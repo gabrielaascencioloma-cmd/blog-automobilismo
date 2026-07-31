@@ -1,0 +1,188 @@
+@import "tailwindcss";
+
+:root {
+  --cream: #ede9e2;
+  --cream-warm: #e6e0d6;
+  --surface: #fbfaf8;
+  --ink: #0d1012;
+  --ink-soft: #424849;
+  --ink-faint: #5e6365;
+  --border-subtle: #d9d3c7;
+
+  --gold: #ae9768;
+  --gold-dark: #8f7a4f;
+  --teal: #0b2628;
+  --teal-soft: #16383b;
+  --rust: #a15a3f;
+}
+
+@theme inline {
+  --color-cream: var(--cream);
+  --color-cream-warm: var(--cream-warm);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-faint: var(--ink-faint);
+  --color-border-subtle: var(--border-subtle);
+
+  --color-gold: var(--gold);
+  --color-gold-dark: var(--gold-dark);
+  --color-teal: var(--teal);
+  --color-teal-soft: var(--teal-soft);
+  --color-rust: var(--rust);
+
+  --font-display: var(--font-archivo);
+  --font-sans: var(--font-inter);
+}
+
+@layer base {
+  * {
+    border-color: var(--border-subtle);
+  }
+
+  body {
+    font-family: var(--font-sans), system-ui, sans-serif;
+  }
+}
+
+::selection {
+  background: var(--gold);
+  color: var(--surface);
+}
+
+.font-display {
+  font-family: var(--font-display), Arial, sans-serif;
+}
+
+/* Article typography */
+.prose-article {
+  color: var(--ink);
+  font-size: 1.0625rem;
+  line-height: 1.75;
+}
+
+.prose-article > * + * {
+  margin-top: 1.35em;
+}
+
+.prose-article h2 {
+  font-family: var(--font-display), Arial, sans-serif;
+  font-size: 1.55rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-top: 2.4em;
+  letter-spacing: -0.01em;
+}
+
+.prose-article h3 {
+  font-family: var(--font-display), Arial, sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-top: 2em;
+}
+
+.prose-article p {
+  color: color-mix(in srgb, var(--ink) 88%, var(--ink-soft));
+}
+
+.prose-article strong {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.prose-article a {
+  color: var(--gold-dark);
+  text-underline-offset: 3px;
+}
+
+.prose-article ul,
+.prose-article ol {
+  padding-left: 1.35em;
+  color: color-mix(in srgb, var(--ink) 88%, var(--ink-soft));
+}
+
+.prose-article li + li {
+  margin-top: 0.55em;
+}
+
+.prose-article ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.prose-article ul > li {
+  position: relative;
+  padding-left: 1.5em;
+}
+
+.prose-article ul > li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.65em;
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: var(--gold);
+}
+
+.prose-article ol {
+  list-style: decimal;
+}
+
+.prose-article ol > li::marker {
+  color: var(--gold-dark);
+  font-weight: 700;
+}
+
+.prose-article blockquote {
+  border-left: 3px solid var(--rust);
+  padding-left: 1.1em;
+  color: var(--ink-soft);
+  font-style: italic;
+}
+
+.prose-article [data-callout] {
+  margin: 2em 0;
+  border-radius: 1rem;
+  border: 1px solid color-mix(in srgb, var(--gold) 30%, transparent);
+  border-left: 3px solid var(--gold);
+  background: var(--cream-warm);
+  padding: 1.25rem 1.5rem;
+  color: color-mix(in srgb, var(--ink) 88%, var(--ink-soft));
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.prose-article [data-callout]::before {
+  content: attr(data-title);
+  display: block;
+  margin-bottom: 0.35em;
+  font-family: var(--font-display), Arial, sans-serif;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.prose-article table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.prose-article th,
+.prose-article td {
+  padding: 0.65em 0.9em;
+  border: 1px solid var(--border-subtle);
+  text-align: left;
+}
+
+.prose-article th {
+  font-family: var(--font-display), Arial, sans-serif;
+  background: var(--cream-warm);
+  color: var(--ink);
+}
+
+.prose-article td {
+  color: color-mix(in srgb, var(--ink) 88%, var(--ink-soft));
+}
