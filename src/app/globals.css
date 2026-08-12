@@ -9,11 +9,12 @@
   --ink-faint: #5e6365;
   --border-subtle: #d9d3c7;
 
-  --gold: #ae9768;
-  --gold-dark: #8f7a4f;
-  --teal: #0b2628;
-  --teal-soft: #16383b;
-  --rust: #a15a3f;
+  /* Identidade vermelho + preto */
+  --gold: #c42b1a;
+  --gold-dark: #a32114;
+  --teal: #0d1012;
+  --teal-soft: #1c1e21;
+  --rust: #c42b1a;
 }
 
 @theme inline {

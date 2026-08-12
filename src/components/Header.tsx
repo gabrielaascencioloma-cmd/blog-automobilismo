@@ -13,15 +13,15 @@ const NAV_LINKS = [
 
 export function Header() {
   return (
-    <header className="sticky top-0 z-50 border-b border-border-subtle bg-cream/90 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-white/10 bg-ink/95 backdrop-blur-md">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <Logo />
-        <nav className="hidden items-center gap-7 text-sm font-medium text-ink-soft md:flex">
+        <Logo inverted />
+        <nav className="hidden items-center gap-7 text-sm font-medium text-cream/70 md:flex">
           {NAV_LINKS.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="transition-colors hover:text-ink"
+              className="transition-colors hover:text-cream"
             >
               {link.label}
             </Link>
@@ -29,7 +29,7 @@ export function Header() {
         </nav>
         <Link
           href="/blog"
-          className="hidden rounded-full bg-teal px-4 py-2 text-sm font-semibold text-cream transition-colors hover:bg-teal-soft sm:inline-flex"
+          className="hidden rounded-full bg-gold px-4 py-2 text-sm font-semibold text-cream transition-colors hover:bg-gold-dark sm:inline-flex"
         >
           Ler os posts
         </Link>
