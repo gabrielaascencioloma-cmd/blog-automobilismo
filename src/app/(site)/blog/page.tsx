@@ -29,22 +29,25 @@ export default async function BlogPage({
   return (
     <div className="mx-auto max-w-6xl px-6 py-16">
       <div className="max-w-2xl">
-        <h1 className="font-display text-3xl font-extrabold text-ink sm:text-4xl">
+        <p className="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-red">
           Blog
+        </p>
+        <h1 className="font-display text-4xl font-black uppercase text-ink sm:text-5xl">
+          Todos os posts
         </h1>
         <p className="mt-3 text-ink-soft">
-          Manutenção, dicas práticas e alertas para quem depende do carro
-          todos os dias.
+          Manutenção, dicas práticas e alertas para quem depende do carro todos os dias.
         </p>
       </div>
 
-      <div className="mt-8 inline-flex flex-wrap gap-1 rounded-full bg-surface p-1.5 shadow-sm">
+      {/* Category filter */}
+      <div className="mt-8 flex flex-wrap gap-2">
         <Link
           href="/blog"
-          className={`rounded-full px-4 py-2 text-sm font-semibold transition-colors ${
+          className={`rounded-full px-4 py-2 text-sm font-bold uppercase tracking-wide transition-colors ${
             !activeCategory
-              ? "bg-ink text-cream"
-              : "text-ink-soft hover:text-ink"
+              ? "bg-red text-white"
+              : "border border-border-subtle text-ink-soft hover:border-red/40 hover:text-ink"
           }`}
         >
           Todos
@@ -53,10 +56,10 @@ export default async function BlogPage({
           <Link
             key={c.slug}
             href={`/blog?categoria=${c.slug}`}
-            className={`rounded-full px-4 py-2 text-sm font-semibold transition-colors ${
+            className={`rounded-full px-4 py-2 text-sm font-bold uppercase tracking-wide transition-colors ${
               activeCategory === c.slug
-                ? "bg-ink text-cream"
-                : "text-ink-soft hover:text-ink"
+                ? "bg-red text-white"
+                : "border border-border-subtle text-ink-soft hover:border-red/40 hover:text-ink"
             }`}
           >
             {c.label}
@@ -65,7 +68,7 @@ export default async function BlogPage({
       </div>
 
       {posts.length > 0 ? (
-        <div className="mt-10 grid gap-6 md:grid-cols-2">
+        <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {posts.map((post) => (
             <PostCard key={post.slug} post={post} />
           ))}

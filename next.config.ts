@@ -17,13 +17,11 @@ const nextConfig: NextConfig = {
     ],
   },
   async rewrites() {
-    // Photos are served from the previous immutable deployment.
-    // This avoids re-uploading ~13MB of binary files on every deploy.
     return [
       {
         source: "/photos/:path*",
         destination:
-          "https://blog-automobilismo-ai9bp8hvf-loma-team1.vercel.app/photos/:path*",
+          "https://raw.githubusercontent.com/gabrielaascencioloma-cmd/blog-automobilismo/main/public/photos/:path*",
       },
     ];
   },

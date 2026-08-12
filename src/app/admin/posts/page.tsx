@@ -41,6 +41,7 @@ export default async function AdminPostsPage() {
                 <th className="px-4 py-3">Título</th>
                 <th className="px-4 py-3">Categoria</th>
                 <th className="px-4 py-3">Status</th>
+                <th className="px-4 py-3 text-right">Leituras</th>
                 <th className="px-4 py-3" />
               </tr>
             </thead>
@@ -57,6 +58,9 @@ export default async function AdminPostsPage() {
                       <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${status.className}`}>
                         {status.text}
                       </span>
+                    </td>
+                    <td className="px-4 py-3 text-right font-medium text-slate-700">
+                      {post.views > 0 ? post.views.toLocaleString("pt-BR") : <span className="text-slate-400">—</span>}
                     </td>
                     <td className="px-4 py-3 text-right">
                       <div className="flex justify-end gap-4">

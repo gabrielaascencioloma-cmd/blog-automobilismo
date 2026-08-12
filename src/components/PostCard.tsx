@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Clock } from "lucide-react";
+import { Clock, ArrowUpRight } from "lucide-react";
 import type { PostSummary } from "@/lib/data/posts";
 import { CATEGORIES } from "@/lib/categories";
 import { CategoryBadge } from "./CategoryBadge";
@@ -16,42 +16,49 @@ export function PostCard({
   return (
     <Link
       href={`/blog/${post.slug}`}
-      className={`group flex flex-col overflow-hidden rounded-2xl bg-surface shadow-sm transition-all hover:shadow-lg hover:shadow-ink/10 ${
-        featured ? "md:col-span-2 md:flex-row" : ""
+      className={`group relative flex flex-col overflow-hidden rounded-2xl border border-border-subtle bg-surface transition-all duration-300 hover:border-red/30 hover:bg-surface-2 ${
+        featured ? "min-h-[340px]" : "min-h-[220px]"
       }`}
     >
-      <div className={`relative ${featured ? "h-56 md:w-1/2" : "h-48 w-full"}`}>
+      {/* Image */}
+      <div className={`relative overflow-hidden ${featured ? "h-56" : "h-44"}`}>
         <PhotoCover
           src={post.cover ?? CATEGORIES[post.category].coverImage}
           alt={post.title}
         />
-        <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-ink/55 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
         <CategoryBadge
           category={post.category}
           linked={false}
           className="absolute left-4 top-4"
         />
+        <ArrowUpRight className="absolute right-4 top-4 h-4 w-4 text-white/0 transition-all duration-200 group-hover:text-white/80 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
       </div>
-      <div className={`flex flex-1 flex-col gap-3 p-6 ${featured ? "md:p-8 md:justify-center" : ""}`}>
+
+      {/* Content */}
+      <div className="flex flex-1 flex-col gap-2.5 p-5">
         <h3
-          className={`font-display font-bold leading-snug text-ink ${
-            featured ? "text-2xl md:text-3xl" : "text-lg"
+          className={`font-display font-black uppercase leading-tight text-ink transition-colors group-hover:text-white ${
+            featured ? "text-xl sm:text-2xl" : "text-base"
           }`}
         >
           {post.title}
         </h3>
-        <p className={`text-ink-soft ${featured ? "text-base" : "text-sm"} line-clamp-3`}>
+        <p className="line-clamp-2 text-sm text-ink-soft">
           {post.excerpt}
         </p>
         <div className="mt-auto flex items-center gap-3 pt-2 text-xs text-ink-faint">
           <time dateTime={post.date}>{formatDate(post.date)}</time>
           <span aria-hidden>·</span>
           <span className="inline-flex items-center gap-1">
-            <Clock className="h-3.5 w-3.5" />
-            {post.readingMinutes} min de leitura
+            <Clock className="h-3 w-3" />
+            {post.readingMinutes} min
           </span>
         </div>
       </div>
+
+      {/* Red accent line on hover */}
+      <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-red transition-all duration-300 group-hover:w-full" />
     </Link>
   );
 }

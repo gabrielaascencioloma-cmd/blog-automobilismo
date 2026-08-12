@@ -1,39 +1,55 @@
 @import "tailwindcss";
 
 :root {
-  --cream: #ede9e2;
-  --cream-warm: #e6e0d6;
-  --surface: #fbfaf8;
-  --ink: #0d1012;
-  --ink-soft: #424849;
-  --ink-faint: #5e6365;
-  --border-subtle: #d9d3c7;
+  /* Page & surfaces */
+  --page-bg:    #0b0d0e;
+  --surface:    #131517;
+  --surface-2:  #1a1d1f;
 
-  /* Identidade vermelho + preto */
-  --gold: #c42b1a;
-  --gold-dark: #a32114;
-  --teal: #0d1012;
-  --teal-soft: #1c1e21;
-  --rust: #c42b1a;
+  /* Text */
+  --ink:        #e8e4dc;
+  --ink-soft:   #858e97;
+  --ink-faint:  #4a5258;
+
+  /* Borders */
+  --border-subtle: #222527;
+
+  /* Brand — vermelho + preto */
+  --red:        #c42b1a;
+  --red-dark:   #a32114;
+  --red-bright: #e5301d;
+
+  /* Aliases mantidos para compatibilidade com classes existentes */
+  --cream:      #e8e4dc;
+  --cream-warm: #1a1d1f;
+  --gold:       #c42b1a;
+  --gold-dark:  #a32114;
+  --teal:       #0b0d0e;
+  --teal-soft:  #131517;
+  --rust:       #c42b1a;
 }
 
 @theme inline {
-  --color-cream: var(--cream);
-  --color-cream-warm: var(--cream-warm);
-  --color-surface: var(--surface);
-  --color-ink: var(--ink);
-  --color-ink-soft: var(--ink-soft);
-  --color-ink-faint: var(--ink-faint);
-  --color-border-subtle: var(--border-subtle);
-
-  --color-gold: var(--gold);
-  --color-gold-dark: var(--gold-dark);
-  --color-teal: var(--teal);
-  --color-teal-soft: var(--teal-soft);
-  --color-rust: var(--rust);
+  --color-page:         var(--page-bg);
+  --color-surface:      var(--surface);
+  --color-surface-2:    var(--surface-2);
+  --color-cream:        var(--cream);
+  --color-cream-warm:   var(--cream-warm);
+  --color-ink:          var(--ink);
+  --color-ink-soft:     var(--ink-soft);
+  --color-ink-faint:    var(--ink-faint);
+  --color-border-subtle:var(--border-subtle);
+  --color-gold:         var(--gold);
+  --color-gold-dark:    var(--gold-dark);
+  --color-teal:         var(--teal);
+  --color-teal-soft:    var(--teal-soft);
+  --color-rust:         var(--rust);
+  --color-red:          var(--red);
+  --color-red-dark:     var(--red-dark);
+  --color-red-bright:   var(--red-bright);
 
   --font-display: var(--font-archivo);
-  --font-sans: var(--font-inter);
+  --font-sans:    var(--font-inter);
 }
 
 @layer base {
@@ -41,25 +57,47 @@
     border-color: var(--border-subtle);
   }
 
+  html {
+    background: var(--page-bg);
+  }
+
   body {
     font-family: var(--font-sans), system-ui, sans-serif;
+    background: var(--page-bg);
+    color: var(--ink);
   }
 }
 
 ::selection {
-  background: var(--gold);
-  color: var(--surface);
+  background: var(--red);
+  color: #fff;
 }
 
 .font-display {
   font-family: var(--font-display), Arial, sans-serif;
 }
 
-/* Article typography */
+/* ── Marquee ─────────────────────────────────────────── */
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 22s linear infinite;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+/* ── Article typography ──────────────────────────────── */
 .prose-article {
   color: var(--ink);
   font-size: 1.0625rem;
-  line-height: 1.75;
+  line-height: 1.8;
 }
 
 .prose-article > * + * {
@@ -68,39 +106,45 @@
 
 .prose-article h2 {
   font-family: var(--font-display), Arial, sans-serif;
-  font-size: 1.55rem;
-  font-weight: 700;
-  color: var(--ink);
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--cream);
   margin-top: 2.4em;
   letter-spacing: -0.01em;
+  padding-bottom: 0.4em;
+  border-bottom: 1px solid var(--border-subtle);
 }
 
 .prose-article h3 {
   font-family: var(--font-display), Arial, sans-serif;
-  font-size: 1.2rem;
+  font-size: 1.15rem;
   font-weight: 700;
-  color: var(--ink);
+  color: var(--cream);
   margin-top: 2em;
 }
 
 .prose-article p {
-  color: color-mix(in srgb, var(--ink) 88%, var(--ink-soft));
+  color: color-mix(in srgb, var(--ink) 90%, var(--ink-soft));
 }
 
 .prose-article strong {
-  color: var(--ink);
+  color: var(--cream);
   font-weight: 700;
 }
 
 .prose-article a {
-  color: var(--gold-dark);
+  color: var(--red-bright);
   text-underline-offset: 3px;
+}
+
+.prose-article a:hover {
+  color: var(--cream);
 }
 
 .prose-article ul,
 .prose-article ol {
   padding-left: 1.35em;
-  color: color-mix(in srgb, var(--ink) 88%, var(--ink-soft));
+  color: color-mix(in srgb, var(--ink) 90%, var(--ink-soft));
 }
 
 .prose-article li + li {
@@ -125,7 +169,7 @@
   width: 6px;
   height: 6px;
   border-radius: 9999px;
-  background: var(--gold);
+  background: var(--red);
 }
 
 .prose-article ol {
@@ -133,12 +177,12 @@
 }
 
 .prose-article ol > li::marker {
-  color: var(--gold-dark);
+  color: var(--red);
   font-weight: 700;
 }
 
 .prose-article blockquote {
-  border-left: 3px solid var(--rust);
+  border-left: 3px solid var(--red);
   padding-left: 1.1em;
   color: var(--ink-soft);
   font-style: italic;
@@ -146,12 +190,12 @@
 
 .prose-article [data-callout] {
   margin: 2em 0;
-  border-radius: 1rem;
-  border: 1px solid color-mix(in srgb, var(--gold) 30%, transparent);
-  border-left: 3px solid var(--gold);
-  background: var(--cream-warm);
+  border-radius: 0.75rem;
+  border: 1px solid var(--border-subtle);
+  border-left: 3px solid var(--red);
+  background: var(--surface-2);
   padding: 1.25rem 1.5rem;
-  color: color-mix(in srgb, var(--ink) 88%, var(--ink-soft));
+  color: var(--ink-soft);
   font-size: 0.95rem;
   line-height: 1.7;
 }
@@ -162,7 +206,7 @@
   margin-bottom: 0.35em;
   font-family: var(--font-display), Arial, sans-serif;
   font-weight: 700;
-  color: var(--ink);
+  color: var(--cream);
 }
 
 .prose-article table {
@@ -180,10 +224,10 @@
 
 .prose-article th {
   font-family: var(--font-display), Arial, sans-serif;
-  background: var(--cream-warm);
-  color: var(--ink);
+  background: var(--surface-2);
+  color: var(--cream);
 }
 
 .prose-article td {
-  color: color-mix(in srgb, var(--ink) 88%, var(--ink-soft));
+  color: var(--ink-soft);
 }

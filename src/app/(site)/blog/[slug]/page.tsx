@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, Clock } from "lucide-react";
+import { ArrowLeft, Clock, Eye } from "lucide-react";
 import { getAllPosts, getPostBySlug } from "@/lib/data/posts";
 import { CATEGORIES } from "@/lib/categories";
 import { CategoryBadge } from "@/components/CategoryBadge";
@@ -18,9 +18,23 @@ export async function generateMetadata({
   const { slug } = await params;
   const post = await getPostBySlug(slug);
   if (!post) return {};
+  const coverSrc = post.cover ?? CATEGORIES[post.category].coverImage;
   return {
     title: post.title,
     description: post.excerpt,
+    openGraph: {
+      title: post.title,
+      description: post.excerpt,
+      type: "article",
+      publishedTime: post.date,
+      images: [{ url: coverSrc, width: 1200, height: 630, alt: post.title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.excerpt,
+      images: [coverSrc],
+    },
   };
 }
 
@@ -77,6 +91,15 @@ export default async function PostPage({
                 <Clock className="h-3.5 w-3.5" />
                 {post.readingMinutes} min de leitura
               </span>
+              {post.views > 0 && (
+                <>
+                  <span aria-hidden>·</span>
+                  <span className="inline-flex items-center gap-1">
+                    <Eye className="h-3.5 w-3.5" />
+                    {post.views.toLocaleString("pt-BR")} leituras
+                  </span>
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -90,9 +113,9 @@ export default async function PostPage({
       </div>
 
       {related.length > 0 && (
-        <div className="bg-cream-warm">
+        <div className="border-t border-border-subtle">
           <div className="mx-auto max-w-6xl px-6 py-14">
-            <h2 className="font-display text-xl font-extrabold text-ink">
+            <h2 className="font-display text-xl font-black uppercase text-ink">
               Continue lendo
             </h2>
             <div className="mt-6 grid gap-6 md:grid-cols-2">
