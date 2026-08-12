@@ -98,9 +98,9 @@ export default async function Home() {
         </div>
 
         {/* Bento: 1 grande + 4 menores */}
-        <div className="grid gap-4 lg:grid-cols-3">
+        <div className="grid items-stretch gap-4 lg:grid-cols-3">
           {featured && (
-            <div className="lg:col-span-2">
+            <div className="flex lg:col-span-2">
               <PostCard post={featured} featured />
             </div>
           )}

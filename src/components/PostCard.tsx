@@ -16,8 +16,8 @@ export function PostCard({
   return (
     <Link
       href={`/blog/${post.slug}`}
-      className={`group relative flex flex-col overflow-hidden rounded-2xl border border-border-subtle bg-surface transition-all duration-300 hover:border-red/30 hover:bg-surface-2 ${
-        featured ? "min-h-[340px]" : "min-h-[220px]"
+      className={`group relative flex w-full flex-col overflow-hidden rounded-2xl border border-border-subtle bg-surface transition-all duration-300 hover:border-red/30 hover:bg-surface-2 ${
+        featured ? "h-full min-h-[340px]" : "min-h-[220px]"
       }`}
     >
       {/* Image */}

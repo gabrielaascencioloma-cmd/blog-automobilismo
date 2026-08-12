@@ -42,7 +42,7 @@ export default function RootLayout({
       lang="pt-BR"
       className={`${inter.variable} ${archivo.variable} h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col bg-cream text-ink">
+      <body className="flex min-h-full flex-col bg-[--page-bg] text-ink">
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
