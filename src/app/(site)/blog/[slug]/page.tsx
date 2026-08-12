@@ -68,7 +68,7 @@ export default async function PostPage({
         ) : (
           <PhotoCover src={coverSrc} alt={post.title} priority />
         )}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/45 to-transparent" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/95 via-black/60 to-black/20" />
         <div className="pointer-events-none absolute inset-0 flex flex-col justify-end">
           <div className="pointer-events-auto mx-auto w-full max-w-3xl px-6 pb-10">
             <Link
