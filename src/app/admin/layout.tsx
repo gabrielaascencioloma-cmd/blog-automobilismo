@@ -53,6 +53,12 @@ export default async function AdminLayout({
                   >
                     + Novo post
                   </Link>
+                  <Link
+                    href="/admin/leads"
+                    className="rounded-md px-3 py-1.5 font-semibold text-red-400 transition-colors hover:bg-slate-800 hover:text-red-300"
+                  >
+                    Leads Loma
+                  </Link>
                 </nav>
               </div>
               <div className="flex items-center gap-4 text-sm text-slate-400">
