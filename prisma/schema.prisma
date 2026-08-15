@@ -26,11 +26,13 @@ enum Category {
 }
 
 model Lead {
-  id        Int      @id @default(autoincrement())
-  nome      String
-  telefone  String
-  placa     String
-  createdAt DateTime @default(now())
+  id            Int      @id @default(autoincrement())
+  tipo          String   @default("cotacao") // "cotacao" | "verificacao"
+  nome          String?
+  telefone      String?
+  placa         String?
+  protecaoAtual String?
+  createdAt     DateTime @default(now())
 }
 
 model User {
