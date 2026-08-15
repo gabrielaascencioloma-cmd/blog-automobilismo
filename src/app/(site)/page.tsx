@@ -26,7 +26,7 @@ export default async function Home() {
     <div className="flex flex-col">
 
       {/* ── Hero ─────────────────────────────────────────── */}
-      <section className="relative min-h-[92vh] w-full overflow-hidden flex flex-col justify-end">
+      <section className="relative min-h-[58vh] w-full overflow-hidden flex flex-col justify-end">
         <PhotoCover
           src="/photos/hero.jpg"
           alt="Carro popular estacionado em uma rua ao entardecer"
@@ -39,10 +39,10 @@ export default async function Home() {
           <p className="mb-5 text-xs font-bold uppercase tracking-[0.2em] text-red-500">
             — Blog automotivo
           </p>
-          <h1 className="font-display max-w-4xl text-[clamp(3.5rem,10vw,8rem)] font-black uppercase leading-[0.88] tracking-tight text-white">
+          <h1 className="font-display max-w-4xl text-[clamp(2.4rem,6vw,5rem)] font-black uppercase leading-[0.92] tracking-tight text-white">
             CARRO<br />EM DIA
           </h1>
-          <p className="mt-6 max-w-sm text-sm leading-relaxed text-white/65">
+          <p className="mt-5 max-w-sm text-sm leading-relaxed text-white/75">
             Manutenção, dicas práticas e alertas para quem depende do carro todos os dias.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">

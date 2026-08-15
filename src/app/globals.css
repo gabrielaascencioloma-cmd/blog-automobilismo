@@ -1,18 +1,18 @@
 @import "tailwindcss";
 
 :root {
-  /* Page & surfaces */
-  --page-bg:    #0b0d0e;
-  --surface:    #131517;
-  --surface-2:  #1a1d1f;
+  /* Page & surfaces — ligeiramente mais claros para reduzir peso visual */
+  --page-bg:    #0e1012;
+  --surface:    #171b1e;
+  --surface-2:  #1e2226;
 
-  /* Text */
-  --ink:        #e8e4dc;
-  --ink-soft:   #858e97;
-  --ink-faint:  #4a5258;
+  /* Text — contraste aumentado */
+  --ink:        #edeae2;
+  --ink-soft:   #9ba5af;
+  --ink-faint:  #5a6470;
 
   /* Borders */
-  --border-subtle: #222527;
+  --border-subtle: #272d32;
 
   /* Brand — vermelho + preto */
   --red:        #c42b1a;
