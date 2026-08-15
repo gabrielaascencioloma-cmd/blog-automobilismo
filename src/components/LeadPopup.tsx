@@ -12,25 +12,21 @@ export function LeadPopup() {
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   useEffect(() => {
-    if (sessionStorage.getItem("loma_lead_shown")) return;
-    const t = setTimeout(() => setStep("question"), 9000);
+    if (sessionStorage.getItem("lead_shown")) return;
+    const t = setTimeout(() => setStep("question"), 30000);
     return () => clearTimeout(t);
   }, []);
 
   function dismiss() {
-    sessionStorage.setItem("loma_lead_shown", "1");
+    sessionStorage.setItem("lead_shown", "1");
     setStep("hidden");
-  }
-
-  function handleSim() {
-    dismiss();
   }
 
   function validate() {
     const e: Record<string, string> = {};
     if (!form.nome.trim()) e.nome = "Informe seu nome";
     if (!form.telefone.trim()) e.telefone = "Informe seu telefone";
-    if (!form.placa.trim()) e.placa = "Informe a placa do veículo";
+    if (!form.placa.trim()) e.placa = "Informe a placa";
     return e;
   }
 
@@ -46,7 +42,7 @@ export function LeadPopup() {
         body: JSON.stringify(form),
       });
       setStep("success");
-      setTimeout(dismiss, 3500);
+      setTimeout(dismiss, 3000);
     } finally {
       setLoading(false);
     }
@@ -55,120 +51,103 @@ export function LeadPopup() {
   if (step === "hidden") return null;
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-end justify-center p-4 sm:items-center">
-      {/* Backdrop */}
-      <div
-        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+    <div className="fixed bottom-6 right-6 z-[100] w-[300px] rounded-2xl border border-border-subtle bg-surface shadow-2xl">
+      {/* Fechar */}
+      <button
         onClick={dismiss}
-      />
+        aria-label="Fechar"
+        className="absolute right-3 top-3 rounded-full p-1 text-ink-faint transition-colors hover:text-ink"
+      >
+        <X className="h-3.5 w-3.5" />
+      </button>
 
-      {/* Card */}
-      <div className="relative w-full max-w-md rounded-2xl border border-border-subtle bg-surface-2 shadow-2xl">
-        {/* Close */}
-        <button
-          onClick={dismiss}
-          aria-label="Fechar"
-          className="absolute right-4 top-4 rounded-full p-1 text-ink-faint transition-colors hover:text-ink"
-        >
-          <X className="h-4 w-4" />
-        </button>
+      {/* Ícone topo */}
+      <div className="flex items-center gap-2 border-b border-border-subtle px-4 py-3">
+        <ShieldCheck className="h-4 w-4 text-red" />
+        <span className="text-xs font-semibold uppercase tracking-widest text-ink-soft">
+          Proteção veicular
+        </span>
+      </div>
 
-        {/* Header vermelho */}
-        <div className="flex items-center gap-3 rounded-t-2xl bg-red px-6 py-4">
-          <ShieldCheck className="h-6 w-6 text-white/80" />
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-widest text-white/70">
-              Loma Bem Protegido
-            </p>
-            <p className="text-sm font-bold text-white">
-              Proteção veicular sem complicação
-            </p>
+      {/* Etapa 1 — pergunta */}
+      {step === "question" && (
+        <div className="px-4 py-5">
+          <p className="text-sm font-bold leading-snug text-ink">
+            Seu carro tem proteção?
+          </p>
+          <p className="mt-1 text-xs text-ink-soft">
+            Responda em segundos
+          </p>
+          <div className="mt-4 flex flex-col gap-2">
+            <button
+              onClick={dismiss}
+              className="w-full rounded-xl border border-border-subtle px-3 py-2.5 text-xs font-semibold text-ink-soft transition-colors hover:border-red/30 hover:text-ink"
+            >
+              Sim, já tenho proteção
+            </button>
+            <button
+              onClick={() => setStep("form")}
+              className="flex w-full items-center justify-center gap-1 rounded-xl bg-red px-3 py-2.5 text-xs font-bold text-white transition-colors hover:bg-red-dark"
+            >
+              Não tenho — quero cotar
+              <ChevronRight className="h-3.5 w-3.5" />
+            </button>
           </div>
         </div>
+      )}
 
-        {/* Step 1 — pergunta */}
-        {step === "question" && (
-          <div className="px-6 py-7">
-            <p className="text-center text-lg font-bold text-ink">
-              Seu carro tem seguro ou proteção?
-            </p>
-            <p className="mt-1 text-center text-sm text-ink-soft">
-              Responda rápido e veja se você está protegido
-            </p>
-            <div className="mt-6 flex flex-col gap-3">
-              <button
-                onClick={handleSim}
-                className="w-full rounded-xl border border-border-subtle bg-surface px-4 py-3 text-sm font-semibold text-ink transition-colors hover:border-red/40 hover:bg-surface-2"
-              >
-                Sim, já tenho proteção
-              </button>
-              <button
-                onClick={() => setStep("form")}
-                className="w-full rounded-xl bg-red px-4 py-3 text-sm font-bold text-white transition-colors hover:bg-red-dark"
-              >
-                Não tenho — quero cotar agora
-                <ChevronRight className="ml-1 inline h-4 w-4" />
-              </button>
+      {/* Etapa 2 — formulário */}
+      {step === "form" && (
+        <form onSubmit={handleSubmit} className="px-4 py-5">
+          <p className="mb-4 text-sm font-bold text-ink">
+            Receba sua cotação gratuita
+          </p>
+
+          {[
+            { id: "nome", label: "Nome", placeholder: "Seu nome", type: "text" },
+            { id: "telefone", label: "WhatsApp", placeholder: "(11) 99999-9999", type: "tel" },
+            { id: "placa", label: "Placa", placeholder: "ABC1234", type: "text" },
+          ].map(({ id, label, placeholder, type }) => (
+            <div key={id} className="mb-3">
+              <label className="mb-1 block text-[10px] font-bold uppercase tracking-wide text-ink-soft">
+                {label}
+              </label>
+              <input
+                type={type}
+                placeholder={placeholder}
+                value={form[id as keyof typeof form]}
+                onChange={(e) => {
+                  setForm((f) => ({ ...f, [id]: e.target.value }));
+                  setErrors((er) => ({ ...er, [id]: "" }));
+                }}
+                className="w-full rounded-lg border border-border-subtle bg-surface-2 px-3 py-2 text-xs text-ink placeholder-ink-faint outline-none transition-colors focus:border-red/50"
+              />
+              {errors[id] && (
+                <p className="mt-0.5 text-[10px] text-red-bright">{errors[id]}</p>
+              )}
             </div>
-          </div>
-        )}
+          ))}
 
-        {/* Step 2 — formulário */}
-        {step === "form" && (
-          <form onSubmit={handleSubmit} className="px-6 py-7">
-            <p className="mb-5 text-center text-base font-bold text-ink">
-              Preencha para receber sua cotação gratuita
-            </p>
+          <button
+            type="submit"
+            disabled={loading}
+            className="mt-1 w-full rounded-xl bg-red px-3 py-2.5 text-xs font-bold text-white transition-colors hover:bg-red-dark disabled:opacity-60"
+          >
+            {loading ? "Enviando..." : "Quero minha cotação →"}
+          </button>
+        </form>
+      )}
 
-            {[
-              { id: "nome", label: "Nome completo", placeholder: "Seu nome", type: "text" },
-              { id: "telefone", label: "WhatsApp / Telefone", placeholder: "(11) 99999-9999", type: "tel" },
-              { id: "placa", label: "Placa do veículo", placeholder: "ABC1234", type: "text" },
-            ].map(({ id, label, placeholder, type }) => (
-              <div key={id} className="mb-4">
-                <label className="mb-1 block text-xs font-semibold uppercase tracking-wide text-ink-soft">
-                  {label}
-                </label>
-                <input
-                  type={type}
-                  placeholder={placeholder}
-                  value={form[id as keyof typeof form]}
-                  onChange={(e) => {
-                    setForm((f) => ({ ...f, [id]: e.target.value }));
-                    setErrors((er) => ({ ...er, [id]: "" }));
-                  }}
-                  className="w-full rounded-lg border border-border-subtle bg-surface px-4 py-2.5 text-sm text-ink placeholder-ink-faint outline-none transition-colors focus:border-red/60"
-                />
-                {errors[id] && (
-                  <p className="mt-1 text-xs text-red-bright">{errors[id]}</p>
-                )}
-              </div>
-            ))}
-
-            <button
-              type="submit"
-              disabled={loading}
-              className="mt-2 w-full rounded-xl bg-red px-4 py-3 text-sm font-bold text-white transition-colors hover:bg-red-dark disabled:opacity-60"
-            >
-              {loading ? "Enviando..." : "Quero minha cotação →"}
-            </button>
-            <p className="mt-3 text-center text-xs text-ink-faint">
-              Um consultor da Loma vai entrar em contato com você
-            </p>
-          </form>
-        )}
-
-        {/* Sucesso */}
-        {step === "success" && (
-          <div className="px-6 py-10 text-center">
-            <ShieldCheck className="mx-auto mb-3 h-10 w-10 text-red" />
-            <p className="text-lg font-bold text-ink">Recebemos seu pedido!</p>
-            <p className="mt-1 text-sm text-ink-soft">
-              Um consultor da Loma vai entrar em contato em breve.
-            </p>
-          </div>
-        )}
-      </div>
+      {/* Sucesso */}
+      {step === "success" && (
+        <div className="px-4 py-6 text-center">
+          <ShieldCheck className="mx-auto mb-2 h-7 w-7 text-red" />
+          <p className="text-sm font-bold text-ink">Recebemos seu pedido!</p>
+          <p className="mt-1 text-xs text-ink-soft">
+            Em breve você recebe sua cotação.
+          </p>
+        </div>
+      )}
     </div>
   );
 }
