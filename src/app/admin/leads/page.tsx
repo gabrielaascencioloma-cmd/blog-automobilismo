@@ -50,7 +50,7 @@ export default async function LeadsPage() {
                     </span>
                   </td>
                   <td className="px-5 py-3 text-gray-400">
-                    {formatDate(lead.createdAt.toISOString())}
+                    {lead.createdAt.toLocaleDateString("pt-BR", { day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" })}
                   </td>
                 </tr>
               ))}
