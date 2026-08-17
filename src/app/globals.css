@@ -1,32 +1,29 @@
 @import "tailwindcss";
 
 :root {
-  /* Page & surfaces — ligeiramente mais claros para reduzir peso visual */
-  --page-bg:    #0e1012;
-  --surface:    #171b1e;
-  --surface-2:  #1e2226;
+  /* Tema claro — fundo branco, vermelho, preto */
+  --page-bg:    #f4f4f4;
+  --surface:    #ffffff;
+  --surface-2:  #f9f9f9;
 
-  /* Text — contraste aumentado */
-  --ink:        #edeae2;
-  --ink-soft:   #9ba5af;
-  --ink-faint:  #5a6470;
+  --ink:        #0f0f0f;
+  --ink-soft:   #555555;
+  --ink-faint:  #999999;
 
-  /* Borders */
-  --border-subtle: #272d32;
+  --border-subtle: #e0e0e0;
 
-  /* Brand — vermelho + preto */
   --red:        #c42b1a;
   --red-dark:   #a32114;
   --red-bright: #e5301d;
 
-  /* Aliases mantidos para compatibilidade com classes existentes */
-  --cream:      #e8e4dc;
-  --cream-warm: #1a1d1f;
+  --cream:      #0f0f0f;
+  --cream-warm: #f8f5f0;
   --gold:       #c42b1a;
   --gold-dark:  #a32114;
-  --teal:       #0b0d0e;
-  --teal-soft:  #131517;
+  --teal:       #f4f4f4;
+  --teal-soft:  #ffffff;
   --rust:       #c42b1a;
+  --silver:     #c0c0c0;
 }
 
 @theme inline {
@@ -47,6 +44,7 @@
   --color-red:          var(--red);
   --color-red-dark:     var(--red-dark);
   --color-red-bright:   var(--red-bright);
+  --color-silver:       var(--silver);
 
   --font-display: var(--font-archivo);
   --font-sans:    var(--font-inter);

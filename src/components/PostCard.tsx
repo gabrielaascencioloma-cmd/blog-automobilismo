@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Clock, ArrowUpRight } from "lucide-react";
+import { Clock } from "lucide-react";
 import type { PostSummary } from "@/lib/data/posts";
 import { CATEGORIES } from "@/lib/categories";
 import { CategoryBadge } from "./CategoryBadge";
@@ -16,38 +16,30 @@ export function PostCard({
   return (
     <Link
       href={`/blog/${post.slug}`}
-      className={`group relative flex w-full flex-col overflow-hidden rounded-2xl border border-border-subtle bg-surface transition-all duration-300 hover:border-red/30 hover:bg-surface-2 ${
-        featured ? "h-full min-h-[340px]" : "min-h-[220px]"
-      }`}
+      className="group flex flex-col overflow-hidden rounded-xl border border-border-subtle bg-surface transition-shadow hover:shadow-md"
     >
-      {/* Image — featured: grows to fill available height; normal: fixed */}
-      <div className={`relative overflow-hidden ${featured ? "flex-1 min-h-[200px]" : "h-44"}`}>
+      {/* Image */}
+      <div className={`relative overflow-hidden ${featured ? "h-60" : "h-48"}`}>
         <PhotoCover
           src={post.cover ?? CATEGORIES[post.category].coverImage}
           alt={post.title}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-        <CategoryBadge
-          category={post.category}
-          linked={false}
-          className="absolute left-4 top-4"
-        />
-        <ArrowUpRight className="absolute right-4 top-4 h-4 w-4 text-white/0 transition-all duration-200 group-hover:text-white/80 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
       </div>
 
-      {/* Content — fixed height, no expansion */}
-      <div className="flex flex-col gap-2.5 p-5">
+      {/* Content */}
+      <div className="flex flex-1 flex-col gap-2.5 p-5">
+        <CategoryBadge category={post.category} linked={false} />
         <h3
-          className={`font-display font-black uppercase leading-tight text-ink transition-colors group-hover:text-white ${
-            featured ? "text-xl sm:text-2xl" : "text-base"
+          className={`font-display font-black uppercase leading-tight text-ink transition-colors group-hover:text-red line-clamp-2 ${
+            featured ? "text-xl" : "text-base"
           }`}
         >
           {post.title}
         </h3>
-        <p className="line-clamp-2 text-sm text-ink-soft">
+        <p className="line-clamp-2 text-sm leading-relaxed text-ink-soft">
           {post.excerpt}
         </p>
-        <div className="mt-3 flex items-center gap-3 text-xs text-ink-faint">
+        <div className="mt-auto flex items-center gap-3 border-t border-border-subtle pt-3 text-xs text-ink-faint">
           <time dateTime={post.date}>{formatDate(post.date)}</time>
           <span aria-hidden>·</span>
           <span className="inline-flex items-center gap-1">
@@ -56,9 +48,6 @@ export function PostCard({
           </span>
         </div>
       </div>
-
-      {/* Red accent line on hover */}
-      <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-red transition-all duration-300 group-hover:w-full" />
     </Link>
   );
 }

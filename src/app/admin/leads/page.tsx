@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/db";
+import { ExportControls } from "@/components/ExportControls";
 
 export const dynamic = "force-dynamic";
 
@@ -23,19 +24,16 @@ export default async function LeadsPage() {
 
   return (
     <div className="mx-auto max-w-5xl px-6 py-10">
-      <div className="mb-8 flex items-end justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900">Leads — Proteção Veicular</h1>
-          <p className="mt-1 text-sm text-gray-500">
-            {total} lead{total !== 1 ? "s" : ""} · {cotacoes} quer{cotacoes !== 1 ? "em" : ""} cotar · {verificacoes} já tem proteção
-          </p>
+      <div className="mb-8">
+        <div className="mb-4 flex items-start justify-between">
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900">Leads — Avaliação gratuita</h1>
+            <p className="mt-1 text-sm text-gray-500">
+              {total} lead{total !== 1 ? "s" : ""} · {cotacoes} quer{cotacoes !== 1 ? "em" : ""} cotar · {verificacoes} já tem proteção
+            </p>
+          </div>
         </div>
-        <a
-          href="/api/lead/export"
-          className="inline-flex items-center gap-2 rounded-lg bg-green-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-green-700"
-        >
-          ↓ Exportar CSV
-        </a>
+        <ExportControls />
       </div>
 
       {leads.length === 0 ? (

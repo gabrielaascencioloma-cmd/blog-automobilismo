@@ -78,137 +78,146 @@ export function LeadPopup() {
 
   if (step === "hidden") return null;
 
-  return (
-    <div className="fixed bottom-6 right-6 z-[100] w-[300px] rounded-2xl border border-border-subtle bg-surface shadow-2xl">
-      <button
-        onClick={dismiss}
-        aria-label="Fechar"
-        className="absolute right-3 top-3 rounded-full p-1 text-ink-faint transition-colors hover:text-ink"
-      >
-        <X className="h-3.5 w-3.5" />
-      </button>
+  const podeConfirmar = !loading && (!!protecao || !!outraProtecao.trim());
 
-      <div className="flex items-center gap-2 border-b border-border-subtle px-4 py-3">
+  return (
+    <div className="fixed bottom-6 right-6 z-[100] flex w-[300px] flex-col rounded-2xl border border-border-subtle bg-surface shadow-2xl"
+      style={{ maxHeight: "calc(100vh - 100px)" }}>
+
+      {/* Header fixo */}
+      <div className="flex flex-shrink-0 items-center gap-2 border-b border-border-subtle px-4 py-3">
         <ShieldCheck className="h-4 w-4 text-red" />
         <span className="text-xs font-semibold uppercase tracking-widest text-ink-soft">
-          Proteção veicular
+          Avaliação gratuita
         </span>
+        <button
+          onClick={dismiss}
+          aria-label="Fechar"
+          className="ml-auto rounded-full p-1 text-ink-faint transition-colors hover:text-ink"
+        >
+          <X className="h-3.5 w-3.5" />
+        </button>
       </div>
 
-      {/* Etapa 1 — pergunta inicial */}
-      {step === "question" && (
-        <div className="px-4 py-5">
-          <p className="text-sm font-bold leading-snug text-ink">
-            Seu carro tem proteção?
-          </p>
-          <p className="mt-1 text-xs text-ink-soft">Responda em segundos</p>
-          <div className="mt-4 flex flex-col gap-2">
-            <button
-              onClick={() => setStep("verificacao")}
-              className="w-full rounded-xl border border-border-subtle px-3 py-2.5 text-xs font-semibold text-ink-soft transition-colors hover:border-red/30 hover:text-ink"
-            >
-              Sim, já tenho proteção
-            </button>
-            <button
-              onClick={() => setStep("form")}
-              className="flex w-full items-center justify-center gap-1 rounded-xl bg-red px-3 py-2.5 text-xs font-bold text-white transition-colors hover:bg-red-dark"
-            >
-              Não tenho — quero cotar
-              <ChevronRight className="h-3.5 w-3.5" />
-            </button>
-          </div>
-        </div>
-      )}
+      {/* Conteúdo scrollável */}
+      <div className="overflow-y-auto">
 
-      {/* Etapa Sim — qual proteção tem */}
-      {step === "verificacao" && (
-        <div className="px-4 py-5">
-          <p className="text-sm font-bold leading-snug text-ink">
-            Você tem seguro/proteção pronto?
-          </p>
-          <p className="mt-1 mb-3 text-xs text-ink-soft">Selecione sua proteção atual</p>
-          <div className="flex flex-col gap-1.5">
-            {PROTECOES.map((p) => (
+        {/* Etapa 1 — pergunta inicial */}
+        {step === "question" && (
+          <div className="px-4 py-5">
+            <p className="text-sm font-bold leading-snug text-ink">
+              Seu carro tem proteção?
+            </p>
+            <p className="mt-1 text-xs text-ink-soft">Responda em segundos</p>
+            <div className="mt-4 flex flex-col gap-2">
               <button
-                key={p}
-                onClick={() => { setProtecao(p); setOutraProtecao(""); }}
-                className={`w-full rounded-lg border px-3 py-2 text-left text-xs font-semibold transition-colors ${
-                  protecao === p
-                    ? "border-red bg-red/10 text-ink"
-                    : "border-border-subtle text-ink-soft hover:border-red/30 hover:text-ink"
-                }`}
+                onClick={() => setStep("verificacao")}
+                className="w-full rounded-xl border border-border-subtle px-3 py-2.5 text-xs font-semibold text-ink-soft transition-colors hover:border-red/30 hover:text-ink"
               >
-                {p}
+                Sim, já tenho proteção
               </button>
-            ))}
-            <input
-              type="text"
-              placeholder="Outra — qual?"
-              value={outraProtecao}
-              onChange={(e) => { setOutraProtecao(e.target.value); setProtecao(""); }}
-              className="mt-1 w-full rounded-lg border border-border-subtle bg-surface-2 px-3 py-2 text-xs text-ink placeholder-ink-faint outline-none transition-colors focus:border-red/50"
-            />
-          </div>
-          <button
-            onClick={handleSubmitVerificacao}
-            disabled={loading || (!protecao && !outraProtecao.trim())}
-            className="mt-3 w-full rounded-xl bg-red px-3 py-2.5 text-xs font-bold text-white transition-colors hover:bg-red-dark disabled:opacity-40"
-          >
-            {loading ? "Enviando..." : "Confirmar →"}
-          </button>
-        </div>
-      )}
-
-      {/* Etapa Não — formulário cotação */}
-      {step === "form" && (
-        <form onSubmit={handleSubmitCotacao} className="px-4 py-5">
-          <p className="mb-4 text-sm font-bold text-ink">
-            Receba sua cotação gratuita
-          </p>
-          {[
-            { id: "nome", label: "Nome", placeholder: "Seu nome", type: "text" },
-            { id: "telefone", label: "WhatsApp", placeholder: "(11) 99999-9999", type: "tel" },
-            { id: "placa", label: "Placa", placeholder: "ABC1234", type: "text" },
-          ].map(({ id, label, placeholder, type }) => (
-            <div key={id} className="mb-3">
-              <label className="mb-1 block text-[10px] font-bold uppercase tracking-wide text-ink-soft">
-                {label}
-              </label>
-              <input
-                type={type}
-                placeholder={placeholder}
-                value={form[id as keyof typeof form]}
-                onChange={(e) => {
-                  setForm((f) => ({ ...f, [id]: e.target.value }));
-                  setErrors((er) => ({ ...er, [id]: "" }));
-                }}
-                className="w-full rounded-lg border border-border-subtle bg-surface-2 px-3 py-2 text-xs text-ink placeholder-ink-faint outline-none transition-colors focus:border-red/50"
-              />
-              {errors[id] && (
-                <p className="mt-0.5 text-[10px] text-red-bright">{errors[id]}</p>
-              )}
+              <button
+                onClick={() => setStep("form")}
+                className="flex w-full items-center justify-center gap-1 rounded-xl bg-red px-3 py-2.5 text-xs font-bold text-white transition-colors hover:bg-red-dark"
+              >
+                Não tenho — quero cotar
+                <ChevronRight className="h-3.5 w-3.5" />
+              </button>
             </div>
-          ))}
-          <button
-            type="submit"
-            disabled={loading}
-            className="mt-1 w-full rounded-xl bg-red px-3 py-2.5 text-xs font-bold text-white transition-colors hover:bg-red-dark disabled:opacity-60"
-          >
-            {loading ? "Enviando..." : "Quero minha cotação →"}
-          </button>
-        </form>
-      )}
+          </div>
+        )}
 
-      {/* Sucesso */}
-      {step === "success" && (
-        <div className="px-4 py-6 text-center">
-          <ShieldCheck className="mx-auto mb-2 h-7 w-7 text-red" />
-          <p className="text-sm font-bold text-ink">Recebemos sua resposta!</p>
-          <p className="mt-1 text-xs text-ink-soft">
-            Obrigado pela informação.
-          </p>
-        </div>
-      )}
+        {/* Etapa Sim — qual proteção tem */}
+        {step === "verificacao" && (
+          <div className="px-4 py-4">
+            <p className="text-sm font-bold leading-snug text-ink">
+              Você tem seguro/proteção pronto?
+            </p>
+            <p className="mb-3 mt-1 text-xs text-ink-soft">Selecione sua proteção atual</p>
+            <div className="flex flex-col gap-1.5">
+              {PROTECOES.map((p) => (
+                <button
+                  key={p}
+                  type="button"
+                  onClick={() => { setProtecao(p); setOutraProtecao(""); }}
+                  className={`w-full rounded-lg border px-3 py-2 text-left text-xs font-semibold transition-colors ${
+                    protecao === p
+                      ? "border-red bg-red/10 text-ink"
+                      : "border-border-subtle text-ink-soft hover:border-red/30 hover:text-ink"
+                  }`}
+                >
+                  {p}
+                </button>
+              ))}
+              <input
+                type="text"
+                placeholder="Outra — qual?"
+                value={outraProtecao}
+                onChange={(e) => { setOutraProtecao(e.target.value); setProtecao(""); }}
+                className="mt-1 w-full rounded-lg border border-border-subtle bg-surface-2 px-3 py-2 text-xs text-ink placeholder-ink-faint outline-none transition-colors focus:border-red/50"
+              />
+            </div>
+            <button
+              type="button"
+              onClick={handleSubmitVerificacao}
+              disabled={!podeConfirmar}
+              className="mt-3 w-full rounded-xl bg-red px-3 py-2.5 text-xs font-bold text-white transition-colors hover:bg-red-dark disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              {loading ? "Enviando..." : "Confirmar →"}
+            </button>
+          </div>
+        )}
+
+        {/* Etapa Não — formulário cotação */}
+        {step === "form" && (
+          <form onSubmit={handleSubmitCotacao} className="px-4 py-5">
+            <p className="mb-4 text-sm font-bold text-ink">
+              Receba sua cotação gratuita
+            </p>
+            {[
+              { id: "nome", label: "Nome", placeholder: "Seu nome", type: "text" },
+              { id: "telefone", label: "WhatsApp", placeholder: "(11) 99999-9999", type: "tel" },
+              { id: "placa", label: "Placa", placeholder: "ABC1234", type: "text" },
+            ].map(({ id, label, placeholder, type }) => (
+              <div key={id} className="mb-3">
+                <label className="mb-1 block text-[10px] font-bold uppercase tracking-wide text-ink-soft">
+                  {label}
+                </label>
+                <input
+                  type={type}
+                  placeholder={placeholder}
+                  value={form[id as keyof typeof form]}
+                  onChange={(e) => {
+                    setForm((f) => ({ ...f, [id]: e.target.value }));
+                    setErrors((er) => ({ ...er, [id]: "" }));
+                  }}
+                  className="w-full rounded-lg border border-border-subtle bg-surface-2 px-3 py-2 text-xs text-ink placeholder-ink-faint outline-none transition-colors focus:border-red/50"
+                />
+                {errors[id] && (
+                  <p className="mt-0.5 text-[10px] text-red-bright">{errors[id]}</p>
+                )}
+              </div>
+            ))}
+            <button
+              type="submit"
+              disabled={loading}
+              className="mt-1 w-full rounded-xl bg-red px-3 py-2.5 text-xs font-bold text-white transition-colors hover:bg-red-dark disabled:opacity-60"
+            >
+              {loading ? "Enviando..." : "Quero minha cotação →"}
+            </button>
+          </form>
+        )}
+
+        {/* Sucesso */}
+        {step === "success" && (
+          <div className="px-4 py-6 text-center">
+            <ShieldCheck className="mx-auto mb-2 h-7 w-7 text-red" />
+            <p className="text-sm font-bold text-ink">Recebemos sua resposta!</p>
+            <p className="mt-1 text-xs text-ink-soft">Obrigado pela informação.</p>
+          </div>
+        )}
+
+      </div>
     </div>
   );
 }
