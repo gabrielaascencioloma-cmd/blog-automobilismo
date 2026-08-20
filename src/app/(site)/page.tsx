@@ -1,11 +1,9 @@
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight, Clock, Wrench, ListChecks, TriangleAlert, CalendarClock } from "lucide-react";
+import Image from "next/image";
+import { ArrowRight, ArrowUpRight, Wrench, ListChecks, TriangleAlert, CalendarClock } from "lucide-react";
 import { getAllPosts } from "@/lib/data/posts";
-import { CATEGORIES, CATEGORY_LIST } from "@/lib/categories";
+import { CATEGORY_LIST } from "@/lib/categories";
 import { PostCard } from "@/components/PostCard";
-import { PhotoCover } from "@/components/PhotoCover";
-import { CategoryBadge } from "@/components/CategoryBadge";
-import { formatDate } from "@/lib/format";
 
 const CATEGORY_ICONS = {
   manutencao: Wrench,
@@ -22,7 +20,7 @@ const TICKER_ITEMS = [
 
 export default async function Home() {
   const posts = await getAllPosts();
-  const [featured, second, ...rest] = posts;
+
 
   return (
     <div className="flex flex-col">
@@ -30,7 +28,10 @@ export default async function Home() {
       {/* ── Ticker ─────────────────────────────────────── */}
       <div className="overflow-hidden border-b border-border-subtle bg-red py-2.5">
         <div className="marquee-track">
-          {TICKER_ITEMS.concat(TICKER_ITEMS).map((item, i) => (
+          {/* Base items duplicated to guarantee width > 100vw on large screens */}
+          {[...TICKER_ITEMS, ...TICKER_ITEMS, ...TICKER_ITEMS, ...TICKER_ITEMS]
+            .concat([...TICKER_ITEMS, ...TICKER_ITEMS, ...TICKER_ITEMS, ...TICKER_ITEMS])
+            .map((item, i) => (
             <span key={i} className="mx-1 inline-flex items-center gap-4">
               <span className="text-[11px] font-black uppercase tracking-[0.2em] text-white">
                 {item}
@@ -52,46 +53,77 @@ export default async function Home() {
         </div>
       </div>
 
-      {/* ── Destaque principal ────────────────────────── */}
-      {featured && (
-        <section className="border-b border-border-subtle bg-surface">
-          <div className="mx-auto max-w-6xl px-6 py-10">
-            <Link
-              href={`/blog/${featured.slug}`}
-              className="group grid gap-8 md:grid-cols-2 md:items-center"
-            >
-              <div className="relative aspect-[16/10] overflow-hidden rounded-xl">
-                <PhotoCover
-                  src={featured.cover ?? CATEGORIES[featured.category].coverImage}
-                  alt={featured.title}
-                  priority
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                />
-              </div>
-              <div>
-                <CategoryBadge category={featured.category} linked={false} />
-                <h2 className="mt-3 font-display text-2xl font-black uppercase leading-tight text-ink transition-colors group-hover:text-red sm:text-3xl lg:text-4xl">
-                  {featured.title}
-                </h2>
-                <p className="mt-3 text-sm leading-relaxed text-ink-soft line-clamp-3">
-                  {featured.excerpt}
-                </p>
-                <div className="mt-4 flex items-center gap-3 text-xs text-ink-faint">
-                  <time dateTime={featured.date}>{formatDate(featured.date)}</time>
-                  <span aria-hidden>·</span>
-                  <span className="inline-flex items-center gap-1">
-                    <Clock className="h-3 w-3" />
-                    {featured.readingMinutes} min de leitura
-                  </span>
-                </div>
-                <span className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-red">
-                  Ler artigo <ArrowRight className="h-4 w-4" />
-                </span>
-              </div>
-            </Link>
+      {/* ── Hero ─────────────────────────────────────── */}
+      <section className="relative overflow-hidden border-b border-border-subtle bg-surface flex items-center">
+        {/* Background image — full coverage */}
+        <div className="absolute inset-0" aria-hidden="true">
+          <Image
+            src="/photos/Hero V2.webp"
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-[center_25%]"
+          />
+          {/* Left gradient overlay for text readability */}
+          <div className="absolute inset-0 bg-gradient-to-r from-white via-white/75 via-35% to-transparent" />
+        </div>
+
+        {/* Content */}
+        <div className="relative z-10 mx-auto w-full max-w-6xl px-6">
+          <div className="py-10 md:w-[48%] md:py-12 lg:py-14">
+            <span className="inline-block rounded-md bg-red px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-white">
+              Carro em Dia
+            </span>
+
+            <h1 className="mt-5 font-display text-4xl font-black italic uppercase leading-[1.05] tracking-tighter text-ink sm:text-5xl lg:text-[4rem]">
+              O blog que
+              <br className="hidden sm:inline" />{" "}
+              aproxima você do seu
+              <br className="hidden sm:inline" />{" "}
+              <span className="text-red">carro</span>
+            </h1>
+
+            <p className="mt-5 max-w-md text-[15px] leading-relaxed text-ink-soft">
+              Conteúdo confiável e prático para você entender
+              manutenção, cuidados, tecnologia e segurança
+              sem complicação.
+            </p>
+
+            <div className="mt-7 flex flex-wrap items-center gap-3">
+              <Link
+                href="/blog"
+                className="inline-flex items-center gap-2 rounded-full bg-red px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-red-dark"
+              >
+                Descobrir conteúdos <ArrowRight className="h-4 w-4" />
+              </Link>
+              <Link
+                href="#categorias"
+                className="inline-flex items-center gap-2 rounded-full border border-ink/20 bg-white/70 px-6 py-3 text-sm font-bold text-ink backdrop-blur-sm transition-all hover:border-ink hover:bg-ink hover:text-white"
+              >
+                Explorar categorias <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+
+            {/* Category pills */}
+            <div className="mt-8 flex flex-wrap gap-2">
+              {CATEGORY_LIST.map((cat) => {
+                const Icon = CATEGORY_ICONS[cat.slug];
+                return (
+                  <Link
+                    key={cat.slug}
+                    href={`/blog?categoria=${cat.slug}`}
+                    className="inline-flex items-center gap-1.5 rounded-full border border-border-subtle bg-white/80 px-3.5 py-1.5 text-xs font-semibold text-ink-soft backdrop-blur-sm transition-colors hover:border-red/40 hover:text-red"
+                  >
+                    <Icon className="h-3.5 w-3.5 text-red" />
+                    {cat.label}
+                  </Link>
+                );
+              })}
+            </div>
           </div>
-        </section>
-      )}
+        </div>
+      </section>
 
       {/* ── Grid de posts ─────────────────────────────── */}
       <section className="mx-auto w-full max-w-6xl px-6 py-12">
@@ -111,15 +143,14 @@ export default async function Home() {
 
         {/* 3 colunas iguais */}
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {second && <PostCard post={second} featured />}
-          {rest.slice(0, 5).map((post) => (
-            <PostCard key={post.slug} post={post} />
+          {posts.slice(0, 6).map((post, i) => (
+            <PostCard key={post.slug} post={post} featured={i === 0} />
           ))}
         </div>
       </section>
 
       {/* ── Categorias ────────────────────────────────── */}
-      <section className="border-t border-border-subtle bg-surface-2">
+      <section id="categorias" className="scroll-mt-20 border-t border-border-subtle bg-surface-2">
         <div className="mx-auto max-w-6xl px-6 py-12">
           <div className="mb-8 border-b-2 border-ink pb-3">
             <h2 className="font-display text-sm font-black uppercase tracking-[0.15em] text-ink">
@@ -154,9 +185,20 @@ export default async function Home() {
       </section>
 
       {/* ── CTA ───────────────────────────────────────── */}
-      <section className="border-t border-border-subtle">
-        <div className="mx-auto max-w-6xl px-6 py-16">
-          <div className="rounded-2xl bg-red px-8 py-12 text-center">
+      <section className="relative overflow-hidden border-t border-border-subtle">
+        {/* Section Background Image */}
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/photos/img.webp"
+            alt="Fundo da seção"
+            fill
+            className="object-cover object-top"
+          />
+          <div className="absolute inset-0 bg-black/30" />
+        </div>
+
+        <div className="relative z-10 mx-auto max-w-6xl px-6 py-16">
+          <div className="rounded-2xl bg-red/60 backdrop-blur-md px-8 py-12 text-center shadow-2xl border border-red/20">
             <h2 className="font-display mx-auto max-w-lg text-3xl font-black uppercase leading-tight text-white sm:text-4xl">
               Carro parado é<br />dinheiro parado.
             </h2>

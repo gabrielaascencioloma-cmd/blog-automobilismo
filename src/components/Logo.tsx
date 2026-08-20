@@ -1,25 +1,20 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export function Logo({ inverted = false, className }: { inverted?: boolean; className?: string }) {
   return (
     <Link
       href="/"
-      className={`group inline-flex items-center gap-2.5 ${className ?? ""}`}
+      className={`inline-flex items-center ${className ?? ""}`}
     >
-      <span
-        className={`flex h-8 w-8 items-center justify-center rounded-full border ${
-          inverted ? "border-cream/30" : "border-ink/20"
-        }`}
-      >
-        <span className="h-2 w-2 rounded-full bg-gold" />
-      </span>
-      <span
-        className={`font-display text-lg font-extrabold uppercase tracking-tight ${
-          inverted ? "text-cream" : "text-ink"
-        }`}
-      >
-        Carro em Dia
-      </span>
+      <Image
+        src={inverted ? "/logotipo/Logo branca.webp" : "/logotipo/Logo.webp"}
+        alt="Carro em Dia"
+        width={160}
+        height={48}
+        priority
+        className="h-8 w-auto sm:h-9"
+      />
     </Link>
   );
 }

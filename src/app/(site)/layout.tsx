@@ -16,6 +16,7 @@ const archivo = Archivo({
   variable: "--font-archivo",
   subsets: ["latin"],
   weight: ["700", "800", "900"],
+  style: ["normal", "italic"],
 });
 
 export const metadata: Metadata = {
