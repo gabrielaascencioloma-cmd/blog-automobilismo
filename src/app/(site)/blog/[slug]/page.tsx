@@ -73,7 +73,7 @@ export default async function PostPage({
           <div className="pointer-events-auto mx-auto w-full max-w-3xl px-6 pb-10">
             <Link
               href="/blog"
-              className="inline-flex items-center gap-1.5 text-sm text-cream/80 transition-colors hover:text-cream"
+              className="inline-flex items-center gap-1.5 text-sm text-white/80 transition-colors hover:text-white"
             >
               <ArrowLeft className="h-3.5 w-3.5" />
               Voltar para o blog
@@ -81,10 +81,10 @@ export default async function PostPage({
             <div className="mt-4">
               <CategoryBadge category={post.category} size="md" />
             </div>
-            <h1 className="font-display mt-4 text-3xl font-extrabold leading-tight text-cream sm:text-4xl">
+            <h1 className="font-display mt-4 text-3xl font-extrabold leading-tight text-white sm:text-4xl">
               {post.title}
             </h1>
-            <div className="mt-4 flex items-center gap-3 text-sm text-cream/75">
+            <div className="mt-4 flex items-center gap-3 text-sm text-white/75">
               <time dateTime={post.date}>{formatDate(post.date)}</time>
               <span aria-hidden>·</span>
               <span className="inline-flex items-center gap-1">

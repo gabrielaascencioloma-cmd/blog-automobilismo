@@ -1,9 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, ArrowUpRight, Wrench, ListChecks, TriangleAlert, CalendarClock } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Wrench, ListChecks, TriangleAlert, CalendarClock, Search } from "lucide-react";
 import { getAllPosts } from "@/lib/data/posts";
-import { CATEGORY_LIST } from "@/lib/categories";
+import { CATEGORY_LIST, CATEGORIES } from "@/lib/categories";
 import { PostCard } from "@/components/PostCard";
+import { CategoryBadge } from "@/components/CategoryBadge";
 
 const CATEGORY_ICONS = {
   manutencao: Wrench,
@@ -54,7 +55,7 @@ export default async function Home() {
       </div>
 
       {/* ── Hero ─────────────────────────────────────── */}
-      <section className="relative overflow-hidden border-b border-border-subtle bg-surface flex items-center">
+      <section className="relative overflow-hidden bg-surface flex items-center min-h-[480px] pb-16">
         {/* Background image — full coverage */}
         <div className="absolute inset-0" aria-hidden="true">
           <Image
@@ -65,29 +66,28 @@ export default async function Home() {
             sizes="100vw"
             className="object-cover object-[center_25%]"
           />
-          {/* Left gradient overlay for text readability */}
-          <div className="absolute inset-0 bg-gradient-to-r from-white via-white/75 via-35% to-transparent" />
+          {/* Dark overlay on mobile for readability, left-side only on desktop */}
+          <div className="absolute inset-0 bg-black/50 md:bg-transparent" />
+          <div className="absolute inset-0 hidden md:block bg-gradient-to-r from-black/60 via-black/30 via-50% to-transparent" />
         </div>
 
         {/* Content */}
         <div className="relative z-10 mx-auto w-full max-w-6xl px-6">
-          <div className="py-10 md:w-[48%] md:py-12 lg:py-14">
+          <div className="py-12 md:w-[50%] md:py-14 lg:py-16">
             <span className="inline-block rounded-md bg-red px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-white">
               Carro em Dia
             </span>
 
-            <h1 className="mt-5 font-display text-4xl font-black italic uppercase leading-[1.05] tracking-tighter text-ink sm:text-5xl lg:text-[4rem]">
-              O blog que
-              <br className="hidden sm:inline" />{" "}
-              aproxima você do seu
-              <br className="hidden sm:inline" />{" "}
-              <span className="text-red">carro</span>
+            <h1 className="mt-5 font-display text-3xl font-black italic uppercase leading-[1] tracking-tighter text-white sm:text-4xl lg:text-5xl">
+              <span className="hero-line">Seu carro merece</span>
+              <span className="hero-line">atenção.</span>
+              <span className="hero-line">A gente te ajuda.</span>
             </h1>
 
-            <p className="mt-5 max-w-md text-[15px] leading-relaxed text-ink-soft">
-              Conteúdo confiável e prático para você entender
-              manutenção, cuidados, tecnologia e segurança
-              sem complicação.
+            <p className="mt-5 max-w-md text-[15px] leading-relaxed text-white/70">
+              Dicas de manutenção, alertas importantes, novidades do
+              mercado e tudo que você precisa saber pra cuidar bem
+              do seu carro. Explicado de forma simples e direta.
             </p>
 
             <div className="mt-7 flex flex-wrap items-center gap-3">
@@ -97,92 +97,74 @@ export default async function Home() {
               >
                 Descobrir conteúdos <ArrowRight className="h-4 w-4" />
               </Link>
-              <Link
-                href="#categorias"
-                className="inline-flex items-center gap-2 rounded-full border border-ink/20 bg-white/70 px-6 py-3 text-sm font-bold text-ink backdrop-blur-sm transition-all hover:border-ink hover:bg-ink hover:text-white"
-              >
-                Explorar categorias <ArrowRight className="h-4 w-4" />
-              </Link>
             </div>
 
-            {/* Category pills */}
-            <div className="mt-8 flex flex-wrap gap-2">
-              {CATEGORY_LIST.map((cat) => {
+            {/* Category pills — compactos, alinhados à largura do H1 */}
+            <div className="mt-6 flex flex-wrap gap-2">
+              {CATEGORY_LIST.slice(0, 3).map((cat, i) => {
                 const Icon = CATEGORY_ICONS[cat.slug];
                 return (
                   <Link
                     key={cat.slug}
                     href={`/blog?categoria=${cat.slug}`}
-                    className="inline-flex items-center gap-1.5 rounded-full border border-border-subtle bg-white/80 px-3.5 py-1.5 text-xs font-semibold text-ink-soft backdrop-blur-sm transition-colors hover:border-red/40 hover:text-red"
+                    className="hero-line group inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5"
+                    style={{ animationDelay: `${0.5 + i * 0.12}s` }}
                   >
-                    <Icon className="h-3.5 w-3.5 text-red" />
-                    {cat.label}
+                    <Icon className="h-4 w-4 text-red" />
+                    <span className="text-[13px] font-bold text-ink group-hover:text-red">
+                      {cat.label}
+                    </span>
                   </Link>
                 );
               })}
             </div>
           </div>
         </div>
+
+        {/* Curved bottom edge — organic wave shape */}
+        <div className="absolute bottom-0 left-0 right-0 z-20" aria-hidden="true">
+          <svg
+            viewBox="0 0 1440 80"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="block w-full h-auto"
+            preserveAspectRatio="none"
+          >
+            <path
+              d="M0,40 C240,80 480,0 720,40 C960,80 1200,0 1440,40 L1440,80 L0,80 Z"
+              fill="var(--page-bg)"
+            />
+          </svg>
+        </div>
       </section>
 
       {/* ── Grid de posts ─────────────────────────────── */}
       <section className="mx-auto w-full max-w-6xl px-6 py-12">
 
-        {/* Cabeçalho editorial */}
-        <div className="mb-8 flex items-center justify-between border-b-2 border-ink pb-3">
-          <h2 className="font-display text-sm font-black uppercase tracking-[0.15em] text-ink">
-            Últimos artigos
-          </h2>
+        {/* Cabeçalho editorial estilizado */}
+        <div className="mb-10 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <span className="h-5 w-1.5 rounded-full bg-red" aria-hidden="true" />
+            <h2 className="font-display text-xl font-black uppercase tracking-[0.1em] text-ink md:text-2xl">
+              Últimos Artigos
+            </h2>
+          </div>
           <Link
             href="/blog"
-            className="inline-flex items-center gap-1 text-xs font-semibold text-red hover:underline"
+            className="inline-flex items-center gap-1 rounded-full bg-red/10 px-4 py-2 text-xs font-bold text-red transition-colors hover:bg-red hover:text-white"
           >
-            Ver todos <ArrowUpRight className="h-3.5 w-3.5" />
+            Ver todos <ArrowUpRight className="h-4 w-4" />
           </Link>
         </div>
 
-        {/* 3 colunas iguais */}
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {/* Bento Grid */}
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {posts.slice(0, 6).map((post, i) => (
             <PostCard key={post.slug} post={post} featured={i === 0} />
           ))}
         </div>
       </section>
 
-      {/* ── Categorias ────────────────────────────────── */}
-      <section id="categorias" className="scroll-mt-20 border-t border-border-subtle bg-surface-2">
-        <div className="mx-auto max-w-6xl px-6 py-12">
-          <div className="mb-8 border-b-2 border-ink pb-3">
-            <h2 className="font-display text-sm font-black uppercase tracking-[0.15em] text-ink">
-              Navegue por categoria
-            </h2>
-          </div>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {CATEGORY_LIST.map((cat) => {
-              const Icon = CATEGORY_ICONS[cat.slug];
-              return (
-                <Link
-                  key={cat.slug}
-                  href={`/blog?categoria=${cat.slug}`}
-                  className="group flex items-start gap-4 rounded-xl border border-border-subtle bg-surface p-5 transition-all hover:border-red/30 hover:shadow-sm"
-                >
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-red/10 text-red">
-                    <Icon className="h-4.5 w-4.5" />
-                  </span>
-                  <div>
-                    <h3 className="font-display text-sm font-black uppercase text-ink group-hover:text-red transition-colors">
-                      {cat.label}
-                    </h3>
-                    <p className="mt-1 text-xs leading-relaxed text-ink-soft">
-                      {cat.description}
-                    </p>
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
-        </div>
-      </section>
 
       {/* ── CTA ───────────────────────────────────────── */}
       <section className="relative overflow-hidden border-t border-border-subtle">
@@ -214,6 +196,32 @@ export default async function Home() {
           </div>
         </div>
       </section>
+
+      {/* ── Mais Conteúdos (conteúdo quente) ────────────── */}
+      {posts.length > 6 && (
+        <section className="mx-auto w-full max-w-6xl px-6 py-12">
+          <div className="mb-10 flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <span className="h-5 w-1.5 rounded-full bg-red" aria-hidden="true" />
+              <h2 className="font-display text-xl font-black uppercase tracking-[0.1em] text-ink md:text-2xl">
+                Mais Conteúdos
+              </h2>
+            </div>
+            <Link
+              href="/blog"
+              className="inline-flex items-center gap-1 rounded-full bg-red/10 px-4 py-2 text-xs font-bold text-red transition-colors hover:bg-red hover:text-white"
+            >
+              Ver todos <ArrowUpRight className="h-4 w-4" />
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {posts.slice(6, 12).map((post, i) => (
+              <PostCard key={post.slug} post={post} featured={i === 0} />
+            ))}
+          </div>
+        </section>
+      )}
 
     </div>
   );

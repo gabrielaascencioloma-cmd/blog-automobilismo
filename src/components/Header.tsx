@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Logo } from "./Logo";
 import { MobileMenu } from "./MobileMenu";
 import { CATEGORY_LIST } from "@/lib/categories";
+import { Search } from "lucide-react";
 
 const NAV_LINKS = [
   { href: "/blog", label: "Blog" },
@@ -31,12 +32,21 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <Link
-            href="/blog"
-            className="hidden rounded-full bg-red px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-red-dark sm:inline-flex"
-          >
-            Ler os posts
-          </Link>
+          <form action="/blog" method="get" className="hidden items-center sm:inline-flex">
+            <input
+              type="search"
+              name="q"
+              placeholder="Pesquise por palavra-chave..."
+              className="w-40 rounded-l-full border border-r-0 border-white/20 bg-white/10 py-2 pl-4 pr-2 text-xs text-white placeholder-white/40 outline-none transition-all focus:w-52 focus:border-white/40 focus:bg-white/15"
+            />
+            <button
+              type="submit"
+              className="rounded-r-full bg-red px-3 py-2 text-white transition-colors hover:bg-red-dark"
+              aria-label="Pesquisar"
+            >
+              <Search className="h-4 w-4" />
+            </button>
+          </form>
           <MobileMenu links={NAV_LINKS} />
         </div>
       </div>
