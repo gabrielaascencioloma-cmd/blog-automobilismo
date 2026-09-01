@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Seu Carro — Carro em Dia",
+  title: "Seu Carro — Olha o Carro",
   description: "Guias de manutenção e dicas específicas para os carros populares mais vendidos do Brasil.",
 };
 

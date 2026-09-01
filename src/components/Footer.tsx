@@ -72,7 +72,7 @@ export function Footer() {
         </div>
       </div>
       <div className="border-t border-border-subtle px-6 py-5 text-center text-xs text-ink-faint">
-        © {new Date().getFullYear()} Carro em Dia. Todos os direitos reservados.
+        © {new Date().getFullYear()} Olha o Carro. Todos os direitos reservados.
       </div>
     </footer>
   );
