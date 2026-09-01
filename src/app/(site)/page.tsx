@@ -16,8 +16,8 @@ const CATEGORY_ICONS = {
 
 const TICKER_ITEMS = [
   "MANUTENÇÃO", "DICAS PRÁTICAS", "ALERTAS", "NOVIDADES",
-  "CARRO EM DIA", "MANUTENÇÃO", "DICAS PRÁTICAS", "ALERTAS",
-  "NOVIDADES", "CARRO EM DIA",
+  "OLHA O CARRO", "MANUTENÇÃO", "DICAS PRÁTICAS", "ALERTAS",
+  "NOVIDADES", "OLHA O CARRO",
 ];
 
 export default async function Home() {
