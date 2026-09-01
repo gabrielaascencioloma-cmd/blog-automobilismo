@@ -5,7 +5,7 @@ export function Logo({ inverted = false, className }: { inverted?: boolean; clas
   return (
     <Link href="/" className={`inline-flex items-center ${className ?? ""}`}>
       <Image
-        src={inverted ? "/logotipo/Logo branca.webp" : "/logotipo/Logo.webp"}
+        src={inverted ? "/logotipo/Logo branca.png" : "/logotipo/Logo.png"}
         alt="Olha o Carro"
         width={160}
         height={52}
