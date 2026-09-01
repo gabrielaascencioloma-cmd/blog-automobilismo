@@ -8,7 +8,7 @@ export function Footer() {
     <footer className="border-t border-border-subtle bg-surface text-ink">
       <div className="mx-auto grid max-w-6xl gap-10 px-6 py-14 sm:grid-cols-2 md:grid-cols-4">
         <div className="sm:col-span-2 md:col-span-1">
-          <Logo inverted />
+          <Logo />
           <p className="mt-4 max-w-xs text-sm text-ink-soft">
             Manutenção, dicas e alertas para quem depende do carro todos os
             dias — sem enrolação e sem jargão de oficina.
@@ -45,8 +45,9 @@ export function Footer() {
           <h4 className="text-xs font-bold uppercase tracking-[0.15em] text-ink">Site</h4>
           <ul className="mt-4 space-y-2.5 text-sm text-ink-soft">
             <li><Link href="/" className="transition-colors hover:text-red">Início</Link></li>
+            <li><Link href="/seu-carro" className="transition-colors hover:text-red">Seu Carro</Link></li>
             <li><Link href="/blog" className="transition-colors hover:text-red">Todos os posts</Link></li>
-            <li><Link href="/sobre" className="transition-colors hover:text-red">Sobre o blog</Link></li>
+            <li><Link href="/sobre" className="transition-colors hover:text-red">Sobre</Link></li>
           </ul>
         </div>
 

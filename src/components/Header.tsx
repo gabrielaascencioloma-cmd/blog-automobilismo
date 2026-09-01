@@ -4,11 +4,10 @@ import { MobileMenu } from "./MobileMenu";
 import { CATEGORY_LIST } from "@/lib/categories";
 
 const NAV_LINKS = [
-  { href: "/blog", label: "Blog" },
-  ...CATEGORY_LIST.map((c) => ({
-    href: `/blog?categoria=${c.slug}`,
-    label: c.label,
-  })),
+  { href: "/seu-carro", label: "Seu Carro" },
+  { href: "/blog?categoria=manutencao", label: "Manutenção" },
+  { href: "/blog?categoria=dicas", label: "Dicas" },
+  { href: "/blog?categoria=alertas", label: "Alertas" },
   { href: "/sobre", label: "Sobre" },
 ];
 
@@ -16,7 +15,7 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-border-subtle bg-page/95 backdrop-blur-md">
       <div className="relative mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <Logo inverted />
+        <Logo />
 
         <nav className="hidden items-center gap-7 text-sm font-medium text-ink-soft md:flex">
           {NAV_LINKS.map((link) => (
