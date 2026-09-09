@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -7,14 +8,70 @@ export const metadata: Metadata = {
 };
 
 const MODELOS = [
-  { nome: "Chevrolet Onix", slug: "onix", descricao: "O mais vendido do Brasil. Motores 1.0 e 1.0 turbo." },
-  { nome: "Hyundai HB20", slug: "hb20", descricao: "Motor 1.0 e 1.6. Forte no interior e nas cidades." },
-  { nome: "VW Gol", slug: "gol", descricao: "Clássico popular com motor 1.0. Manutenção acessível." },
-  { nome: "Fiat Uno / Mobi", slug: "uno-mobi", descricao: "Compacto urbano com motor 1.0 FIRE e EVO." },
-  { nome: "Renault Kwid", slug: "kwid", descricao: "Menor custo de manutenção entre os compactos." },
-  { nome: "Hyundai Creta", slug: "creta", descricao: "SUV com motor 1.0 turbo. Cada vez mais popular." },
-  { nome: "Jeep Compass", slug: "compass", descricao: "SUV médio mais vendido. Motor 1.3 turbo e diesel." },
-  { nome: "Chevrolet Tracker", slug: "tracker", descricao: "SUV compacto com motor 1.2 e 1.0 turbo." },
+  {
+    nome: "Chevrolet Onix",
+    descricao: "O mais vendido do Brasil. Motores 1.0 e 1.0 turbo.",
+    posts: [
+      { label: "Benefícios e pontos de atenção", slug: "onix-beneficios-e-pontos-de-atencao" },
+      { label: "Problemas que os donos reclamam", slug: "problemas-do-chevrolet-onix" },
+    ],
+  },
+  {
+    nome: "Hyundai HB20",
+    descricao: "Motor 1.0 e 1.6. Forte no interior e nas cidades.",
+    posts: [
+      { label: "Benefícios e pontos de atenção", slug: "hb20-beneficios-e-pontos-de-atencao" },
+      { label: "Problemas que os donos reclamam", slug: "problemas-do-hyundai-hb20" },
+    ],
+  },
+  {
+    nome: "VW Gol",
+    descricao: "Clássico popular com motor 1.0. Manutenção acessível.",
+    posts: [
+      { label: "Benefícios e pontos de atenção", slug: "vw-gol-beneficios-e-pontos-de-atencao" },
+      { label: "Problemas que os donos reclamam", slug: "problemas-do-vw-gol" },
+    ],
+  },
+  {
+    nome: "Fiat Mobi",
+    descricao: "Compacto urbano com motor 1.0 FIRE e EVO.",
+    posts: [
+      { label: "Benefícios e pontos de atenção", slug: "fiat-mobi-beneficios-e-pontos-de-atencao" },
+      { label: "Problemas que os donos reclamam", slug: "problemas-do-fiat-mobi" },
+    ],
+  },
+  {
+    nome: "Renault Kwid",
+    descricao: "Menor custo de manutenção entre os compactos.",
+    posts: [
+      { label: "Benefícios e pontos de atenção", slug: "kwid-beneficios-e-pontos-de-atencao" },
+      { label: "Problemas que os donos reclamam", slug: "problemas-do-renault-kwid" },
+    ],
+  },
+  {
+    nome: "Hyundai Creta",
+    descricao: "SUV com motor 1.0 turbo. Cada vez mais popular.",
+    posts: [
+      { label: "Benefícios e pontos de atenção", slug: "creta-beneficios-e-pontos-de-atencao" },
+      { label: "Problemas que os donos reclamam", slug: "problemas-do-hyundai-creta" },
+    ],
+  },
+  {
+    nome: "Jeep Compass",
+    descricao: "SUV médio mais vendido. Motor 1.3 turbo e diesel.",
+    posts: [
+      { label: "Benefícios e pontos de atenção", slug: "compass-beneficios-e-pontos-de-atencao" },
+      { label: "Problemas que os donos reclamam", slug: "problemas-do-jeep-compass" },
+    ],
+  },
+  {
+    nome: "Chevrolet Tracker",
+    descricao: "SUV compacto com motor 1.2 e 1.0 turbo.",
+    posts: [
+      { label: "Benefícios e pontos de atenção", slug: "tracker-beneficios-e-pontos-de-atencao" },
+      { label: "Problemas que os donos reclamam", slug: "problemas-do-chevrolet-tracker" },
+    ],
+  },
 ];
 
 export default function SeuCarroPage() {
@@ -34,12 +91,24 @@ export default function SeuCarroPage() {
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {MODELOS.map((modelo) => (
           <div
-            key={modelo.slug}
-            className="group rounded-xl border border-border-subtle bg-surface p-6 transition-shadow hover:shadow-md"
+            key={modelo.nome}
+            className="rounded-xl border border-border-subtle bg-surface p-6"
           >
             <h2 className="text-lg font-bold text-ink">{modelo.nome}</h2>
             <p className="mt-1 text-sm text-ink-soft">{modelo.descricao}</p>
-            <span className="mt-4 inline-block text-xs font-semibold text-ink-faint">Em breve</span>
+            <ul className="mt-4 space-y-2">
+              {modelo.posts.map((post) => (
+                <li key={post.slug}>
+                  <Link
+                    href={`/blog/${post.slug}`}
+                    className="inline-flex items-center gap-1.5 text-sm font-semibold text-red hover:underline"
+                  >
+                    <ArrowRight className="h-3.5 w-3.5 shrink-0" />
+                    {post.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
         ))}
       </div>
