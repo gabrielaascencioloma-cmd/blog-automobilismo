@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
 
@@ -105,13 +104,11 @@ export default function SeuCarroPage() {
             key={modelo.nome}
             className="overflow-hidden rounded-xl border border-border-subtle bg-surface"
           >
-            <div className="relative aspect-[16/9] bg-surface-2">
-              <Image
+            <div className="relative aspect-[16/9] bg-surface-2 overflow-hidden">
+              <img
                 src={modelo.foto}
                 alt={modelo.nome}
-                fill
-                className="object-cover"
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                className="absolute inset-0 h-full w-full object-cover"
               />
             </div>
             <div className="p-5">

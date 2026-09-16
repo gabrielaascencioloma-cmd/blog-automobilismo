@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { getAllPosts } from "@/lib/data/posts";
 import { PostCard } from "@/components/PostCard";
@@ -44,12 +43,10 @@ export default async function Home() {
 
       {/* ── Hero ───────────────────────────────────────── */}
       <section className="relative h-[65vh] min-h-[460px] max-h-[700px] overflow-hidden">
-        <Image
+        <img
           src="/photos/hero.jpg"
           alt="Seu carro merece atenção"
-          fill
-          className="object-cover object-center"
-          priority
+          className="absolute inset-0 h-full w-full object-cover object-center"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/55 to-black/20" />
         <div className="relative flex h-full items-end pb-14 px-6">
@@ -98,12 +95,11 @@ export default async function Home() {
 
       {/* ── CTA ───────────────────────────────────────── */}
       <section className="relative overflow-hidden">
-        <Image
+        <img
           src="/photos/hero-cta.jpg"
           alt=""
-          fill
-          className="object-cover object-center"
           aria-hidden
+          className="absolute inset-0 h-full w-full object-cover object-center"
         />
         <div className="absolute inset-0 bg-ink/80" />
         <div className="relative mx-auto max-w-6xl px-6 py-20 text-center">
