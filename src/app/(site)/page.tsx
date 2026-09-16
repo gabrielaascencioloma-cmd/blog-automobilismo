@@ -1,18 +1,8 @@
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight, Clock, Wrench, ListChecks, TriangleAlert, CalendarClock } from "lucide-react";
+import Image from "next/image";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { getAllPosts } from "@/lib/data/posts";
-import { CATEGORIES, CATEGORY_LIST } from "@/lib/categories";
 import { PostCard } from "@/components/PostCard";
-import { PhotoCover } from "@/components/PhotoCover";
-import { CategoryBadge } from "@/components/CategoryBadge";
-import { formatDate } from "@/lib/format";
-
-const CATEGORY_ICONS = {
-  manutencao: Wrench,
-  dicas: ListChecks,
-  alertas: TriangleAlert,
-  novidades: CalendarClock,
-} as const;
 
 const TICKER_ITEMS = [
   "MANUTENÇÃO", "DICAS PRÁTICAS", "ALERTAS", "NOVIDADES",
@@ -22,7 +12,7 @@ const TICKER_ITEMS = [
 
 export default async function Home() {
   const posts = await getAllPosts();
-  const [featured, second, ...rest] = posts;
+  const [featured, ...rest] = posts;
 
   return (
     <div className="flex flex-col">
@@ -52,103 +42,56 @@ export default async function Home() {
         </div>
       </div>
 
-      {/* ── Destaque principal ────────────────────────── */}
-      {featured && (
-        <section className="border-b border-border-subtle bg-surface">
-          <div className="mx-auto max-w-6xl px-6 py-10">
+      {/* ── Hero ───────────────────────────────────────── */}
+      <section className="relative h-[65vh] min-h-[460px] max-h-[700px] overflow-hidden">
+        <Image
+          src="/photos/hero.jpg"
+          alt="Seu carro merece atenção"
+          fill
+          className="object-cover object-center"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/55 to-black/20" />
+        <div className="relative flex h-full items-end pb-14 px-6">
+          <div className="mx-auto w-full max-w-6xl">
+            <h1 className="font-display text-4xl font-black uppercase leading-[0.9] text-white sm:text-5xl lg:text-6xl">
+              Seu carro merece<br />
+              atenção.<br />
+              <span className="text-red">A gente te ajuda.</span>
+            </h1>
             <Link
-              href={`/blog/${featured.slug}`}
-              className="group grid gap-8 md:grid-cols-2 md:items-center"
+              href="/blog"
+              className="mt-7 inline-flex items-center gap-2 rounded-full bg-red px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-red-dark"
             >
-              <div className="relative aspect-[16/10] overflow-hidden rounded-xl">
-                <PhotoCover
-                  src={featured.cover ?? CATEGORIES[featured.category].coverImage}
-                  alt={featured.title}
-                  priority
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                />
-              </div>
-              <div>
-                <CategoryBadge category={featured.category} linked={false} />
-                <h2 className="mt-3 font-display text-2xl font-black uppercase leading-tight text-ink transition-colors group-hover:text-red sm:text-3xl lg:text-4xl">
-                  {featured.title}
-                </h2>
-                <p className="mt-3 text-sm leading-relaxed text-ink-soft line-clamp-3">
-                  {featured.excerpt}
-                </p>
-                <div className="mt-4 flex items-center gap-3 text-xs text-ink-faint">
-                  <time dateTime={featured.date}>{formatDate(featured.date)}</time>
-                  <span aria-hidden>·</span>
-                  <span className="inline-flex items-center gap-1">
-                    <Clock className="h-3 w-3" />
-                    {featured.readingMinutes} min de leitura
-                  </span>
-                </div>
-                <span className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-red">
-                  Ler artigo <ArrowRight className="h-4 w-4" />
-                </span>
-              </div>
+              Explorar artigos <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
-        </section>
-      )}
+        </div>
+      </section>
 
-      {/* ── Grid de posts ─────────────────────────────── */}
+      {/* ── Últimos Artigos ───────────────────────────── */}
       <section className="mx-auto w-full max-w-6xl px-6 py-12">
-
-        {/* Cabeçalho editorial */}
         <div className="mb-8 flex items-center justify-between border-b-2 border-ink pb-3">
           <h2 className="font-display text-sm font-black uppercase tracking-[0.15em] text-ink">
-            Últimos artigos
+            ✦ Últimos artigos
           </h2>
           <Link
             href="/blog"
             className="inline-flex items-center gap-1 text-xs font-semibold text-red hover:underline"
           >
-            Ver todos <ArrowUpRight className="h-3.5 w-3.5" />
+            Todos <ArrowUpRight className="h-3.5 w-3.5" />
           </Link>
         </div>
 
-        {/* 3 colunas iguais */}
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {second && <PostCard post={second} featured />}
-          {rest.slice(0, 5).map((post) => (
-            <PostCard key={post.slug} post={post} />
-          ))}
-        </div>
-      </section>
+        <div className="grid gap-6 md:grid-cols-2">
+          {/* Card grande à esquerda */}
+          {featured && <PostCard post={featured} featured />}
 
-      {/* ── Categorias ────────────────────────────────── */}
-      <section className="border-t border-border-subtle bg-surface-2">
-        <div className="mx-auto max-w-6xl px-6 py-12">
-          <div className="mb-8 border-b-2 border-ink pb-3">
-            <h2 className="font-display text-sm font-black uppercase tracking-[0.15em] text-ink">
-              Navegue por categoria
-            </h2>
-          </div>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {CATEGORY_LIST.map((cat) => {
-              const Icon = CATEGORY_ICONS[cat.slug];
-              return (
-                <Link
-                  key={cat.slug}
-                  href={`/blog?categoria=${cat.slug}`}
-                  className="group flex items-start gap-4 rounded-xl border border-border-subtle bg-surface p-5 transition-all hover:border-red/30 hover:shadow-sm"
-                >
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-red/10 text-red">
-                    <Icon className="h-4.5 w-4.5" />
-                  </span>
-                  <div>
-                    <h3 className="font-display text-sm font-black uppercase text-ink group-hover:text-red transition-colors">
-                      {cat.label}
-                    </h3>
-                    <p className="mt-1 text-xs leading-relaxed text-ink-soft">
-                      {cat.description}
-                    </p>
-                  </div>
-                </Link>
-              );
-            })}
+          {/* 2×2 pequenos à direita */}
+          <div className="grid grid-cols-2 gap-6">
+            {rest.slice(0, 4).map((post) => (
+              <PostCard key={post.slug} post={post} />
+            ))}
           </div>
         </div>
       </section>
@@ -172,6 +115,22 @@ export default async function Home() {
           </div>
         </div>
       </section>
+
+      {/* ── Mais Conteúdo ─────────────────────────────── */}
+      {rest.length > 4 && (
+        <section className="mx-auto w-full max-w-6xl px-6 pb-16">
+          <div className="mb-8 flex items-center justify-between border-b-2 border-ink pb-3">
+            <h2 className="font-display text-sm font-black uppercase tracking-[0.15em] text-ink">
+              + Mais conteúdo
+            </h2>
+          </div>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {rest.slice(4, 10).map((post) => (
+              <PostCard key={post.slug} post={post} />
+            ))}
+          </div>
+        </section>
+      )}
 
     </div>
   );
