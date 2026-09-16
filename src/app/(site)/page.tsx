@@ -97,22 +97,20 @@ export default async function Home() {
       </section>
 
       {/* ── CTA ───────────────────────────────────────── */}
-      <section className="border-t border-border-subtle">
-        <div className="mx-auto max-w-6xl px-6 py-16">
-          <div className="rounded-2xl bg-red px-8 py-12 text-center">
-            <h2 className="font-display mx-auto max-w-lg text-3xl font-black uppercase leading-tight text-white sm:text-4xl">
-              Carro parado é<br />dinheiro parado.
-            </h2>
-            <p className="mx-auto mt-3 max-w-sm text-sm text-white/70">
-              Novos posts toda semana. Comece pelos mais lidos.
-            </p>
-            <Link
-              href="/blog"
-              className="mt-7 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-bold text-red transition-colors hover:bg-white/90"
-            >
-              Explorar o blog <ArrowRight className="h-4 w-4" />
-            </Link>
-          </div>
+      <section className="bg-ink">
+        <div className="mx-auto max-w-6xl px-6 py-20 text-center">
+          <h2 className="font-display mx-auto max-w-lg text-3xl font-black uppercase leading-tight text-white sm:text-4xl">
+            Carro parado é<br />dinheiro parado.
+          </h2>
+          <p className="mx-auto mt-3 max-w-sm text-sm text-white/60">
+            Novos posts toda semana. Comece pelos mais lidos.
+          </p>
+          <Link
+            href="/blog"
+            className="mt-7 inline-flex items-center gap-2 rounded-full bg-red px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-red-dark"
+          >
+            Explorar o blog <ArrowRight className="h-4 w-4" />
+          </Link>
         </div>
       </section>
 
