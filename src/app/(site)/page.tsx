@@ -97,8 +97,16 @@ export default async function Home() {
       </section>
 
       {/* ── CTA ───────────────────────────────────────── */}
-      <section className="bg-ink">
-        <div className="mx-auto max-w-6xl px-6 py-20 text-center">
+      <section className="relative overflow-hidden">
+        <Image
+          src="/photos/hero-cta.jpg"
+          alt=""
+          fill
+          className="object-cover object-center"
+          aria-hidden
+        />
+        <div className="absolute inset-0 bg-ink/80" />
+        <div className="relative mx-auto max-w-6xl px-6 py-20 text-center">
           <h2 className="font-display mx-auto max-w-lg text-3xl font-black uppercase leading-tight text-white sm:text-4xl">
             Carro parado é<br />dinheiro parado.
           </h2>
