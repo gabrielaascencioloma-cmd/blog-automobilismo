@@ -1,4 +1,4 @@
-export type CategorySlug = "manutencao" | "dicas" | "alertas" | "novidades";
+export type CategorySlug = "manutencao" | "dicas" | "alertas" | "novidades" | "financeiro" | "burocracia";
 
 export interface CategoryDef {
   slug: CategorySlug;
@@ -31,6 +31,18 @@ export const CATEGORIES: Record<CategorySlug, CategoryDef> = {
     label: "Novidades",
     description: "Prazos, documentos e lembretes que ficam fáceis de esquecer.",
     coverImage: "/photos/novidades.jpg",
+  },
+  financeiro: {
+    slug: "financeiro",
+    label: "Financeiro",
+    description: "Custos, financiamento, consórcio e tudo que envolve dinheiro e carro.",
+    coverImage: "/photos/financeiro.jpg",
+  },
+  burocracia: {
+    slug: "burocracia",
+    label: "Burocracia",
+    description: "Transferência, vistoria, recall, multas e toda a papelada do veículo.",
+    coverImage: "/photos/burocracia.jpg",
   },
 };
 

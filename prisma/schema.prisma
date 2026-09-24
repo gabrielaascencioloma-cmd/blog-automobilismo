@@ -23,6 +23,8 @@ enum Category {
   dicas
   alertas
   novidades
+  financeiro
+  burocracia
 }
 
 model Lead {

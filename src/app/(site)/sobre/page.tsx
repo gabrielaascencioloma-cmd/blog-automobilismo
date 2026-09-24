@@ -1,18 +1,21 @@
+import React from "react";
 import type { Metadata } from "next";
-import { Wrench, ListChecks, TriangleAlert, CalendarClock } from "lucide-react";
-import { CATEGORIES } from "@/lib/categories";
+import { Wrench, ListChecks, TriangleAlert, CalendarClock, DollarSign, FileText } from "lucide-react";
+import { CATEGORIES, type CategorySlug } from "@/lib/categories";
 
 export const metadata: Metadata = {
   title: "Sobre",
   description: "De onde vem o Olha o Carro e o que você encontra por aqui.",
 };
 
-const CATEGORY_ICONS = {
+const CATEGORY_ICONS: Record<CategorySlug, React.ElementType> = {
   manutencao: Wrench,
-  dicas: ListChecks,
-  alertas: TriangleAlert,
-  novidades: CalendarClock,
-} as const;
+  dicas:      ListChecks,
+  alertas:    TriangleAlert,
+  novidades:  CalendarClock,
+  financeiro: DollarSign,
+  burocracia: FileText,
+};
 
 export default function SobrePage() {
   return (
