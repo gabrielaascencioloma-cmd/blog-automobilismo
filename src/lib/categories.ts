@@ -40,7 +40,7 @@ export const CATEGORIES: Record<CategorySlug, CategoryDef> = {
   },
   burocracia: {
     slug: "burocracia",
-    label: "Burocracia",
+    label: "Documentação",
     description: "Transferência, vistoria, recall, multas e toda a papelada do veículo.",
     coverImage: "/photos/burocracia.jpg",
   },

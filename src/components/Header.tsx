@@ -8,6 +8,8 @@ const NAV_LINKS = [
   { href: "/blog?categoria=manutencao", label: "Manutenção" },
   { href: "/blog?categoria=dicas", label: "Dicas" },
   { href: "/blog?categoria=alertas", label: "Alertas" },
+  { href: "/blog?categoria=financeiro", label: "Financeiro" },
+  { href: "/blog?categoria=burocracia", label: "Documentação" },
   { href: "/sobre", label: "Sobre" },
 ];
 
