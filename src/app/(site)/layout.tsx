@@ -5,6 +5,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { LeadPopup } from "@/components/LeadPopup";
+import { SITE_URL } from "@/lib/site";
 import "../globals.css";
 
 const inter = Inter({
@@ -20,7 +21,7 @@ const archivo = Archivo({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://blog-automobilismo.vercel.app"),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "Meu Carro Protegido — manutenção, dicas e alertas para o seu carro",
     template: "%s · Meu Carro Protegido",
