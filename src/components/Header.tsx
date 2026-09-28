@@ -15,7 +15,7 @@ const NAV_LINKS = [
 
 export function Header() {
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-[#0f0f0f]/95 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-white/10 bg-black backdrop-blur-md">
       <div className="relative mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         <Logo inverted />
 

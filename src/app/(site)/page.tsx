@@ -55,7 +55,7 @@ export default async function Home() {
       </div>
 
       {/* ── Hero ─────────────────────────────────────── */}
-      <section className="relative overflow-hidden bg-surface flex items-center min-h-[480px] pb-16">
+      <section className="relative overflow-hidden bg-surface flex items-center min-h-[480px]">
         {/* Background image — full coverage */}
         <div className="absolute inset-0" aria-hidden="true">
           <Image
@@ -119,22 +119,6 @@ export default async function Home() {
               })}
             </div>
           </div>
-        </div>
-
-        {/* Curved bottom edge — organic wave shape */}
-        <div className="absolute bottom-0 left-0 right-0 z-20" aria-hidden="true">
-          <svg
-            viewBox="0 0 1440 80"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="block w-full h-auto"
-            preserveAspectRatio="none"
-          >
-            <path
-              d="M0,40 C240,80 480,0 720,40 C960,80 1200,0 1440,40 L1440,80 L0,80 Z"
-              fill="var(--page-bg)"
-            />
-          </svg>
         </div>
       </section>
 

@@ -1,6 +1,12 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  experimental: {
+    // Disable Turbopack persistent cache — the project path has spaces
+    // which causes "Failed to open database: invalid digit found in string"
+    turbopackFileSystemCacheForDev: false,
+  },
+
   images: {
     // The built-in AVIF/WebP optimizer hangs on-demand in this environment
     // (Next 16 + Turbopack + sharp); serve local photos unoptimized instead.
