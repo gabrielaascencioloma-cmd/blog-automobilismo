@@ -70,11 +70,7 @@ export default async function Home() {
         {/* Content */}
         <div className="relative z-10 mx-auto w-full max-w-6xl px-6">
           <div className="py-12 md:w-[50%] md:py-14 lg:py-16">
-            <span className="inline-block rounded-md bg-red px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-white">
-              Olha o Carro
-            </span>
-
-            <h1 className="mt-5 font-display text-3xl font-black italic uppercase leading-[1] tracking-tighter text-white sm:text-4xl lg:text-5xl">
+            <h1 className="font-display text-3xl font-black italic uppercase leading-[1] tracking-tighter text-white sm:text-4xl lg:text-5xl">
               <span className="hero-line">Seu carro merece</span>
               <span className="hero-line">atenção.</span>
               <span className="hero-line">A gente te ajuda.</span>
