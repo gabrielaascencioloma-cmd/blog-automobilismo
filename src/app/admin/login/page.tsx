@@ -12,7 +12,7 @@ export default function LoginPage() {
         <h1 className="text-lg font-semibold text-slate-900">
           Entrar no painel
         </h1>
-        <p className="mt-1 text-sm text-slate-500">Carro em Dia — Admin</p>
+        <p className="mt-1 text-sm text-slate-500">Olha o Carro — Admin</p>
 
         <form action={formAction} className="mt-6 space-y-4">
           <div>

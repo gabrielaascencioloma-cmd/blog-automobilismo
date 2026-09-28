@@ -5,11 +5,10 @@ import { CATEGORY_LIST } from "@/lib/categories";
 import { Search } from "lucide-react";
 
 const NAV_LINKS = [
-  { href: "/blog", label: "Blog" },
-  ...CATEGORY_LIST.map((c) => ({
-    href: `/blog?categoria=${c.slug}`,
-    label: c.label,
-  })),
+  { href: "/seu-carro", label: "Seu Carro" },
+  { href: "/blog?categoria=manutencao", label: "Manutenção" },
+  { href: "/blog?categoria=dicas", label: "Dicas" },
+  { href: "/blog?categoria=alertas", label: "Alertas" },
   { href: "/sobre", label: "Sobre" },
 ];
 

@@ -5,8 +5,8 @@ import { CATEGORY_LIST, type CategorySlug } from "@/lib/categories";
 import { PostCard } from "@/components/PostCard";
 
 export const metadata: Metadata = {
-  title: "Blog",
-  description: "Todos os posts sobre manutenção, dicas e alertas para o seu carro.",
+  title: "Manutenção automotiva: dicas, alertas e revisão do seu carro",
+  description: "Posts sobre manutenção automotiva, dicas práticas e alertas para quem depende do carro todos os dias.",
 };
 
 function isCategorySlug(value: string | undefined): value is CategorySlug {

@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import { ArrowRight, ArrowUpRight, Wrench, ListChecks, TriangleAlert, CalendarClock, Search } from "lucide-react";
 import { getAllPosts } from "@/lib/data/posts";
 import { CATEGORY_LIST, CATEGORIES } from "@/lib/categories";
@@ -15,8 +14,8 @@ const CATEGORY_ICONS = {
 
 const TICKER_ITEMS = [
   "MANUTENÇÃO", "DICAS PRÁTICAS", "ALERTAS", "NOVIDADES",
-  "CARRO EM DIA", "MANUTENÇÃO", "DICAS PRÁTICAS", "ALERTAS",
-  "NOVIDADES", "CARRO EM DIA",
+  "OLHA O CARRO", "MANUTENÇÃO", "DICAS PRÁTICAS", "ALERTAS",
+  "NOVIDADES", "OLHA O CARRO",
 ];
 
 export default async function Home() {
@@ -58,13 +57,10 @@ export default async function Home() {
       <section className="relative overflow-hidden bg-surface flex items-center min-h-[480px]">
         {/* Background image — full coverage */}
         <div className="absolute inset-0" aria-hidden="true">
-          <Image
+          <img
             src="/photos/Hero V2.webp"
             alt=""
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover object-[center_25%]"
+            className="absolute inset-0 h-full w-full object-cover object-[center_25%]"
           />
           {/* Dark overlay on mobile for readability, left-side only on desktop */}
           <div className="absolute inset-0 bg-black/50 md:bg-transparent" />
@@ -75,7 +71,7 @@ export default async function Home() {
         <div className="relative z-10 mx-auto w-full max-w-6xl px-6">
           <div className="py-12 md:w-[50%] md:py-14 lg:py-16">
             <span className="inline-block rounded-md bg-red px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-white">
-              Carro em Dia
+              Olha o Carro
             </span>
 
             <h1 className="mt-5 font-display text-3xl font-black italic uppercase leading-[1] tracking-tighter text-white sm:text-4xl lg:text-5xl">
@@ -154,11 +150,11 @@ export default async function Home() {
       <section className="relative overflow-hidden border-t border-border-subtle">
         {/* Section Background Image */}
         <div className="absolute inset-0 z-0">
-          <Image
+          <img
             src="/photos/img.webp"
-            alt="Fundo da seção"
-            fill
-            className="object-cover object-top"
+            alt=""
+            aria-hidden
+            className="absolute inset-0 h-full w-full object-cover object-top"
           />
           <div className="absolute inset-0 bg-black/30" />
         </div>
