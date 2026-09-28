@@ -22,13 +22,13 @@ const archivo = Archivo({
 export const metadata: Metadata = {
   metadataBase: new URL("https://blog-automobilismo.vercel.app"),
   title: {
-    default: "Olha o Carro — manutenção, dicas e alertas para o seu carro",
-    template: "%s · Olha o Carro",
+    default: "Meu Carro Protegido — manutenção, dicas e alertas para o seu carro",
+    template: "%s · Meu Carro Protegido",
   },
   description:
     "Blog sobre manutenção automotiva, dicas práticas e alertas para quem depende do carro todos os dias.",
   openGraph: {
-    siteName: "Olha o Carro",
+    siteName: "Meu Carro Protegido",
     locale: "pt_BR",
     type: "website",
   },

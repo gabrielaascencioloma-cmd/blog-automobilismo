@@ -71,7 +71,7 @@ export function Footer() {
         </div>
       </div>
       <div className="border-t border-white/10 px-6 py-5 text-center text-xs text-white/40">
-        © {new Date().getFullYear()} Olha o Carro. Todos os direitos reservados.
+        © {new Date().getFullYear()} Meu Carro Protegido. Todos os direitos reservados.
       </div>
     </footer>
   );

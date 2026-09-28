@@ -16,7 +16,7 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-black backdrop-blur-md">
       <div className="relative mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <Logo inverted />
+        <Logo inverted compact />
 
         <nav className="hidden items-center gap-7 text-sm font-medium text-white md:flex">
           {NAV_LINKS.map((link) => (
