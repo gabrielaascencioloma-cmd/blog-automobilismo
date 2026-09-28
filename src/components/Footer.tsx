@@ -46,6 +46,7 @@ export function Footer() {
           <ul className="mt-4 space-y-2.5 text-sm text-white/70">
             <li><Link href="/" className="transition-colors hover:text-red">Início</Link></li>
             <li><Link href="/blog" className="transition-colors hover:text-red">Todos os posts</Link></li>
+            <li><Link href="/seu-carro" className="transition-colors hover:text-red">Seu Carro</Link></li>
             <li><Link href="/sobre" className="transition-colors hover:text-red">Sobre o blog</Link></li>
           </ul>
         </div>
