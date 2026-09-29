@@ -18,7 +18,7 @@ export function DesktopNav() {
     <nav
       onBlur={handleBlur}
       onKeyDown={(e) => e.key === "Escape" && close()}
-      className="hidden items-center gap-6 text-[13px] font-medium text-white lg:flex xl:gap-7 wide:gap-8"
+      className="hidden items-center gap-6 text-[13px] font-medium text-tiffany lg:flex xl:gap-7 wide:gap-8"
     >
       {MENU_TOPICS.map((topic, i) => {
         const isOpen = openSlug === topic.slug;
@@ -34,7 +34,7 @@ export function DesktopNav() {
               href={topicHref(topic)}
               onClick={close}
               aria-expanded={isOpen}
-              className="flex items-center gap-1 whitespace-nowrap py-2 transition-colors hover:text-white/70"
+              className="flex items-center gap-1 whitespace-nowrap py-2 transition-colors hover:text-white"
             >
               {topic.label}
               <ChevronDown className={`h-3 w-3 transition-transform ${isOpen ? "rotate-180" : ""}`} />

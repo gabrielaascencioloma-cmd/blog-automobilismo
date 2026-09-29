@@ -25,6 +25,7 @@
   --rust:       #c42b1a;
   --silver:     #c0c0c0;
 
+  --tiffany:    #81d8d0;
   --link:       #1d4ed8;
   --link-hover: #1e3a8a;
 }
@@ -49,6 +50,7 @@
   --color-red-dark:     var(--red-dark);
   --color-red-bright:   var(--red-bright);
   --color-silver:       var(--silver);
+  --color-tiffany:      var(--tiffany);
 
   --font-display: var(--font-archivo);
   --font-sans:    var(--font-inter);
