@@ -34,9 +34,7 @@ export function DesktopNav() {
               href={topicHref(topic)}
               onClick={close}
               aria-expanded={isOpen}
-              className={`flex items-center gap-1 whitespace-nowrap py-2 transition-colors hover:text-white ${
-                isOpen ? "text-white" : "text-red-bright"
-              }`}
+              className="flex items-center gap-1 whitespace-nowrap py-2 transition-colors hover:text-white/70"
             >
               {topic.label}
               <ChevronDown className={`h-3 w-3 transition-transform ${isOpen ? "rotate-180" : ""}`} />
