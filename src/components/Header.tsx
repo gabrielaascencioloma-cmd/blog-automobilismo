@@ -7,10 +7,10 @@ import { ChevronDown, Search } from "lucide-react";
 export function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-black backdrop-blur-md">
-      <div className="relative mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-4">
-        <Logo inverted compact />
+      <div className="relative mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-4 lg:gap-10 wide:gap-12">
+        <Logo inverted compact className="shrink-0" />
 
-        <nav className="hidden items-center gap-5 text-sm font-medium text-white lg:flex">
+        <nav className="hidden items-center gap-6 text-[13px] font-medium text-white lg:flex xl:gap-7 wide:gap-8">
           {MENU_TOPICS.map((topic, i) => (
             <div key={topic.slug} className="group relative">
               <Link
@@ -18,7 +18,7 @@ export function Header() {
                 className="flex items-center gap-1 whitespace-nowrap py-2 transition-colors hover:text-white/70"
               >
                 {topic.label}
-                <ChevronDown className="h-3.5 w-3.5 transition-transform group-hover:rotate-180 group-focus-within:rotate-180" />
+                <ChevronDown className="h-3 w-3 transition-transform group-hover:rotate-180 group-focus-within:rotate-180" />
               </Link>
 
               <div

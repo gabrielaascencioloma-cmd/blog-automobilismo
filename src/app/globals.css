@@ -27,6 +27,7 @@
 }
 
 @theme inline {
+  --breakpoint-wide:    87.5rem;
   --color-page:         var(--page-bg);
   --color-surface:      var(--surface);
   --color-surface-2:    var(--surface-2);
