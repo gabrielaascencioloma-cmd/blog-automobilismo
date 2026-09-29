@@ -22,6 +22,12 @@ jobs:
       - name: Instala a CLI da Vercel
         run: npm i -g vercel@latest
 
+      # A CLI le os metadados git do checkout e a Vercel checa se o autor do
+      # commit e membro do time. Sem .git nao ha autor a checar, entao qualquer
+      # pessoa da organizacao pode publicar pelo token.
+      - name: Remove metadados git
+        run: rm -rf .git
+
       - name: Deploy de produção
         if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         run: vercel deploy --prod --yes --token=${{ secrets.VERCEL_TOKEN }}
