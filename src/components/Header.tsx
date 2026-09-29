@@ -1,8 +1,7 @@
-import Link from "next/link";
 import { Logo } from "./Logo";
+import { DesktopNav } from "./DesktopNav";
 import { MobileMenu } from "./MobileMenu";
-import { MENU_TOPICS, topicHref } from "@/lib/menu";
-import { ChevronDown, Search } from "lucide-react";
+import { Search } from "lucide-react";
 
 export function Header() {
   return (
@@ -10,47 +9,7 @@ export function Header() {
       <div className="relative mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-4 lg:gap-10 wide:gap-12">
         <Logo inverted compact className="shrink-0" />
 
-        <nav className="hidden items-center gap-6 text-[13px] font-medium text-white lg:flex xl:gap-7 wide:gap-8">
-          {MENU_TOPICS.map((topic, i) => (
-            <div key={topic.slug} className="group relative">
-              <Link
-                href={topicHref(topic)}
-                className="flex items-center gap-1 whitespace-nowrap py-2 transition-colors hover:text-white/70"
-              >
-                {topic.label}
-                <ChevronDown className="h-3 w-3 transition-transform group-hover:rotate-180 group-focus-within:rotate-180" />
-              </Link>
-
-              <div
-                className={`invisible absolute top-full z-50 w-72 pt-3 opacity-0 transition-opacity group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100 ${
-                  i >= MENU_TOPICS.length - 2 ? "right-0" : "left-1/2 -translate-x-1/2"
-                }`}
-              >
-                <ul className="overflow-hidden rounded-xl border border-white/10 bg-[#0f0f0f] py-2 shadow-2xl">
-                  {topic.subtopics.map((sub) => (
-                    <li key={sub.slug}>
-                      <Link
-                        href={topicHref(topic, sub)}
-                        className="block px-4 py-2.5 transition-colors hover:bg-white/5 focus:bg-white/5 focus:outline-none"
-                      >
-                        <span className="block text-sm font-semibold text-white">{sub.label}</span>
-                        <span className="block text-xs text-white/50">{sub.scope}</span>
-                      </Link>
-                    </li>
-                  ))}
-                  <li className="mt-1 border-t border-white/10">
-                    <Link
-                      href={topicHref(topic)}
-                      className="block px-4 py-2.5 text-xs font-bold uppercase tracking-wide text-red transition-colors hover:bg-white/5 focus:bg-white/5 focus:outline-none"
-                    >
-                      Ver tudo de {topic.label}
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          ))}
-        </nav>
+        <DesktopNav />
 
         <div className="flex items-center gap-2">
           <form action="/blog" method="get" className="hidden items-center sm:inline-flex lg:hidden xl:inline-flex">
