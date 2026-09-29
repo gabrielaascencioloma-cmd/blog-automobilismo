@@ -24,6 +24,9 @@
   --teal-soft:  #ffffff;
   --rust:       #c42b1a;
   --silver:     #c0c0c0;
+
+  --link:       #1d4ed8;
+  --link-hover: #1e3a8a;
 }
 
 @theme inline {
@@ -165,12 +168,16 @@
 }
 
 .prose-article a {
-  color: var(--red-bright);
+  color: var(--link);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
   text-underline-offset: 3px;
 }
 
 .prose-article a:hover {
-  color: var(--cream);
+  color: var(--link-hover);
+  text-decoration-thickness: 2px;
 }
 
 .prose-article ul,
