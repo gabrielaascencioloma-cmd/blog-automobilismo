@@ -34,7 +34,12 @@ export default async function BlogPage({
     : activeTopic?.subtopics.flatMap((s) => s.keywords);
 
   const posts = allPosts.filter((post) => {
-    if (keywords) return matchesKeywords(`${post.title} ${post.excerpt}`, keywords);
+    if (keywords) {
+      const tagged = activeSubtopic
+        ? post.subcategory === activeSubtopic.slug
+        : activeTopic?.subtopics.some((s) => s.slug === post.subcategory);
+      return tagged || matchesKeywords(`${post.title} ${post.excerpt}`, keywords);
+    }
     return !activeCategory || post.category === activeCategory;
   });
 

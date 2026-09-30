@@ -9,6 +9,7 @@ export interface PostSummary {
   excerpt: string;
   date: string;
   category: CategorySlug;
+  subcategory?: string;
   cover?: string;
   coverType: "IMAGE" | "VIDEO";
   readingMinutes: number;
@@ -30,6 +31,7 @@ function toSummary(post: DbPost): PostSummary {
     excerpt: post.excerpt,
     date: post.publishAt.toISOString().slice(0, 10),
     category: post.category,
+    subcategory: post.subcategory ?? undefined,
     cover: post.coverUrl ?? undefined,
     coverType: post.coverType,
     readingMinutes: Math.max(1, Math.round(readingTime(stripHtml(post.contentHtml)).minutes)),

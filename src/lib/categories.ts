@@ -71,11 +71,11 @@ const MENU_ONLY: CategorySlug[] = ["seguranca", "comparativos", "protecao"];
 export const CATEGORY_LIST = Object.values(CATEGORIES).filter((c) => !MENU_ONLY.includes(c.slug));
 
 // Seletor de categoria no admin: os 6 tópicos do menu do blog.
-export const ADMIN_CATEGORY_OPTIONS: { slug: CategorySlug; label: string }[] = [
-  { slug: "manutencao", label: "Manutenção" },
-  { slug: "financeiro", label: "Financiamento" },
-  { slug: "burocracia", label: "Documentos" },
-  { slug: "seguranca", label: "Segurança" },
-  { slug: "comparativos", label: "Comparativos" },
-  { slug: "protecao", label: "Proteção Veicular" },
+export const ADMIN_CATEGORY_OPTIONS: { slug: CategorySlug; label: string; topicSlug: string }[] = [
+  { slug: "manutencao", label: "Manutenção", topicSlug: "manutencao" },
+  { slug: "financeiro", label: "Financiamento", topicSlug: "financiamento" },
+  { slug: "burocracia", label: "Documentos", topicSlug: "documentos" },
+  { slug: "seguranca", label: "Segurança", topicSlug: "seguranca" },
+  { slug: "comparativos", label: "Comparativos", topicSlug: "comparativos" },
+  { slug: "protecao", label: "Proteção Veicular", topicSlug: "protecao-veicular" },
 ];

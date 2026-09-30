@@ -3,6 +3,7 @@
 import { useActionState, useState } from "react";
 import { Send, CalendarClock, FileEdit, Save } from "lucide-react";
 import { ADMIN_CATEGORY_OPTIONS, CATEGORIES } from "@/lib/categories";
+import { findTopic } from "@/lib/menu";
 import { TiptapEditor } from "./TiptapEditor";
 import { MediaUploader } from "./MediaUploader";
 import type { PostFormState } from "../posts/actions";
@@ -12,6 +13,7 @@ export interface PostFormInitialValues {
   title: string;
   excerpt: string;
   category: string;
+  subcategory?: string | null;
   contentHtml: string;
   coverUrl: string | null;
   coverType: "IMAGE" | "VIDEO";
@@ -51,6 +53,10 @@ export function PostForm({
     post?.coverUrl ? { url: post.coverUrl, type: post.coverType } : null
   );
   const [publishing, setPublishing] = useState(initialPublishingMode(post));
+  const [category, setCategory] = useState(post?.category ?? "");
+  const [subcategory, setSubcategory] = useState(post?.subcategory ?? "");
+  const topicSlug = ADMIN_CATEGORY_OPTIONS.find((c) => c.slug === category)?.topicSlug;
+  const subtopics = findTopic(topicSlug)?.subtopics ?? [];
 
   return (
     <form action={formAction} className="space-y-4">
@@ -86,7 +92,17 @@ export function PostForm({
             <label htmlFor="category" className={label}>
               Categoria
             </label>
-            <select id="category" name="category" required defaultValue={post?.category ?? ""} className={input}>
+            <select
+              id="category"
+              name="category"
+              required
+              value={category}
+              onChange={(e) => {
+                setCategory(e.target.value);
+                setSubcategory("");
+              }}
+              className={input}
+            >
               <option value="" disabled>
                 Selecione…
               </option>
@@ -98,6 +114,26 @@ export function PostForm({
               {post?.category && !ADMIN_CATEGORY_OPTIONS.some((c) => c.slug === post.category) && (
                 <option value={post.category}>{CATEGORIES[post.category as keyof typeof CATEGORIES]?.label ?? post.category}</option>
               )}
+            </select>
+          </div>
+          <div>
+            <label htmlFor="subcategory" className={label}>
+              Subcategoria
+            </label>
+            <select
+              id="subcategory"
+              name="subcategory"
+              value={subcategory}
+              onChange={(e) => setSubcategory(e.target.value)}
+              disabled={subtopics.length === 0}
+              className={input}
+            >
+              <option value="">{subtopics.length === 0 ? "Escolha a categoria primeiro" : "Nenhuma"}</option>
+              {subtopics.map((s) => (
+                <option key={s.slug} value={s.slug}>
+                  {s.label}
+                </option>
+              ))}
             </select>
           </div>
 

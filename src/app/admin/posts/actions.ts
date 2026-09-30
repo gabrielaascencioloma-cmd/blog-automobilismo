@@ -44,6 +44,7 @@ export async function createPost(
   const title = String(formData.get("title") ?? "").trim();
   const excerpt = String(formData.get("excerpt") ?? "").trim();
   const category = String(formData.get("category")) as CategorySlug;
+  const subcategory = String(formData.get("subcategory") ?? "") || null;
   const contentHtml = String(formData.get("contentHtml") ?? "");
   const coverUrl = String(formData.get("coverUrl") ?? "") || null;
   const coverType = (String(formData.get("coverType") ?? "IMAGE")) as "IMAGE" | "VIDEO";
@@ -56,7 +57,7 @@ export async function createPost(
   const slug = await uniqueSlug(title);
 
   await prisma.post.create({
-    data: { slug, title, excerpt, category, contentHtml, coverUrl, coverType, status, publishAt },
+    data: { slug, title, excerpt, category, subcategory, contentHtml, coverUrl, coverType, status, publishAt },
   });
 
   revalidatePath("/");
@@ -72,6 +73,7 @@ export async function updatePost(
   const title = String(formData.get("title") ?? "").trim();
   const excerpt = String(formData.get("excerpt") ?? "").trim();
   const category = String(formData.get("category")) as CategorySlug;
+  const subcategory = String(formData.get("subcategory") ?? "") || null;
   const contentHtml = String(formData.get("contentHtml") ?? "");
   const coverUrl = String(formData.get("coverUrl") ?? "") || null;
   const coverType = (String(formData.get("coverType") ?? "IMAGE")) as "IMAGE" | "VIDEO";
@@ -87,7 +89,7 @@ export async function updatePost(
 
   await prisma.post.update({
     where: { id: postId },
-    data: { slug, title, excerpt, category, contentHtml, coverUrl, coverType, status, publishAt },
+    data: { slug, title, excerpt, category, subcategory, contentHtml, coverUrl, coverType, status, publishAt },
   });
 
   revalidatePath("/");
