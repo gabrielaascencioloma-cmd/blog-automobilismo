@@ -32,7 +32,7 @@ function ToolbarButton({
       title={label}
       onClick={onClick}
       className={`flex h-8 w-8 items-center justify-center rounded-lg transition-colors ${
-        active ? "bg-slate-900 text-white" : "text-slate-600 hover:bg-slate-200"
+        active ? "bg-emerald-500/15 text-emerald-400" : "text-zinc-400 hover:bg-white/[0.07] hover:text-white"
       }`}
     >
       {children}
@@ -65,8 +65,8 @@ export function TiptapEditor({
   if (!editor) return null;
 
   return (
-    <div className="rounded-xl border border-slate-300 bg-white">
-      <div className="flex flex-wrap gap-1 border-b border-slate-200 p-2">
+    <div className="overflow-hidden rounded-xl border border-white/10">
+      <div className="flex flex-wrap gap-1 border-b border-white/10 bg-[#101114] p-2">
         <ToolbarButton
           label="Negrito"
           active={editor.isActive("bold")}
@@ -128,7 +128,7 @@ export function TiptapEditor({
         >
           <ShieldPlus className="h-4 w-4" />
         </ToolbarButton>
-        <div className="mx-1 w-px bg-slate-200" />
+        <div className="mx-1 w-px bg-white/10" />
         <ToolbarButton label="Desfazer" onClick={() => editor.chain().focus().undo().run()}>
           <Undo2 className="h-4 w-4" />
         </ToolbarButton>
@@ -136,7 +136,8 @@ export function TiptapEditor({
           <Redo2 className="h-4 w-4" />
         </ToolbarButton>
       </div>
-      <div className="px-4 py-3">
+      {/* Área de escrita clara, igual ao post no site */}
+      <div className="bg-white px-5 py-4 text-ink">
         <EditorContent editor={editor} />
       </div>
     </div>

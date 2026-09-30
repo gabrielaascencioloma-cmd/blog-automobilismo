@@ -51,7 +51,7 @@ export function MediaUploader({
   return (
     <div>
       {url ? (
-        <div className="relative w-full max-w-xs overflow-hidden rounded-xl border border-slate-200">
+        <div className="relative w-full overflow-hidden rounded-xl border border-white/10">
           {type === "VIDEO" ? (
             <video src={url} controls className="h-40 w-full object-cover" />
           ) : (
@@ -67,7 +67,7 @@ export function MediaUploader({
           </button>
         </div>
       ) : (
-        <label className="flex w-full max-w-xs cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-slate-300 bg-slate-50 py-8 text-sm text-slate-500 hover:border-slate-400">
+        <label className="flex w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-white/15 bg-[#101114] py-8 text-sm text-zinc-500 transition-colors hover:border-emerald-500/50 hover:text-zinc-300">
           {uploading ? (
             <Loader2 className="h-6 w-6 animate-spin" />
           ) : (
@@ -84,7 +84,7 @@ export function MediaUploader({
           />
         </label>
       )}
-      {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
+      {error && <p className="mt-2 text-sm text-red-400">{error}</p>}
     </div>
   );
 }
