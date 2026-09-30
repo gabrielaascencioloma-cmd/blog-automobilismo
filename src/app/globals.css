@@ -270,3 +270,15 @@
 .prose-article td {
   color: var(--ink-soft);
 }
+
+.prose-article img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 1.75em 0;
+  border-radius: 0.75rem;
+}
+
+.prose-article table {
+  margin: 1.75em 0;
+}
