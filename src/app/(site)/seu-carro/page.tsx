@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Seu Carro — Olha o Carro",
+  title: "Seu Carro — Meu Carro Protegido",
   description: "Guias de manutenção e dicas específicas para os carros populares mais vendidos do Brasil.",
 };
 

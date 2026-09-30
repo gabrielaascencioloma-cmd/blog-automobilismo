@@ -5,11 +5,11 @@ import { CATEGORY_LIST } from "@/lib/categories";
 
 export function Footer() {
   return (
-    <footer className="bg-ink text-white">
+    <footer className="border-t border-white/10 bg-[#0f0f0f] text-white">
       <div className="mx-auto grid max-w-6xl gap-10 px-6 py-14 sm:grid-cols-2 md:grid-cols-4">
         <div className="sm:col-span-2 md:col-span-1">
           <Logo inverted />
-          <p className="mt-4 max-w-xs text-sm text-white/60">
+          <p className="mt-4 max-w-xs text-sm text-white/70">
             Manutenção, dicas e alertas para quem depende do carro todos os
             dias — sem enrolação e sem jargão de oficina.
           </p>
@@ -17,7 +17,7 @@ export function Footer() {
             {[Camera, Play, MessageCircle].map((Icon, i) => (
               <span
                 key={i}
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-white/20 text-white/40 transition-colors hover:border-red hover:text-red"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-white/20 text-white/70 transition-colors hover:border-red hover:text-red"
               >
                 <Icon className="h-4 w-4" />
               </span>
@@ -27,12 +27,12 @@ export function Footer() {
 
         <div>
           <h4 className="text-xs font-bold uppercase tracking-[0.15em] text-white">Categorias</h4>
-          <ul className="mt-4 space-y-2.5 text-sm text-white/60">
+          <ul className="mt-4 space-y-2.5 text-sm text-white/70">
             {CATEGORY_LIST.map((c) => (
               <li key={c.slug}>
                 <Link
                   href={`/blog?categoria=${c.slug}`}
-                  className="transition-colors hover:text-white"
+                  className="transition-colors hover:text-red"
                 >
                   {c.label}
                 </Link>
@@ -43,23 +43,24 @@ export function Footer() {
 
         <div>
           <h4 className="text-xs font-bold uppercase tracking-[0.15em] text-white">Site</h4>
-          <ul className="mt-4 space-y-2.5 text-sm text-white/60">
-            <li><Link href="/" className="transition-colors hover:text-white">Início</Link></li>
-            <li><Link href="/blog" className="transition-colors hover:text-white">Todos os posts</Link></li>
-            <li><Link href="/sobre" className="transition-colors hover:text-white">Sobre o blog</Link></li>
+          <ul className="mt-4 space-y-2.5 text-sm text-white/70">
+            <li><Link href="/" className="transition-colors hover:text-red">Início</Link></li>
+            <li><Link href="/blog" className="transition-colors hover:text-red">Todos os posts</Link></li>
+            <li><Link href="/seu-carro" className="transition-colors hover:text-red">Seu Carro</Link></li>
+            <li><Link href="/sobre" className="transition-colors hover:text-red">Sobre o blog</Link></li>
           </ul>
         </div>
 
         <div>
           <h4 className="text-xs font-bold uppercase tracking-[0.15em] text-white">Receba novidades</h4>
-          <p className="mt-4 text-sm text-white/60">
+          <p className="mt-4 text-sm text-white/70">
             Um resumo por e-mail quando sair conteúdo novo. Sem spam.
           </p>
           <form className="mt-4 flex gap-2">
             <input
               type="email"
               placeholder="seu@email.com"
-              className="w-full min-w-0 rounded-lg border border-white/20 bg-white/10 px-3 py-2 text-sm text-white placeholder:text-white/40 focus:border-red focus:outline-none"
+              className="w-full min-w-0 rounded-lg border border-white/20 bg-white/5 px-3 py-2 text-sm text-white placeholder:text-white/40 focus:border-red focus:outline-none"
             />
             <button
               type="submit"
@@ -71,7 +72,7 @@ export function Footer() {
         </div>
       </div>
       <div className="border-t border-white/10 px-6 py-5 text-center text-xs text-white/40">
-        © {new Date().getFullYear()} Olha o Carro. Todos os direitos reservados.
+        © {new Date().getFullYear()} Meu Carro Protegido. Todos os direitos reservados.
       </div>
     </footer>
   );

@@ -5,6 +5,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { LeadPopup } from "@/components/LeadPopup";
+import { SITE_URL } from "@/lib/site";
 import "../globals.css";
 
 const inter = Inter({
@@ -16,18 +17,19 @@ const archivo = Archivo({
   variable: "--font-archivo",
   subsets: ["latin"],
   weight: ["700", "800", "900"],
+  style: ["normal", "italic"],
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://blog-automobilismo.vercel.app"),
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: "Olha o Carro — manutenção, dicas e alertas para o seu carro",
-    template: "%s · Olha o Carro",
+    default: "Meu Carro Protegido — manutenção, dicas e alertas para o seu carro",
+    template: "%s · Meu Carro Protegido",
   },
   description:
     "Blog sobre manutenção automotiva, dicas práticas e alertas para quem depende do carro todos os dias.",
   openGraph: {
-    siteName: "Olha o Carro",
+    siteName: "Meu Carro Protegido",
     locale: "pt_BR",
     type: "website",
   },

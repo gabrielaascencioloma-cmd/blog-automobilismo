@@ -12,7 +12,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Painel administrativo · Olha o Carro",
+  title: "Painel administrativo · Meu Carro Protegido",
   robots: "noindex, nofollow",
 };
 
@@ -32,7 +32,7 @@ export default async function AdminLayout({
             <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3">
               <div className="flex items-center gap-6">
                 <span className="text-sm font-semibold uppercase tracking-wide text-slate-100">
-                  Olha o Carro
+                  Meu Carro Protegido
                 </span>
                 <nav className="flex items-center gap-1 text-sm">
                   <Link

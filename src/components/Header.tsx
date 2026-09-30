@@ -1,44 +1,33 @@
-import Link from "next/link";
 import { Logo } from "./Logo";
+import { DesktopNav } from "./DesktopNav";
 import { MobileMenu } from "./MobileMenu";
-import { CATEGORY_LIST } from "@/lib/categories";
-
-const NAV_LINKS = [
-  { href: "/seu-carro", label: "Seu Carro" },
-  { href: "/blog?categoria=manutencao", label: "Manutenção" },
-  { href: "/blog?categoria=dicas", label: "Dicas" },
-  { href: "/blog?categoria=alertas", label: "Alertas" },
-  { href: "/blog?categoria=financeiro", label: "Financeiro" },
-  { href: "/blog?categoria=burocracia", label: "Documentação" },
-  { href: "/sobre", label: "Sobre" },
-];
+import { Search } from "lucide-react";
 
 export function Header() {
   return (
-    <header className="sticky top-0 z-50 border-b border-border-subtle bg-page/95 backdrop-blur-md">
-      <div className="relative mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <Logo />
+    <header className="sticky top-0 z-50 border-b border-white/10 bg-black backdrop-blur-md">
+      <div className="relative mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-4 lg:gap-10 wide:gap-12">
+        <Logo inverted compact className="shrink-0" />
 
-        <nav className="hidden items-center gap-7 text-sm font-medium text-ink-soft md:flex">
-          {NAV_LINKS.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="transition-colors hover:text-ink"
-            >
-              {link.label}
-            </Link>
-          ))}
-        </nav>
+        <DesktopNav />
 
         <div className="flex items-center gap-2">
-          <Link
-            href="/blog"
-            className="hidden rounded-full bg-red px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-red-dark sm:inline-flex"
-          >
-            Ler os posts
-          </Link>
-          <MobileMenu links={NAV_LINKS} />
+          <form action="/blog" method="get" className="hidden items-center sm:inline-flex lg:hidden xl:inline-flex">
+            <input
+              type="search"
+              name="q"
+              placeholder="Pesquise por palavra-chave..."
+              className="w-40 rounded-l-full border border-r-0 border-white/20 bg-white/10 py-2 pl-4 pr-2 text-xs text-white placeholder-white/40 outline-none transition-all focus:w-52 focus:border-white/40 focus:bg-white/15"
+            />
+            <button
+              type="submit"
+              className="rounded-r-full bg-red px-3 py-2 text-white transition-colors hover:bg-red-dark"
+              aria-label="Pesquisar"
+            >
+              <Search className="h-4 w-4" />
+            </button>
+          </form>
+          <MobileMenu />
         </div>
       </div>
     </header>

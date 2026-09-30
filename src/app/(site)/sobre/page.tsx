@@ -5,7 +5,7 @@ import { CATEGORIES, type CategorySlug } from "@/lib/categories";
 
 export const metadata: Metadata = {
   title: "Sobre",
-  description: "De onde vem o Olha o Carro e o que você encontra por aqui.",
+  description: "De onde vem o Meu Carro Protegido e o que você encontra por aqui.",
 };
 
 const CATEGORY_ICONS: Record<CategorySlug, React.ElementType> = {
@@ -25,7 +25,7 @@ export default function SobrePage() {
         </h1>
         <div className="mt-6 space-y-4 text-base leading-relaxed text-ink-soft">
           <p>
-            O <strong className="text-ink">Olha o Carro</strong> nasceu de uma
+            O <strong className="text-ink">Meu Carro Protegido</strong> nasceu de uma
             constatação simples: a maioria do conteúdo sobre carros no Brasil
             fala de carro esportivo, lançamento e review de performance — e
             pouca coisa fala com quem usa o carro popular para trabalhar,
