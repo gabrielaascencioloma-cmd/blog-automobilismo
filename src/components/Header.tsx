@@ -12,12 +12,12 @@ export function Header() {
         <DesktopNav />
 
         <div className="flex items-center gap-2">
-          <form action="/blog" method="get" className="hidden items-center sm:inline-flex lg:hidden xl:inline-flex">
+          <form action="/blog" method="get" className="hidden items-stretch sm:inline-flex lg:hidden xl:inline-flex">
             <input
               type="search"
               name="q"
               placeholder="Pesquise por palavra-chave..."
-              className="w-40 rounded-l-full border border-r-0 border-white/20 bg-white/10 py-2 pl-4 pr-2 text-xs text-white placeholder-white/40 outline-none transition-all focus:w-52 focus:border-white/40 focus:bg-white/15"
+              className="w-40 rounded-l-full border border-r-0 border-white bg-white py-2 pl-4 pr-2 text-xs text-ink placeholder-ink-faint outline-none transition-all focus:w-52"
             />
             <button
               type="submit"
