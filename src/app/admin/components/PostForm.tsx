@@ -11,6 +11,7 @@ import { card, input, label, btnPrimary } from "./ui";
 
 export interface PostFormInitialValues {
   title: string;
+  slug?: string;
   excerpt: string;
   category: string;
   subcategory?: string | null;
@@ -84,6 +85,17 @@ export function PostForm({
             Título
           </label>
           <input id="title" name="title" required defaultValue={post?.title} className={input} />
+          <label htmlFor="slug" className={`${label} mt-4 block`}>
+            Endereço (slug)
+          </label>
+          <input
+            id="slug"
+            name="slug"
+            defaultValue={post?.slug}
+            placeholder="Em branco: gerado pelo título"
+            className={input}
+          />
+          <p className="mt-1 text-xs text-zinc-500">Vira /blog/endereço. Só letras minúsculas, números e hífens.</p>
         </div>
 
         <div>
