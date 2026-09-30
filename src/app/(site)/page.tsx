@@ -12,6 +12,9 @@ const CATEGORY_ICONS = {
   novidades: CalendarClock,
   financeiro: DollarSign,
   burocracia: FileText,
+  seguranca: Wrench,
+  comparativos: ListChecks,
+  protecao: CalendarClock,
 } as const;
 
 const TICKER_ITEMS = [

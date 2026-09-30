@@ -25,6 +25,9 @@ enum Category {
   novidades
   financeiro
   burocracia
+  seguranca
+  comparativos
+  protecao
 }
 
 model Lead {

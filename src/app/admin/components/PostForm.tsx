@@ -2,7 +2,7 @@
 
 import { useActionState, useState } from "react";
 import { Send, CalendarClock, FileEdit, Save } from "lucide-react";
-import { CATEGORY_LIST } from "@/lib/categories";
+import { ADMIN_CATEGORY_OPTIONS, CATEGORIES } from "@/lib/categories";
 import { TiptapEditor } from "./TiptapEditor";
 import { MediaUploader } from "./MediaUploader";
 import type { PostFormState } from "../posts/actions";
@@ -90,11 +90,14 @@ export function PostForm({
               <option value="" disabled>
                 Selecione…
               </option>
-              {CATEGORY_LIST.map((c) => (
+              {ADMIN_CATEGORY_OPTIONS.map((c) => (
                 <option key={c.slug} value={c.slug}>
                   {c.label}
                 </option>
               ))}
+              {post?.category && !ADMIN_CATEGORY_OPTIONS.some((c) => c.slug === post.category) && (
+                <option value={post.category}>{CATEGORIES[post.category as keyof typeof CATEGORIES]?.label ?? post.category}</option>
+              )}
             </select>
           </div>
 

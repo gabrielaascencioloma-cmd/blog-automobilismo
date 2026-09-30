@@ -1,7 +1,7 @@
 import React from "react";
 import type { Metadata } from "next";
 import { Wrench, ListChecks, TriangleAlert, CalendarClock, DollarSign, FileText } from "lucide-react";
-import { CATEGORIES, type CategorySlug } from "@/lib/categories";
+import { CATEGORIES, CATEGORY_LIST, type CategorySlug } from "@/lib/categories";
 
 export const metadata: Metadata = {
   title: "Sobre",
@@ -15,6 +15,9 @@ const CATEGORY_ICONS: Record<CategorySlug, React.ElementType> = {
   novidades:  CalendarClock,
   financeiro: DollarSign,
   burocracia: FileText,
+  seguranca: Wrench,
+  comparativos: ListChecks,
+  protecao: CalendarClock,
 };
 
 export default function SobrePage() {
@@ -42,7 +45,7 @@ export default function SobrePage() {
         </div>
 
         <div className="mt-10 grid gap-4 sm:grid-cols-2">
-          {Object.values(CATEGORIES).map((cat) => {
+          {CATEGORY_LIST.map((cat) => {
             const Icon = CATEGORY_ICONS[cat.slug];
             return (
               <div key={cat.slug} className="rounded-2xl bg-surface p-5 shadow-sm">

@@ -1,4 +1,4 @@
-export type CategorySlug = "manutencao" | "dicas" | "alertas" | "novidades" | "financeiro" | "burocracia";
+export type CategorySlug = "manutencao" | "dicas" | "alertas" | "novidades" | "financeiro" | "burocracia" | "seguranca" | "comparativos" | "protecao";
 
 export interface CategoryDef {
   slug: CategorySlug;
@@ -44,6 +44,38 @@ export const CATEGORIES: Record<CategorySlug, CategoryDef> = {
     description: "Transferência, vistoria, recall, multas e toda a papelada do veículo.",
     coverImage: "/photos/burocracia.jpg",
   },
+  seguranca: {
+    slug: "seguranca",
+    label: "Segurança",
+    description: "Direção segura, prevenção e cuidados com o veículo.",
+    coverImage: "/photos/alertas.jpg",
+  },
+  comparativos: {
+    slug: "comparativos",
+    label: "Comparativos",
+    description: "Comparações práticas para decidir com mais clareza.",
+    coverImage: "/photos/dicas.jpg",
+  },
+  protecao: {
+    slug: "protecao",
+    label: "Proteção Veicular",
+    description: "Como funciona a proteção veicular e o que avaliar antes de contratar.",
+    coverImage: "/photos/novidades.jpg",
+  },
 };
 
-export const CATEGORY_LIST = Object.values(CATEGORIES);
+// Categorias criadas só para casar com os tópicos do menu. Ficam fora das listas públicas
+// (filtros do blog, rodapé, sobre) para não aparecerem vazias.
+const MENU_ONLY: CategorySlug[] = ["seguranca", "comparativos", "protecao"];
+
+export const CATEGORY_LIST = Object.values(CATEGORIES).filter((c) => !MENU_ONLY.includes(c.slug));
+
+// Seletor de categoria no admin: os 6 tópicos do menu do blog.
+export const ADMIN_CATEGORY_OPTIONS: { slug: CategorySlug; label: string }[] = [
+  { slug: "manutencao", label: "Manutenção" },
+  { slug: "financeiro", label: "Financiamento" },
+  { slug: "burocracia", label: "Documentos" },
+  { slug: "seguranca", label: "Segurança" },
+  { slug: "comparativos", label: "Comparativos" },
+  { slug: "protecao", label: "Proteção Veicular" },
+];
