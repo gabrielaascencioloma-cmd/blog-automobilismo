@@ -32,7 +32,8 @@ function parsePublishing(formData: FormData) {
   }
   if (publishing === "schedule") {
     const scheduledFor = String(formData.get("scheduledFor"));
-    return { status: "PUBLISHED" as const, publishAt: new Date(scheduledFor) };
+    return { status: "PUBLISHED" as const, // O campo vem sem fuso (datetime-local): interpreta como horário de Brasília (UTC-3, sem horário de verão).
+    publishAt: new Date(`${scheduledFor}-03:00`) };
   }
   return { status: "PUBLISHED" as const, publishAt: new Date() };
 }

@@ -23,6 +23,9 @@ const TICKER_ITEMS = [
   "NOVIDADES", "MEU CARRO PROTEGIDO",
 ];
 
+// Reconstrói a home a cada 5 min para que posts agendados entrem no horário.
+export const revalidate = 300;
+
 export default async function Home() {
   const posts = await getAllPosts();
 

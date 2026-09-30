@@ -229,7 +229,7 @@ export default async function DashboardPage() {
                     </td>
                     <td className="hidden px-3 py-4 text-zinc-400 md:table-cell">{categoryLabel(post.category)}</td>
                     <td className="hidden px-3 py-4 text-zinc-400 sm:table-cell">
-                      {post.publishAt.toLocaleDateString("pt-BR")}
+                      {post.publishAt.toLocaleDateString("pt-BR", { timeZone: "America/Sao_Paulo" })}
                     </td>
                     <td className="px-3 py-4 text-right font-semibold text-white">
                       {post.views.toLocaleString("pt-BR")}

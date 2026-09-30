@@ -10,6 +10,9 @@ import { PostCard } from "@/components/PostCard";
 import { formatDate } from "@/lib/format";
 import { ViewTracker } from "./ViewTracker";
 
+// Reconstrói a cada 5 min: posts agendados passam a existir sem novo deploy.
+export const revalidate = 300;
+
 export async function generateMetadata({
   params,
 }: {

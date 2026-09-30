@@ -11,7 +11,7 @@ function statusLabel(status: "DRAFT" | "PUBLISHED", publishAt: Date) {
   }
   if (publishAt > new Date()) {
     return {
-      text: `Agendado · ${publishAt.toLocaleString("pt-BR", { dateStyle: "short", timeStyle: "short" })}`,
+      text: `Agendado · ${publishAt.toLocaleString("pt-BR", { dateStyle: "short", timeStyle: "short", timeZone: "America/Sao_Paulo" })}`,
       dot: "bg-amber-400",
       className: "text-amber-300",
     };
