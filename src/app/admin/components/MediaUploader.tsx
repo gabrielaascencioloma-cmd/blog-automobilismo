@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import { upload } from "@vercel/blob/client";
+import { toWebp } from "../lib/toWebp";
 import { ImagePlus, Loader2, X } from "lucide-react";
 
 export function MediaUploader({
@@ -20,13 +21,14 @@ export function MediaUploader({
   const [error, setError] = useState<string | null>(null);
 
   async function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files?.[0];
-    if (!file) return;
+    const picked = e.target.files?.[0];
+    if (!picked) return;
 
     setUploading(true);
     setError(null);
 
     try {
+      const file = await toWebp(picked);
       const blob = await upload(file.name, file, {
         access: "public",
         handleUploadUrl: "/admin/api/upload",

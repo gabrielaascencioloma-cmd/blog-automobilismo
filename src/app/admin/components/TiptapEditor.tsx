@@ -6,6 +6,7 @@ import StarterKit from "@tiptap/starter-kit";
 import Image from "@tiptap/extension-image";
 import { Table, TableRow, TableHeader, TableCell } from "@tiptap/extension-table";
 import { upload } from "@vercel/blob/client";
+import { toWebp } from "../lib/toWebp";
 import {
   Bold as BoldIcon,
   Heading2,
@@ -85,7 +86,8 @@ export function TiptapEditor({
     setUploading(true);
     setUploadError(null);
     try {
-      for (const file of files) {
+      for (const picked of files) {
+        const file = await toWebp(picked);
         const blob = await upload(file.name, file, {
           access: "public",
           handleUploadUrl: "/admin/api/upload",
