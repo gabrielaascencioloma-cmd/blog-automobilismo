@@ -52,15 +52,17 @@ export function PostsView({
             </p>
           )}
         </div>
-        <PeriodFilter
-          periodo={period ? (params.periodo ?? "") : ""}
-          de={params.de ?? ""}
-          ate={params.ate ?? ""}
-          basePath={basePath}
-        />
-        <Link href="/admin/posts/new" className={btnPrimary}>
-          <Plus className="h-4 w-4" /> Novo post
-        </Link>
+        <div className="flex flex-wrap items-center gap-3">
+          <PeriodFilter
+            periodo={period ? (params.periodo ?? "") : ""}
+            de={params.de ?? ""}
+            ate={params.ate ?? ""}
+            basePath={basePath}
+          />
+          <Link href="/admin/posts/new" className={btnPrimary}>
+            <Plus className="h-4 w-4" /> Novo post
+          </Link>
+        </div>
       </div>
 
       <div className={`${card} overflow-hidden`}>

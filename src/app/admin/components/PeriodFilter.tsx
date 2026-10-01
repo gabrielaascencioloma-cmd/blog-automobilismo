@@ -6,7 +6,7 @@ import { CalendarRange, X } from "lucide-react";
 import { PERIOD_OPTIONS } from "../lib/period";
 
 const field =
-  "h-10 rounded-xl border border-white/10 bg-[#101114] px-3 text-sm text-zinc-100 transition-colors focus:border-emerald-500/60 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 [color-scheme:dark]";
+  "h-10 rounded-xl border border-white/10 bg-[#101114] px-3 text-[13px] text-zinc-100 transition-colors focus:border-emerald-500/60 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 [color-scheme:dark]";
 
 export function PeriodFilter({
   periodo,
@@ -57,11 +57,13 @@ export function PeriodFilter({
           aria-label="Filtrar por período"
           value={mode}
           onChange={(e) => onModeChange(e.target.value)}
-          className={`${field} min-w-[11.5rem] pl-9`}
+          className={`${field} min-w-[10.5rem] pl-9`}
         >
-          <option value="">Todo o período</option>
+          <option value="" className="text-xs">
+            Todo o período
+          </option>
           {PERIOD_OPTIONS.map((o) => (
-            <option key={o.value} value={o.value}>
+            <option key={o.value} value={o.value} className="text-xs">
               {o.label}
             </option>
           ))}
