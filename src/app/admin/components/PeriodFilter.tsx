@@ -2,11 +2,12 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { CalendarRange, X } from "lucide-react";
+import { X } from "lucide-react";
 import { PERIOD_OPTIONS } from "../lib/period";
+import { PeriodSelect } from "./PeriodSelect";
 
 const field =
-  "h-10 rounded-xl border border-white/10 bg-[#101114] px-3 text-[13px] text-zinc-100 transition-colors focus:border-emerald-500/60 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 [color-scheme:dark]";
+  "h-10 rounded-xl border border-white/10 bg-[#101114] px-3 text-sm text-zinc-100 transition-colors focus:border-emerald-500/60 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 [color-scheme:dark]";
 
 export function PeriodFilter({
   periodo,
@@ -51,24 +52,11 @@ export function PeriodFilter({
 
   return (
     <div className="flex flex-wrap items-center gap-2">
-      <div className="relative">
-        <CalendarRange className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-500" />
-        <select
-          aria-label="Filtrar por período"
-          value={mode}
-          onChange={(e) => onModeChange(e.target.value)}
-          className={`${field} min-w-[10.5rem] pl-9`}
-        >
-          <option value="" className="text-xs">
-            Todo o período
-          </option>
-          {PERIOD_OPTIONS.map((o) => (
-            <option key={o.value} value={o.value} className="text-xs">
-              {o.label}
-            </option>
-          ))}
-        </select>
-      </div>
+      <PeriodSelect
+        value={mode}
+        onChange={onModeChange}
+        options={[{ value: "", label: "Todo o período" }, ...PERIOD_OPTIONS]}
+      />
 
       {mode === "custom" && (
         <>
