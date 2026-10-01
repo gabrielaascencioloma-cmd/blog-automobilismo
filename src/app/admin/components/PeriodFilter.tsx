@@ -8,7 +8,17 @@ import { PERIOD_OPTIONS } from "../lib/period";
 const field =
   "h-10 rounded-xl border border-white/10 bg-[#101114] px-3 text-sm text-zinc-100 transition-colors focus:border-emerald-500/60 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 [color-scheme:dark]";
 
-export function PeriodFilter({ periodo, de, ate }: { periodo: string; de: string; ate: string }) {
+export function PeriodFilter({
+  periodo,
+  de,
+  ate,
+  basePath = "/admin/posts",
+}: {
+  periodo: string;
+  de: string;
+  ate: string;
+  basePath?: string;
+}) {
   const router = useRouter();
   const [mode, setMode] = useState(periodo);
   const [from, setFrom] = useState(de);
@@ -16,7 +26,7 @@ export function PeriodFilter({ periodo, de, ate }: { periodo: string; de: string
 
   function go(params: Record<string, string>) {
     const q = new URLSearchParams(params).toString();
-    router.push(q ? `/admin/posts?${q}` : "/admin/posts");
+    router.push(q ? `${basePath}?${q}` : basePath);
   }
 
   function onModeChange(value: string) {
