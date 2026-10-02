@@ -18,7 +18,7 @@ export function DesktopNav() {
     <nav
       onBlur={handleBlur}
       onKeyDown={(e) => e.key === "Escape" && close()}
-      className="hidden items-center gap-6 text-[13px] font-medium text-white lg:flex xl:gap-7 wide:gap-8"
+      className="hidden items-center gap-0.5 rounded-full border border-white/[0.08] bg-white/[0.04] p-1 font-nav text-[13px] font-medium text-white/75 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] lg:flex"
     >
       {MENU_TOPICS.map((topic, i) => {
         const isOpen = openSlug === topic.slug;
@@ -34,7 +34,9 @@ export function DesktopNav() {
               href={topicHref(topic)}
               onClick={close}
               aria-expanded={isOpen}
-              className="flex items-center gap-1 whitespace-nowrap py-2 transition-colors hover:text-white/70"
+              className={`flex items-center gap-1 whitespace-nowrap rounded-full px-2.5 py-2 transition-colors xl:px-3 ${
+                isOpen ? "bg-white/[0.09] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]" : "hover:bg-white/[0.06] hover:text-white"
+              }`}
             >
               {topic.label}
               <ChevronDown className={`h-3 w-3 transition-transform ${isOpen ? "rotate-180" : ""}`} />
@@ -47,7 +49,7 @@ export function DesktopNav() {
                   ? "right-0 xl:right-auto xl:left-1/2 xl:-translate-x-1/2"
                   : "left-1/2 -translate-x-1/2"}`}
             >
-              <ul className="overflow-hidden rounded-xl border border-white/10 bg-[#0f0f0f] py-2 shadow-2xl">
+              <ul className="overflow-hidden rounded-2xl border border-white/10 bg-[#141414]/95 py-2 font-sans shadow-[0_24px_60px_-12px_rgba(0,0,0,0.8)] backdrop-blur-xl">
                 {topic.subtopics.map((sub) => (
                   <li key={sub.slug}>
                     <Link

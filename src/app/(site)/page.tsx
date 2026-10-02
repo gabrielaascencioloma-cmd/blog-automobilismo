@@ -33,34 +33,6 @@ export default async function Home() {
   return (
     <div className="flex flex-col">
 
-      {/* ── Ticker ─────────────────────────────────────── */}
-      <div className="overflow-hidden border-b border-border-subtle bg-red py-2.5">
-        <div className="marquee-track">
-          {/* Base items duplicated to guarantee width > 100vw on large screens */}
-          {[...TICKER_ITEMS, ...TICKER_ITEMS, ...TICKER_ITEMS, ...TICKER_ITEMS]
-            .concat([...TICKER_ITEMS, ...TICKER_ITEMS, ...TICKER_ITEMS, ...TICKER_ITEMS])
-            .map((item, i) => (
-            <span key={i} className="mx-1 inline-flex items-center gap-4">
-              <span className="text-[11px] font-black uppercase tracking-[0.2em] text-white">
-                {item}
-              </span>
-              <svg className="h-3 w-3 opacity-40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="12" cy="12" r="10" stroke="white" strokeWidth="2"/>
-                <circle cx="12" cy="12" r="3.5" stroke="white" strokeWidth="2"/>
-                <line x1="12" y1="2" x2="12" y2="8.5" stroke="white" strokeWidth="1.5"/>
-                <line x1="12" y1="15.5" x2="12" y2="22" stroke="white" strokeWidth="1.5"/>
-                <line x1="2" y1="12" x2="8.5" y2="12" stroke="white" strokeWidth="1.5"/>
-                <line x1="15.5" y1="12" x2="22" y2="12" stroke="white" strokeWidth="1.5"/>
-                <line x1="4.93" y1="4.93" x2="9.17" y2="9.17" stroke="white" strokeWidth="1.5"/>
-                <line x1="14.83" y1="14.83" x2="19.07" y2="19.07" stroke="white" strokeWidth="1.5"/>
-                <line x1="19.07" y1="4.93" x2="14.83" y2="9.17" stroke="white" strokeWidth="1.5"/>
-                <line x1="9.17" y1="14.83" x2="4.93" y2="19.07" stroke="white" strokeWidth="1.5"/>
-              </svg>
-            </span>
-          ))}
-        </div>
-      </div>
-
       {/* ── Hero ─────────────────────────────────────── */}
       <section className="relative overflow-hidden bg-surface flex items-center min-h-[480px]">
         {/* Background image — full coverage */}
@@ -93,7 +65,7 @@ export default async function Home() {
             <div className="mt-7 flex flex-wrap items-center gap-3">
               <Link
                 href="/blog"
-                className="inline-flex items-center gap-2 rounded-full bg-red px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-red-dark"
+                className="btn-3d inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-bold"
               >
                 Descobrir conteúdos <ArrowRight className="h-4 w-4" />
               </Link>
@@ -107,7 +79,7 @@ export default async function Home() {
                   <Link
                     key={cat.slug}
                     href={`/blog?categoria=${cat.slug}`}
-                    className="hero-line group inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5"
+                    className="hero-line btn-3d-light group inline-flex items-center gap-2 rounded-full px-5 py-2.5"
                     style={{ animationDelay: `${0.5 + i * 0.12}s` }}
                   >
                     <Icon className="h-4 w-4 text-red" />
@@ -122,6 +94,34 @@ export default async function Home() {
         </div>
       </section>
 
+      {/* ── Ticker ─────────────────────────────────────── */}
+      <div className="overflow-hidden border-b border-border-subtle bg-red py-2.5">
+        <div className="marquee-track">
+          {/* Base items duplicated to guarantee width > 100vw on large screens */}
+          {[...TICKER_ITEMS, ...TICKER_ITEMS, ...TICKER_ITEMS, ...TICKER_ITEMS]
+            .concat([...TICKER_ITEMS, ...TICKER_ITEMS, ...TICKER_ITEMS, ...TICKER_ITEMS])
+            .map((item, i) => (
+            <span key={i} className="mx-1 inline-flex items-center gap-4">
+              <span className="text-[11px] font-black uppercase tracking-[0.2em] text-white">
+                {item}
+              </span>
+              <svg className="h-3 w-3 opacity-40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="10" stroke="white" strokeWidth="2"/>
+                <circle cx="12" cy="12" r="3.5" stroke="white" strokeWidth="2"/>
+                <line x1="12" y1="2" x2="12" y2="8.5" stroke="white" strokeWidth="1.5"/>
+                <line x1="12" y1="15.5" x2="12" y2="22" stroke="white" strokeWidth="1.5"/>
+                <line x1="2" y1="12" x2="8.5" y2="12" stroke="white" strokeWidth="1.5"/>
+                <line x1="15.5" y1="12" x2="22" y2="12" stroke="white" strokeWidth="1.5"/>
+                <line x1="4.93" y1="4.93" x2="9.17" y2="9.17" stroke="white" strokeWidth="1.5"/>
+                <line x1="14.83" y1="14.83" x2="19.07" y2="19.07" stroke="white" strokeWidth="1.5"/>
+                <line x1="19.07" y1="4.93" x2="14.83" y2="9.17" stroke="white" strokeWidth="1.5"/>
+                <line x1="9.17" y1="14.83" x2="4.93" y2="19.07" stroke="white" strokeWidth="1.5"/>
+              </svg>
+            </span>
+          ))}
+        </div>
+      </div>
+
       {/* ── Grid de posts ─────────────────────────────── */}
       <section className="mx-auto w-full max-w-6xl px-6 py-12">
 
@@ -135,7 +135,7 @@ export default async function Home() {
           </div>
           <Link
             href="/blog"
-            className="inline-flex items-center gap-1 rounded-full bg-red/10 px-4 py-2 text-xs font-bold text-red transition-colors hover:bg-red hover:text-white"
+            className="btn-3d-light inline-flex items-center gap-1 rounded-full px-4 py-2 text-xs font-bold !text-red"
           >
             Ver todos <ArrowUpRight className="h-4 w-4" />
           </Link>
@@ -173,7 +173,7 @@ export default async function Home() {
             </p>
             <Link
               href="/blog"
-              className="mt-7 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-bold text-red transition-colors hover:bg-white/90"
+              className="btn-3d-light mt-7 inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-bold !text-red"
             >
               Explorar o blog <ArrowRight className="h-4 w-4" />
             </Link>
@@ -193,7 +193,7 @@ export default async function Home() {
             </div>
             <Link
               href="/blog"
-              className="inline-flex items-center gap-1 rounded-full bg-red/10 px-4 py-2 text-xs font-bold text-red transition-colors hover:bg-red hover:text-white"
+              className="btn-3d-light inline-flex items-center gap-1 rounded-full px-4 py-2 text-xs font-bold !text-red"
             >
               Ver todos <ArrowUpRight className="h-4 w-4" />
             </Link>
