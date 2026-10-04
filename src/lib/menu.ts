@@ -251,3 +251,17 @@ export function matchesKeywords(text: string, keywords: string[]): boolean {
     return new RegExp(`(^|[^a-z0-9])${escaped}(e?s)?(?![a-z0-9])`).test(haystack);
   });
 }
+
+// Um post pertence ao tema/subtema pela subcategoria marcada no admin
+// ou por palavras-chave no título e no resumo.
+export function postMatchesTopic(
+  post: { title: string; excerpt: string; subcategory?: string | null },
+  topic: Topic,
+  subtopic?: Subtopic,
+): boolean {
+  const tagged = subtopic
+    ? post.subcategory === subtopic.slug
+    : topic.subtopics.some((s) => s.slug === post.subcategory);
+  const keywords = subtopic ? subtopic.keywords : topic.subtopics.flatMap((s) => s.keywords);
+  return tagged || matchesKeywords(`${post.title} ${post.excerpt}`, keywords);
+}

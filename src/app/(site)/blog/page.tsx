@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { getAllPosts } from "@/lib/data/posts";
 import { CATEGORY_LIST, type CategorySlug } from "@/lib/categories";
-import { findTopic, matchesKeywords, topicHref } from "@/lib/menu";
+import { findTopic, postMatchesTopic, topicHref } from "@/lib/menu";
 import { PostCard } from "@/components/PostCard";
 
 export const metadata: Metadata = {
@@ -29,17 +29,8 @@ export default async function BlogPage({
   const activeCategory = !activeTopic && isCategorySlug(categoria) ? categoria : undefined;
 
   const allPosts = await getAllPosts();
-  const keywords = activeSubtopic
-    ? activeSubtopic.keywords
-    : activeTopic?.subtopics.flatMap((s) => s.keywords);
-
   const posts = allPosts.filter((post) => {
-    if (keywords) {
-      const tagged = activeSubtopic
-        ? post.subcategory === activeSubtopic.slug
-        : activeTopic?.subtopics.some((s) => s.slug === post.subcategory);
-      return tagged || matchesKeywords(`${post.title} ${post.excerpt}`, keywords);
-    }
+    if (activeTopic) return postMatchesTopic(post, activeTopic, activeSubtopic);
     return !activeCategory || post.category === activeCategory;
   });
 

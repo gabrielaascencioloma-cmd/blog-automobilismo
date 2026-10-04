@@ -3,13 +3,16 @@ import { DesktopNav } from "./DesktopNav";
 import { MobileMenu } from "./MobileMenu";
 import { HeaderShell } from "./HeaderShell";
 import { Search } from "lucide-react";
+import { getMenuHighlights } from "@/lib/data/posts";
 
-export function Header() {
+export async function Header() {
+  const highlights = await getMenuHighlights();
+
   return (
     <HeaderShell>
       <Logo inverted compact className="shrink-0" />
 
-      <DesktopNav />
+      <DesktopNav highlights={highlights} />
 
       <div className="flex items-center gap-2">
         <form action="/blog" method="get" className="hidden items-center sm:inline-flex lg:hidden xl:inline-flex">
