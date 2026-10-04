@@ -3,6 +3,9 @@
 import { useEffect, useState } from "react";
 import { X, ShieldCheck, ChevronRight } from "lucide-react";
 
+// Disparado por botões do site para abrir a avaliação na hora.
+export const OPEN_LEAD_POPUP_EVENT = "open-lead-popup";
+
 type Step = "hidden" | "question" | "verificacao" | "form" | "success";
 
 const PROTECOES = [
@@ -21,6 +24,12 @@ export function LeadPopup() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [protecao, setProtecao] = useState("");
   const [outraProtecao, setOutraProtecao] = useState("");
+
+  useEffect(() => {
+    const openNow = () => setStep("question");
+    window.addEventListener(OPEN_LEAD_POPUP_EVENT, openNow);
+    return () => window.removeEventListener(OPEN_LEAD_POPUP_EVENT, openNow);
+  }, []);
 
   useEffect(() => {
     if (sessionStorage.getItem("lead_shown")) return;

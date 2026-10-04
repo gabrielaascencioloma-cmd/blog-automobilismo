@@ -357,3 +357,10 @@
   to   { opacity: 1; transform: none; }
 }
 .mega-fade { animation: mega-fade-in 0.22s ease-out both; }
+
+/* Blocos que entram na home infinita */
+@keyframes home-reveal-in {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: none; }
+}
+.home-reveal { animation: home-reveal-in 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both; }

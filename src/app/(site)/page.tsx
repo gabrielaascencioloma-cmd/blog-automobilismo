@@ -1,9 +1,11 @@
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight, Wrench, ListChecks, TriangleAlert, CalendarClock, DollarSign, FileText, Search } from "lucide-react";
+import { ArrowRight, Wrench, ListChecks, TriangleAlert, CalendarClock, DollarSign, FileText } from "lucide-react";
 import { getAllPosts } from "@/lib/data/posts";
-import { CATEGORY_LIST, CATEGORIES } from "@/lib/categories";
-import { PostCard } from "@/components/PostCard";
-import { CategoryBadge } from "@/components/CategoryBadge";
+import { CATEGORY_LIST } from "@/lib/categories";
+import { EditorialGrid, MixedSection, MosaicSection, TrendingStrip } from "@/components/home/sections";
+import { TopicTiles } from "@/components/home/TopicTiles";
+import { LeadCtaBand } from "@/components/home/LeadCtaBand";
+import { InfiniteSections } from "@/components/home/InfiniteSections";
 
 const CATEGORY_ICONS = {
   manutencao: Wrench,
@@ -28,6 +30,11 @@ export const revalidate = 300;
 
 export default async function Home() {
   const posts = await getAllPosts();
+  const latest = posts.slice(0, 5);
+  const editorial = posts.slice(5, 9);
+  const mixed = posts.slice(9, 15);
+  const rest = posts.slice(15);
+  const mostRead = [...posts].filter((p) => p.views > 0).sort((a, b) => b.views - a.views).slice(0, 4);
 
 
   return (
@@ -122,90 +129,27 @@ export default async function Home() {
         </div>
       </div>
 
-      {/* ── Grid de posts ─────────────────────────────── */}
-      <section className="mx-auto w-full max-w-6xl px-6 py-12">
+      {/* ── Ritmo da home: quente → morno → quente… ─────── */}
+      {/* QUENTE: o que acabou de sair */}
+      <MosaicSection posts={latest} eyebrow="Acabou de sair" title="Em alta agora" />
 
-        {/* Cabeçalho editorial estilizado */}
-        <div className="mb-10 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <span className="h-5 w-1.5 rounded-full bg-red" aria-hidden="true" />
-            <h2 className="font-display text-xl font-black uppercase tracking-[0.1em] text-ink md:text-2xl">
-              Últimos Artigos
-            </h2>
-          </div>
-          <Link
-            href="/blog"
-            className="btn-3d-light inline-flex items-center gap-1 rounded-full px-4 py-2 text-xs font-bold !text-red"
-          >
-            Ver todos <ArrowUpRight className="h-4 w-4" />
-          </Link>
-        </div>
+      {/* MORNO: ranking dos mais lidos */}
+      <TrendingStrip posts={mostRead} />
 
-        {/* Bento Grid */}
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {posts.slice(0, 6).map((post, i) => (
-            <PostCard key={post.slug} post={post} featured={i === 0} />
-          ))}
-        </div>
-      </section>
+      {/* MORNO: atalhos por assunto */}
+      <TopicTiles posts={posts} />
 
+      {/* QUENTE: grade editorial */}
+      <EditorialGrid posts={editorial} eyebrow="Fresquinhos" title="Últimas do blog" />
 
-      {/* ── CTA ───────────────────────────────────────── */}
-      <section className="relative overflow-hidden border-t border-border-subtle">
-        {/* Section Background Image */}
-        <div className="absolute inset-0 z-0">
-          <img
-            src="/photos/img.webp"
-            alt=""
-            aria-hidden
-            className="absolute inset-0 h-full w-full object-cover object-top"
-          />
-          <div className="absolute inset-0 bg-black/30" />
-        </div>
+      {/* PAUSA: chamada para a avaliação gratuita */}
+      <LeadCtaBand />
 
-        <div className="relative z-10 mx-auto max-w-6xl px-6 py-16">
-          <div className="rounded-2xl bg-red/60 backdrop-blur-md px-8 py-12 text-center shadow-2xl border border-red/20">
-            <h2 className="font-display mx-auto max-w-lg text-3xl font-black uppercase leading-tight text-white sm:text-4xl">
-              Carro parado é<br />dinheiro parado.
-            </h2>
-            <p className="mx-auto mt-3 max-w-sm text-sm text-white/70">
-              Novos posts toda semana. Comece pelos mais lidos.
-            </p>
-            <Link
-              href="/blog"
-              className="btn-3d-light mt-7 inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-bold !text-red"
-            >
-              Explorar o blog <ArrowRight className="h-4 w-4" />
-            </Link>
-          </div>
-        </div>
-      </section>
+      {/* MISTA: destaque + lista + cards */}
+      <MixedSection posts={mixed} eyebrow="Para ler com calma" title="Guias e explicações" />
 
-      {/* ── Mais Conteúdos (conteúdo quente) ────────────── */}
-      {posts.length > 6 && (
-        <section className="mx-auto w-full max-w-6xl px-6 py-12">
-          <div className="mb-10 flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <span className="h-5 w-1.5 rounded-full bg-red" aria-hidden="true" />
-              <h2 className="font-display text-xl font-black uppercase tracking-[0.1em] text-ink md:text-2xl">
-                Mais Conteúdos
-              </h2>
-            </div>
-            <Link
-              href="/blog"
-              className="btn-3d-light inline-flex items-center gap-1 rounded-full px-4 py-2 text-xs font-bold !text-red"
-            >
-              Ver todos <ArrowUpRight className="h-4 w-4" />
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {posts.slice(6, 12).map((post, i) => (
-              <PostCard key={post.slug} post={post} featured={i === 0} />
-            ))}
-          </div>
-        </section>
-      )}
+      {/* Depois disso, novos blocos entram conforme a pessoa rola */}
+      <InfiniteSections posts={rest} />
 
     </div>
   );
