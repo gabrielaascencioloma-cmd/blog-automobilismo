@@ -8,6 +8,7 @@ import { CategoryBadge } from "@/components/CategoryBadge";
 import { PhotoCover } from "@/components/PhotoCover";
 import { PostCard } from "@/components/PostCard";
 import { formatDate } from "@/lib/format";
+import { enhanceTables } from "@/lib/enhance-tables";
 import { ViewTracker } from "./ViewTracker";
 
 // Reconstrói a cada 5 min: posts agendados passam a existir sem novo deploy.
@@ -111,7 +112,7 @@ export default async function PostPage({
       <div className="mx-auto max-w-3xl px-6 py-12">
         <div
           className="prose-article"
-          dangerouslySetInnerHTML={{ __html: post.contentHtml }}
+          dangerouslySetInnerHTML={{ __html: enhanceTables(post.contentHtml) }}
         />
       </div>
 
