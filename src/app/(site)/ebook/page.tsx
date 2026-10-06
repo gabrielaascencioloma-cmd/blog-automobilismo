@@ -53,14 +53,11 @@ export default function EbookPage() {
   }
 
   return (
-    <div className="min-h-screen bg-page">
+    <div className="bg-page">
 
-      {/* ── Hero ── */}
-      <section className="relative overflow-hidden bg-ink py-16 sm:py-24">
-        <div className="pointer-events-none absolute inset-0 opacity-10"
-          style={{ backgroundImage: "repeating-linear-gradient(45deg, #fff 0, #fff 1px, transparent 0, transparent 50%)", backgroundSize: "20px 20px" }}
-        />
-        <div className="relative mx-auto max-w-4xl px-6 text-center">
+      {/* ── Hero — fundo escuro limpo, sem padrões ── */}
+      <section className="bg-[#0f0f0f] py-16 sm:py-24">
+        <div className="mx-auto max-w-4xl px-6 text-center">
           <span className="inline-block rounded-full bg-red/20 px-4 py-1 text-xs font-bold uppercase tracking-widest text-red mb-6">
             Ebook gratuito
           </span>
@@ -73,7 +70,6 @@ export default function EbookPage() {
             Guia prático para donos de carros populares.
           </p>
 
-          {/* Badges */}
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3 text-sm text-white/60">
             <span className="flex items-center gap-1.5"><CheckCircle className="h-4 w-4 text-green-400" /> 100% gratuito</span>
             <span className="h-1 w-1 rounded-full bg-white/20" />
@@ -166,13 +162,13 @@ export default function EbookPage() {
                   </div>
 
                   {error && (
-                    <p className="rounded-lg bg-red/10 px-3 py-2 text-xs font-semibold text-red">{error}</p>
+                    <p className="rounded-full bg-red/10 px-3 py-2 text-xs font-semibold text-red">{error}</p>
                   )}
 
                   <button
                     type="submit"
                     disabled={loading}
-                    className="flex w-full items-center justify-center gap-2 rounded-lg bg-red px-6 py-3.5 text-sm font-bold text-white transition-colors hover:bg-red-dark disabled:opacity-60"
+                    className="flex w-full items-center justify-center gap-2 rounded-full bg-red px-6 py-3.5 text-sm font-bold text-white transition-colors hover:bg-red-dark disabled:opacity-60"
                   >
                     {loading ? (
                       <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
@@ -203,7 +199,7 @@ export default function EbookPage() {
                   download="beaba-da-manutencao.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-6 flex items-center gap-2 rounded-lg bg-red px-8 py-3.5 text-sm font-bold text-white transition-colors hover:bg-red-dark"
+                  className="mt-6 inline-flex items-center gap-2 rounded-full bg-red px-8 py-3.5 text-sm font-bold text-white transition-colors hover:bg-red-dark"
                 >
                   <Download className="h-4 w-4" />
                   Baixar PDF agora
@@ -217,14 +213,6 @@ export default function EbookPage() {
         </div>
       </section>
 
-      {/* ── Social proof / rodapé ── */}
-      <section className="border-t border-border-subtle bg-surface-2 py-10">
-        <div className="mx-auto max-w-3xl px-6 text-center">
-          <p className="text-sm text-ink-soft">
-            <span className="font-bold text-ink">Meu Carro Protegido</span> — conteúdo prático para quem depende do carro todo dia.
-          </p>
-        </div>
-      </section>
     </div>
   );
 }
