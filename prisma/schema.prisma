@@ -23,9 +23,6 @@ enum Category {
   dicas
   alertas
   novidades
-  seguranca
-  comparativos
-  protecao
   financeiro
   burocracia
   seguranca
@@ -61,7 +58,6 @@ model Post {
   subcategory String?
   coverUrl    String?
   coverType   CoverType  @default(IMAGE)
-  subcategory String?
   status      PostStatus @default(DRAFT)
   publishAt   DateTime   @default(now())
   createdAt   DateTime   @default(now())
