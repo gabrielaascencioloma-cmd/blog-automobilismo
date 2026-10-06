@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight, Wrench, ListChecks, TriangleAlert, CalendarClock, Search } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Wrench, ListChecks, TriangleAlert, CalendarClock, Search, Banknote, FileText, Shield, BarChart2, ShieldPlus } from "lucide-react";
 import { getAllPosts } from "@/lib/data/posts";
 import { CATEGORY_LIST, CATEGORIES } from "@/lib/categories";
 import { PostCard } from "@/components/PostCard";
@@ -10,6 +10,11 @@ const CATEGORY_ICONS = {
   dicas: ListChecks,
   alertas: TriangleAlert,
   novidades: CalendarClock,
+  financeiro: Banknote,
+  burocracia: FileText,
+  seguranca: Shield,
+  comparativos: BarChart2,
+  protecao: ShieldPlus,
 } as const;
 
 const TICKER_ITEMS = [
