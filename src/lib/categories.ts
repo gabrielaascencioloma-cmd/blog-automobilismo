@@ -1,4 +1,4 @@
-export type CategorySlug = "manutencao" | "dicas" | "alertas" | "novidades" | "financeiro" | "burocracia";
+export type CategorySlug = "manutencao" | "dicas" | "alertas" | "novidades" | "financeiro" | "burocracia" | "seguranca" | "comparativos" | "protecao";
 
 export interface CategoryDef {
   slug: CategorySlug;
@@ -43,6 +43,24 @@ export const CATEGORIES: Record<CategorySlug, CategoryDef> = {
     label: "Documentação",
     description: "Transferência, vistoria, recall, multas e toda a papelada do veículo.",
     coverImage: "/photos/burocracia.jpg",
+  },
+  seguranca: {
+    slug: "seguranca",
+    label: "Segurança",
+    description: "Dicas de direção segura, equipamentos e prevenção de acidentes.",
+    coverImage: "/photos/seguranca.jpg",
+  },
+  comparativos: {
+    slug: "comparativos",
+    label: "Comparativos",
+    description: "Side a side entre modelos, combustíveis e opções do mercado.",
+    coverImage: "/photos/comparativos.jpg",
+  },
+  protecao: {
+    slug: "protecao",
+    label: "Proteção Veicular",
+    description: "Como funciona a proteção veicular, o que protege e quanto custa.",
+    coverImage: "/photos/protecao.jpg",
   },
 };
 
