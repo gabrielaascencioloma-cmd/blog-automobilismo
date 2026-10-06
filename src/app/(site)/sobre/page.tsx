@@ -1,6 +1,6 @@
 import React from "react";
 import type { Metadata } from "next";
-import { Wrench, ListChecks, TriangleAlert, CalendarClock, DollarSign, FileText } from "lucide-react";
+import { Wrench, ListChecks, TriangleAlert, CalendarClock, DollarSign, FileText, Shield, BarChart2, ShieldPlus } from "lucide-react";
 import { CATEGORIES, type CategorySlug } from "@/lib/categories";
 
 export const metadata: Metadata = {
@@ -9,12 +9,15 @@ export const metadata: Metadata = {
 };
 
 const CATEGORY_ICONS: Record<CategorySlug, React.ElementType> = {
-  manutencao: Wrench,
-  dicas:      ListChecks,
-  alertas:    TriangleAlert,
-  novidades:  CalendarClock,
-  financeiro: DollarSign,
-  burocracia: FileText,
+  manutencao:   Wrench,
+  dicas:        ListChecks,
+  alertas:      TriangleAlert,
+  novidades:    CalendarClock,
+  financeiro:   DollarSign,
+  burocracia:   FileText,
+  seguranca:    Shield,
+  comparativos: BarChart2,
+  protecao:     ShieldPlus,
 };
 
 export default function SobrePage() {

@@ -2,12 +2,15 @@ import Link from "next/link";
 import { CATEGORIES, type CategorySlug } from "@/lib/categories";
 
 const PILL: Record<CategorySlug, string> = {
-  manutencao: "bg-red/10 text-red",
-  dicas:      "bg-blue-100 text-blue-700",
-  alertas:    "bg-amber-100 text-amber-700",
-  novidades:  "bg-emerald-100 text-emerald-700",
-  financeiro: "bg-violet-100 text-violet-700",
-  burocracia: "bg-orange-100 text-orange-700",
+  manutencao:   "bg-red/10 text-red",
+  dicas:        "bg-blue-100 text-blue-700",
+  alertas:      "bg-amber-100 text-amber-700",
+  novidades:    "bg-emerald-100 text-emerald-700",
+  financeiro:   "bg-violet-100 text-violet-700",
+  burocracia:   "bg-orange-100 text-orange-700",
+  seguranca:    "bg-teal-100 text-teal-700",
+  comparativos: "bg-sky-100 text-sky-700",
+  protecao:     "bg-green-100 text-green-700",
 };
 
 export function CategoryBadge({
