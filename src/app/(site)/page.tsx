@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight, Wrench, ListChecks, TriangleAlert, CalendarClock, Search, Banknote, FileText, Shield, BarChart2, ShieldPlus } from "lucide-react";
 import { getAllPosts } from "@/lib/data/posts";
