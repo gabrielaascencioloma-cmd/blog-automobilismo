@@ -3,8 +3,7 @@
 import { useState } from "react";
 import { Download, CheckCircle, BookOpen, Wrench, DollarSign, Shield, AlertTriangle } from "lucide-react";
 
-// ⬇️ ATUALIZAR com a URL do Vercel Blob após upload do PDF
-const EBOOK_PDF_URL = process.env.NEXT_PUBLIC_EBOOK_PDF_URL ?? "#sem-pdf";
+const EBOOK_PDF_URL = "/ebooks/beaba-da-manutencao.pdf";
 
 function formatPhone(value: string) {
   const digits = value.replace(/\D/g, "").slice(0, 11);
