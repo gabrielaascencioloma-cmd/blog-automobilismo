@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Font Preview</title>
+<style>
+  @font-face { font-family: 'Gerny'; src: url('/fonts/Gerny.otf'); }
+  @font-face { font-family: 'LemonDrink'; src: url('/fonts/LemonDrink.otf'); }
+  @font-face { font-family: 'Aminute'; src: url('/fonts/Aminute.otf'); }
+  @font-face { font-family: 'OldportScript'; src: url('/fonts/OldportScript.otf'); }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #0e1012; color: #edeae2; font-family: system-ui,sans-serif; padding: 40px 32px; }
+  .label { font-size: 11px; letter-spacing: .15em; text-transform: uppercase; color: #5a6470; margin-bottom: 10px; }
+  .block { margin-bottom: 52px; border-bottom: 1px solid #1e2226; padding-bottom: 40px; }
+  .big { font-size: 56px; line-height: 1.05; margin-bottom: 10px; }
+  .mid { font-size: 22px; margin-bottom: 6px; opacity: .75; }
+  .small { font-size: 13px; opacity: .45; }
+
+  .divider { border: none; border-top: 1px solid #272d32; margin: 52px 0; }
+  .section-title { font-size: 13px; color: #9ba5af; margin-bottom: 24px; }
+
+  .palettes { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .palette { border-radius: 14px; overflow: hidden; border: 1px solid #272d32; }
+  .pal-label { padding: 12px 18px; font-size: 11px; font-weight: 600; letter-spacing: .06em; color: #9ba5af; background: #171b1e; text-transform: uppercase; }
+  .swatches { display: flex; height: 64px; }
+  .swatch { flex: 1; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 7px; font-size: 9px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+  .card { padding: 18px; }
+  .card h3 { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+  .card p { font-size: 12px; opacity: .65; margin-bottom: 12px; }
+  .tag { display: inline-block; padding: 3px 10px; border-radius: 100px; font-size: 10px; font-weight: 700; margin-right: 5px; }
+
+  /* Paleta A */
+  .pal-a .card { background: #fffdf5; color: #1a1a1a; }
+  .pal-a h3 { color: #1a1a1a; }
+  .pal-a p { color: #555; }
+  .pal-a .t1 { background: #e85d04; color: #fff; }
+  .pal-a .t2 { background: #1d3a8a; color: #fff; }
+  .pal-a .t3 { background: #fffdf5; color: #1a1a1a; border: 1px solid #ccc; }
+
+  /* Paleta B */
+  .pal-b .card { background: #111; color: #f0f0f0; }
+  .pal-b h3 { color: #f0f0f0; }
+  .pal-b p { color: #aaa; }
+  .pal-b .t1 { background: #c0c0c0; color: #111; }
+  .pal-b .t2 { background: #f0f0f0; color: #111; }
+  .pal-b .t3 { background: #333; color: #c0c0c0; }
+</style>
+</head>
+<body>
+
+<p class="section-title" style="margin-bottom:36px">Preview de fontes · Carro em Dia</p>
+
+<div class="block">
+  <div class="label">01 · Gerny</div>
+  <div class="big" style="font-family:'Gerny'">Carro em Dia</div>
+  <div class="mid" style="font-family:'Gerny'">Manutenção, dicas e alertas para o seu carro</div>
+  <div class="small">Texto corrido do post em fonte sistema</div>
+</div>
+
+<div class="block">
+  <div class="label">02 · Lemon Drink</div>
+  <div class="big" style="font-family:'LemonDrink'">Carro em Dia</div>
+  <div class="mid" style="font-family:'LemonDrink'">Manutenção, dicas e alertas para o seu carro</div>
+  <div class="small">Texto corrido do post em fonte sistema</div>
+</div>
+
+<div class="block">
+  <div class="label">03 · Aminute</div>
+  <div class="big" style="font-family:'Aminute'">Carro em Dia</div>
+  <div class="mid" style="font-family:'Aminute'">Manutenção, dicas e alertas para o seu carro</div>
+  <div class="small">Texto corrido do post em fonte sistema</div>
+</div>
+
+<div class="block" style="border-bottom:none">
+  <div class="label">04 · Oldport Script</div>
+  <div class="big" style="font-family:'OldportScript'">Carro em Dia</div>
+  <div class="mid" style="font-family:'OldportScript'">Manutenção, dicas e alertas para o seu carro</div>
+  <div class="small">Texto corrido do post em fonte sistema</div>
+</div>
+
+<hr class="divider">
+
+<p class="section-title">Comparativo de paletas</p>
+
+<div class="palettes">
+  <div class="palette pal-a">
+    <div class="pal-label">A · Laranja · Azul · Creme</div>
+    <div class="swatches">
+      <div class="swatch" style="background:#e85d04;color:#fff">laranja</div>
+      <div class="swatch" style="background:#1d3a8a;color:#fff">azul</div>
+      <div class="swatch" style="background:#fffdf5;color:#888">creme</div>
+      <div class="swatch" style="background:#1a1a1a;color:#fffdf5">escuro</div>
+    </div>
+    <div class="card">
+      <h3>Pneu Careca</h3>
+      <p>Saiba quando trocar antes que vire problema</p>
+      <span class="tag t1">MANUTENÇÃO</span>
+      <span class="tag t2">ALERTAS</span>
+      <span class="tag t3">DICAS</span>
+    </div>
+  </div>
+
+  <div class="palette pal-b">
+    <div class="pal-label">B · Preto · Prata · Branco</div>
+    <div class="swatches">
+      <div class="swatch" style="background:#111;color:#999">preto</div>
+      <div class="swatch" style="background:#c0c0c0;color:#333">prata</div>
+      <div class="swatch" style="background:#f0f0f0;color:#555">branco</div>
+      <div class="swatch" style="background:#333;color:#c0c0c0">grafite</div>
+    </div>
+    <div class="card">
+      <h3>Pneu Careca</h3>
+      <p>Saiba quando trocar antes que vire problema</p>
+      <span class="tag t1">MANUTENÇÃO</span>
+      <span class="tag t2">ALERTAS</span>
+      <span class="tag t3">DICAS</span>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
