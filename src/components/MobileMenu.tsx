@@ -24,13 +24,13 @@ export function MobileMenu() {
       <button
         aria-label={open ? "Fechar menu" : "Abrir menu"}
         onClick={() => (open ? close() : setOpen(true))}
-        className="flex items-center justify-center rounded-md p-2 text-ink-soft transition-colors hover:text-ink lg:hidden"
+        className="flex items-center justify-center rounded-full p-2 text-white/80 transition-colors hover:bg-white/10 hover:text-white lg:hidden"
       >
         {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
       </button>
 
       {open && (
-        <div className="absolute left-0 top-full z-50 max-h-[calc(100vh-4.5rem)] w-full overflow-y-auto border-b border-border-subtle bg-surface shadow-lg lg:hidden">
+        <div className="absolute left-0 top-full z-50 mt-2 max-h-[calc(100vh-5.5rem)] w-full overflow-y-auto rounded-2xl border border-border-subtle bg-surface shadow-2xl lg:hidden">
           <nav className="mx-auto flex max-w-6xl flex-col px-6 py-4">
             {MENU_TOPICS.map((topic) => {
               const isExpanded = expanded === topic.slug;

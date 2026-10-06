@@ -28,6 +28,9 @@ enum Category {
   protecao
   financeiro
   burocracia
+  seguranca
+  comparativos
+  protecao
 }
 
 model Lead {
@@ -55,6 +58,7 @@ model Post {
   excerpt     String
   contentHtml String     @db.Text
   category    Category
+  subcategory String?
   coverUrl    String?
   coverType   CoverType  @default(IMAGE)
   subcategory String?

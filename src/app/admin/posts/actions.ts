@@ -32,7 +32,8 @@ function parsePublishing(formData: FormData) {
   }
   if (publishing === "schedule") {
     const scheduledFor = String(formData.get("scheduledFor"));
-    return { status: "PUBLISHED" as const, publishAt: new Date(scheduledFor) };
+    return { status: "PUBLISHED" as const, // O campo vem sem fuso (datetime-local): interpreta como horário de Brasília (UTC-3, sem horário de verão).
+    publishAt: new Date(`${scheduledFor}-03:00`) };
   }
   return { status: "PUBLISHED" as const, publishAt: new Date() };
 }
@@ -42,8 +43,10 @@ export async function createPost(
   formData: FormData
 ): Promise<PostFormState> {
   const title = String(formData.get("title") ?? "").trim();
+  const customSlug = slugify(String(formData.get("slug") ?? ""));
   const excerpt = String(formData.get("excerpt") ?? "").trim();
   const category = String(formData.get("category")) as CategorySlug;
+  const subcategory = String(formData.get("subcategory") ?? "") || null;
   const contentHtml = String(formData.get("contentHtml") ?? "");
   const coverUrl = String(formData.get("coverUrl") ?? "") || null;
   const coverType = (String(formData.get("coverType") ?? "IMAGE")) as "IMAGE" | "VIDEO";
@@ -53,10 +56,10 @@ export async function createPost(
   }
 
   const { status, publishAt } = parsePublishing(formData);
-  const slug = await uniqueSlug(title);
+  const slug = await uniqueSlug(customSlug || title);
 
   await prisma.post.create({
-    data: { slug, title, excerpt, category, contentHtml, coverUrl, coverType, status, publishAt },
+    data: { slug, title, excerpt, category, subcategory, contentHtml, coverUrl, coverType, status, publishAt },
   });
 
   revalidatePath("/");
@@ -70,8 +73,10 @@ export async function updatePost(
   formData: FormData
 ): Promise<PostFormState> {
   const title = String(formData.get("title") ?? "").trim();
+  const customSlug = slugify(String(formData.get("slug") ?? ""));
   const excerpt = String(formData.get("excerpt") ?? "").trim();
   const category = String(formData.get("category")) as CategorySlug;
+  const subcategory = String(formData.get("subcategory") ?? "") || null;
   const contentHtml = String(formData.get("contentHtml") ?? "");
   const coverUrl = String(formData.get("coverUrl") ?? "") || null;
   const coverType = (String(formData.get("coverType") ?? "IMAGE")) as "IMAGE" | "VIDEO";
@@ -82,12 +87,16 @@ export async function updatePost(
 
   const existing = await prisma.post.findUniqueOrThrow({ where: { id: postId } });
   const { status, publishAt } = parsePublishing(formData);
-  const slug =
-    title === existing.title ? existing.slug : await uniqueSlug(title, postId);
+  // Endereço: o campo manda; em branco, mantém o atual (ou gera pelo título se ele mudou).
+  const slug = customSlug
+    ? await uniqueSlug(customSlug, postId)
+    : title === existing.title
+      ? existing.slug
+      : await uniqueSlug(title, postId);
 
   await prisma.post.update({
     where: { id: postId },
-    data: { slug, title, excerpt, category, contentHtml, coverUrl, coverType, status, publishAt },
+    data: { slug, title, excerpt, category, subcategory, contentHtml, coverUrl, coverType, status, publishAt },
   });
 
   revalidatePath("/");

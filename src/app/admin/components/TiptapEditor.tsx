@@ -1,7 +1,12 @@
 "use client";
 
+import { useRef, useState } from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+import Image from "@tiptap/extension-image";
+import { Table, TableRow, TableHeader, TableCell } from "@tiptap/extension-table";
+import { upload } from "@vercel/blob/client";
+import { toWebp } from "../lib/toWebp";
 import {
   Bold as BoldIcon,
   Heading2,
@@ -10,6 +15,9 @@ import {
   ListOrdered,
   LinkIcon,
   ShieldPlus,
+  ImagePlus,
+  Loader2,
+  Table2,
   Undo2,
   Redo2,
 } from "lucide-react";
@@ -52,6 +60,11 @@ export function TiptapEditor({
     extensions: [
       StarterKit.configure({ link: { openOnClick: false } }),
       CalloutNode,
+      Image,
+      Table,
+      TableRow,
+      TableHeader,
+      TableCell,
     ],
     content: initialContent,
     editorProps: {
@@ -61,6 +74,33 @@ export function TiptapEditor({
     },
     onUpdate: ({ editor }) => onChange(editor.getHTML()),
   });
+
+  const fileRef = useRef<HTMLInputElement>(null);
+  const [uploading, setUploading] = useState(false);
+  const [uploadError, setUploadError] = useState<string | null>(null);
+
+  async function handleImages(e: React.ChangeEvent<HTMLInputElement>) {
+    const files = Array.from(e.target.files ?? []);
+    e.target.value = "";
+    if (!editor || files.length === 0) return;
+    setUploading(true);
+    setUploadError(null);
+    try {
+      for (const picked of files) {
+        const file = await toWebp(picked);
+        const blob = await upload(file.name, file, {
+          access: "public",
+          handleUploadUrl: "/admin/api/upload",
+        });
+        const alt = window.prompt(`Texto alternativo (ALT) para ${file.name}:`, "") ?? "";
+        editor.chain().focus().setImage({ src: blob.url, alt }).run();
+      }
+    } catch (err) {
+      setUploadError(err instanceof Error ? err.message : "Falha no upload.");
+    } finally {
+      setUploading(false);
+    }
+  }
 
   if (!editor) return null;
 
@@ -128,6 +168,23 @@ export function TiptapEditor({
         >
           <ShieldPlus className="h-4 w-4" />
         </ToolbarButton>
+        <ToolbarButton label="Inserir imagem" onClick={() => fileRef.current?.click()}>
+          {uploading ? <Loader2 className="h-4 w-4 animate-spin" /> : <ImagePlus className="h-4 w-4" />}
+        </ToolbarButton>
+        <ToolbarButton
+          label="Inserir tabela"
+          onClick={() => editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run()}
+        >
+          <Table2 className="h-4 w-4" />
+        </ToolbarButton>
+        <input
+          ref={fileRef}
+          type="file"
+          accept="image/jpeg,image/png,image/webp,image/gif"
+          multiple
+          className="hidden"
+          onChange={handleImages}
+        />
         <div className="mx-1 w-px bg-white/10" />
         <ToolbarButton label="Desfazer" onClick={() => editor.chain().focus().undo().run()}>
           <Undo2 className="h-4 w-4" />
@@ -136,6 +193,7 @@ export function TiptapEditor({
           <Redo2 className="h-4 w-4" />
         </ToolbarButton>
       </div>
+      {uploadError && <p className="bg-red-500/10 px-3 py-2 text-xs text-red-400">{uploadError}</p>}
       {/* Área de escrita clara, igual ao post no site */}
       <div className="bg-white px-5 py-4 text-ink">
         <EditorContent editor={editor} />

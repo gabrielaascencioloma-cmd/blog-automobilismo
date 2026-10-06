@@ -2,7 +2,8 @@
 
 import { useActionState, useState } from "react";
 import { Send, CalendarClock, FileEdit, Save } from "lucide-react";
-import { CATEGORY_LIST } from "@/lib/categories";
+import { ADMIN_CATEGORY_OPTIONS, CATEGORIES } from "@/lib/categories";
+import { findTopic } from "@/lib/menu";
 import { TiptapEditor } from "./TiptapEditor";
 import { MediaUploader } from "./MediaUploader";
 import type { PostFormState } from "../posts/actions";
@@ -10,8 +11,10 @@ import { card, input, label, btnPrimary } from "./ui";
 
 export interface PostFormInitialValues {
   title: string;
+  slug?: string;
   excerpt: string;
   category: string;
+  subcategory?: string | null;
   contentHtml: string;
   coverUrl: string | null;
   coverType: "IMAGE" | "VIDEO";
@@ -33,9 +36,22 @@ function initialPublishingMode(post?: PostFormInitialValues): PublishingMode {
   return post.publishAt > new Date() ? "schedule" : "now";
 }
 
+// Sempre no horário de Brasília, igual ao que a action salva (evita diferença entre servidor UTC e navegador).
 function toDatetimeLocal(date: Date) {
-  const pad = (n: number) => String(n).padStart(2, "0");
-  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+  const p = Object.fromEntries(
+    new Intl.DateTimeFormat("en-CA", {
+      timeZone: "America/Sao_Paulo",
+      hourCycle: "h23",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+    })
+      .formatToParts(date)
+      .map((x) => [x.type, x.value])
+  );
+  return `${p.year}-${p.month}-${p.day}T${p.hour}:${p.minute}`;
 }
 
 export function PostForm({
@@ -51,6 +67,10 @@ export function PostForm({
     post?.coverUrl ? { url: post.coverUrl, type: post.coverType } : null
   );
   const [publishing, setPublishing] = useState(initialPublishingMode(post));
+  const [category, setCategory] = useState(post?.category ?? "");
+  const [subcategory, setSubcategory] = useState(post?.subcategory ?? "");
+  const topicSlug = ADMIN_CATEGORY_OPTIONS.find((c) => c.slug === category)?.topicSlug;
+  const subtopics = findTopic(topicSlug)?.subtopics ?? [];
 
   return (
     <form action={formAction} className="space-y-4">
@@ -65,6 +85,17 @@ export function PostForm({
             Título
           </label>
           <input id="title" name="title" required defaultValue={post?.title} className={input} />
+          <label htmlFor="slug" className={`${label} mt-4 block`}>
+            Endereço (slug)
+          </label>
+          <input
+            id="slug"
+            name="slug"
+            defaultValue={post?.slug}
+            placeholder="Em branco: gerado pelo título"
+            className={input}
+          />
+          <p className="mt-1 text-xs text-zinc-500">Vira /blog/endereço. Só letras minúsculas, números e hífens.</p>
         </div>
 
         <div>
@@ -86,13 +117,46 @@ export function PostForm({
             <label htmlFor="category" className={label}>
               Categoria
             </label>
-            <select id="category" name="category" required defaultValue={post?.category ?? ""} className={input}>
+            <select
+              id="category"
+              name="category"
+              required
+              value={category}
+              onChange={(e) => {
+                setCategory(e.target.value);
+                setSubcategory("");
+              }}
+              className={input}
+            >
               <option value="" disabled>
                 Selecione…
               </option>
-              {CATEGORY_LIST.map((c) => (
+              {ADMIN_CATEGORY_OPTIONS.map((c) => (
                 <option key={c.slug} value={c.slug}>
                   {c.label}
+                </option>
+              ))}
+              {post?.category && !ADMIN_CATEGORY_OPTIONS.some((c) => c.slug === post.category) && (
+                <option value={post.category}>{CATEGORIES[post.category as keyof typeof CATEGORIES]?.label ?? post.category}</option>
+              )}
+            </select>
+          </div>
+          <div>
+            <label htmlFor="subcategory" className={label}>
+              Subcategoria
+            </label>
+            <select
+              id="subcategory"
+              name="subcategory"
+              value={subcategory}
+              onChange={(e) => setSubcategory(e.target.value)}
+              disabled={subtopics.length === 0}
+              className={input}
+            >
+              <option value="">{subtopics.length === 0 ? "Escolha a categoria primeiro" : "Nenhuma"}</option>
+              {subtopics.map((s) => (
+                <option key={s.slug} value={s.slug}>
+                  {s.label}
                 </option>
               ))}
             </select>

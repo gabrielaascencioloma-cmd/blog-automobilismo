@@ -8,9 +8,9 @@ const PILL: Record<CategorySlug, string> = {
   novidades:    "bg-emerald-100 text-emerald-700",
   financeiro:   "bg-violet-100 text-violet-700",
   burocracia:   "bg-orange-100 text-orange-700",
-  seguranca:    "bg-teal-100 text-teal-700",
-  comparativos: "bg-sky-100 text-sky-700",
-  protecao:     "bg-green-100 text-green-700",
+  seguranca:    "bg-red/10 text-red",
+  comparativos: "bg-cyan-100 text-cyan-700",
+  protecao:     "bg-emerald-100 text-emerald-700",
 };
 
 export function CategoryBadge({

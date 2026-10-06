@@ -3,6 +3,9 @@
 import { useEffect, useState } from "react";
 import { X, ShieldCheck, ChevronRight } from "lucide-react";
 
+// Disparado por botões do site para abrir a avaliação na hora.
+export const OPEN_LEAD_POPUP_EVENT = "open-lead-popup";
+
 type Step = "hidden" | "question" | "verificacao" | "form" | "success";
 
 const PROTECOES = [
@@ -23,10 +26,28 @@ export function LeadPopup() {
   const [outraProtecao, setOutraProtecao] = useState("");
 
   useEffect(() => {
+    const openNow = () => setStep("question");
+    window.addEventListener(OPEN_LEAD_POPUP_EVENT, openNow);
+    return () => window.removeEventListener(OPEN_LEAD_POPUP_EVENT, openNow);
+  }, []);
+
+  useEffect(() => {
     if (sessionStorage.getItem("lead_shown")) return;
     const t = setTimeout(() => setStep("question"), 30000);
     return () => clearTimeout(t);
   }, []);
+
+  useEffect(() => {
+    if (step === "hidden") return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && dismiss();
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = previous;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [step]);
 
   function dismiss() {
     sessionStorage.setItem("lead_shown", "1");
@@ -81,21 +102,30 @@ export function LeadPopup() {
   const podeConfirmar = !loading && (!!protecao || !!outraProtecao.trim());
 
   return (
-    <div className="fixed bottom-6 right-6 z-[100] flex w-[300px] flex-col rounded-2xl border border-border-subtle bg-surface shadow-2xl"
-      style={{ maxHeight: "calc(100vh - 100px)" }}>
+    <div
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
+      onClick={(e) => e.target === e.currentTarget && dismiss()}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Avaliação gratuita"
+    >
+    <div className="lead-pop flex w-full max-w-md flex-col overflow-hidden rounded-3xl border border-white/60 bg-surface shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6)]"
+      style={{ maxHeight: "calc(100vh - 2rem)" }}>
 
       {/* Header fixo */}
-      <div className="flex flex-shrink-0 items-center gap-2 border-b border-border-subtle px-4 py-3">
-        <ShieldCheck className="h-4 w-4 text-red" />
-        <span className="text-xs font-semibold uppercase tracking-widest text-ink-soft">
+      <div className="flex flex-shrink-0 items-center gap-2.5 border-b border-border-subtle px-6 py-4">
+        <span className="flex h-8 w-8 items-center justify-center rounded-full bg-red/10">
+          <ShieldCheck className="h-4 w-4 text-red" />
+        </span>
+        <span className="font-nav text-xs font-bold uppercase tracking-widest text-ink-soft">
           Avaliação gratuita
         </span>
         <button
           onClick={dismiss}
           aria-label="Fechar"
-          className="ml-auto rounded-full p-1 text-ink-faint transition-colors hover:text-ink"
+          className="ml-auto rounded-full p-1.5 text-ink-faint transition-colors hover:bg-black/5 hover:text-ink"
         >
-          <X className="h-3.5 w-3.5" />
+          <X className="h-4 w-4" />
         </button>
       </div>
 
@@ -104,21 +134,21 @@ export function LeadPopup() {
 
         {/* Etapa 1 — pergunta inicial */}
         {step === "question" && (
-          <div className="px-4 py-5">
-            <p className="text-sm font-bold leading-snug text-ink">
+          <div className="px-6 py-7">
+            <p className="font-display text-2xl font-black uppercase leading-tight text-ink">
               Seu carro tem proteção?
             </p>
-            <p className="mt-1 text-xs text-ink-soft">Responda em segundos</p>
-            <div className="mt-4 flex flex-col gap-2">
+            <p className="mt-2 text-sm text-ink-soft">Responda em segundos e receba uma avaliação gratuita.</p>
+            <div className="mt-6 flex flex-col gap-2.5">
               <button
                 onClick={() => setStep("verificacao")}
-                className="w-full rounded-xl border border-border-subtle px-3 py-2.5 text-xs font-semibold text-ink-soft transition-colors hover:border-red/30 hover:text-ink"
+                className="btn-3d-light w-full rounded-full px-4 py-3.5 text-sm font-semibold"
               >
                 Sim, já tenho proteção
               </button>
               <button
                 onClick={() => setStep("form")}
-                className="flex w-full items-center justify-center gap-1 rounded-xl bg-red px-3 py-2.5 text-xs font-bold text-white transition-colors hover:bg-red-dark"
+                className="btn-3d flex w-full items-center justify-center gap-1 rounded-full px-4 py-3.5 text-sm font-bold"
               >
                 Não tenho — quero cotar
                 <ChevronRight className="h-3.5 w-3.5" />
@@ -129,18 +159,18 @@ export function LeadPopup() {
 
         {/* Etapa Sim — qual proteção tem */}
         {step === "verificacao" && (
-          <div className="px-4 py-4">
-            <p className="text-sm font-bold leading-snug text-ink">
+          <div className="px-6 py-6">
+            <p className="font-display text-2xl font-black uppercase leading-tight text-ink">
               Você tem seguro/proteção pronto?
             </p>
-            <p className="mb-3 mt-1 text-xs text-ink-soft">Selecione sua proteção atual</p>
+            <p className="mb-4 mt-2 text-sm text-ink-soft">Selecione sua proteção atual</p>
             <div className="flex flex-col gap-1.5">
               {PROTECOES.map((p) => (
                 <button
                   key={p}
                   type="button"
                   onClick={() => { setProtecao(p); setOutraProtecao(""); }}
-                  className={`w-full rounded-lg border px-3 py-2 text-left text-xs font-semibold transition-colors ${
+                  className={`w-full rounded-xl border px-4 py-2.5 text-left text-sm font-semibold transition-colors ${
                     protecao === p
                       ? "border-red bg-red/10 text-ink"
                       : "border-border-subtle text-ink-soft hover:border-red/30 hover:text-ink"
@@ -154,14 +184,14 @@ export function LeadPopup() {
                 placeholder="Outra — qual?"
                 value={outraProtecao}
                 onChange={(e) => { setOutraProtecao(e.target.value); setProtecao(""); }}
-                className="mt-1 w-full rounded-lg border border-border-subtle bg-surface-2 px-3 py-2 text-xs text-ink placeholder-ink-faint outline-none transition-colors focus:border-red/50"
+                className="mt-1 w-full rounded-xl border border-border-subtle bg-surface-2 px-4 py-2.5 text-sm text-ink placeholder-ink-faint outline-none transition-colors focus:border-red/50"
               />
             </div>
             <button
               type="button"
               onClick={handleSubmitVerificacao}
               disabled={!podeConfirmar}
-              className="mt-3 w-full rounded-xl bg-red px-3 py-2.5 text-xs font-bold text-white transition-colors hover:bg-red-dark disabled:cursor-not-allowed disabled:opacity-40"
+              className="btn-3d mt-4 w-full rounded-full px-4 py-3.5 text-sm font-bold"
             >
               {loading ? "Enviando..." : "Confirmar →"}
             </button>
@@ -170,8 +200,8 @@ export function LeadPopup() {
 
         {/* Etapa Não — formulário cotação */}
         {step === "form" && (
-          <form onSubmit={handleSubmitCotacao} className="px-4 py-5">
-            <p className="mb-4 text-sm font-bold text-ink">
+          <form onSubmit={handleSubmitCotacao} className="px-6 py-7">
+            <p className="mb-5 font-display text-2xl font-black uppercase leading-tight text-ink">
               Receba sua cotação gratuita
             </p>
             {[
@@ -179,8 +209,8 @@ export function LeadPopup() {
               { id: "telefone", label: "WhatsApp", placeholder: "(11) 99999-9999", type: "tel" },
               { id: "placa", label: "Placa", placeholder: "ABC1234", type: "text" },
             ].map(({ id, label, placeholder, type }) => (
-              <div key={id} className="mb-3">
-                <label className="mb-1 block text-[10px] font-bold uppercase tracking-wide text-ink-soft">
+              <div key={id} className="mb-4">
+                <label className="mb-1.5 block text-[11px] font-bold uppercase tracking-wide text-ink-soft">
                   {label}
                 </label>
                 <input
@@ -191,17 +221,17 @@ export function LeadPopup() {
                     setForm((f) => ({ ...f, [id]: e.target.value }));
                     setErrors((er) => ({ ...er, [id]: "" }));
                   }}
-                  className="w-full rounded-lg border border-border-subtle bg-surface-2 px-3 py-2 text-xs text-ink placeholder-ink-faint outline-none transition-colors focus:border-red/50"
+                  className="w-full rounded-xl border border-border-subtle bg-surface-2 px-4 py-3 text-sm text-ink placeholder-ink-faint outline-none transition-colors focus:border-red/50"
                 />
                 {errors[id] && (
-                  <p className="mt-0.5 text-[10px] text-red-bright">{errors[id]}</p>
+                  <p className="mt-1 text-xs text-red-bright">{errors[id]}</p>
                 )}
               </div>
             ))}
             <button
               type="submit"
               disabled={loading}
-              className="mt-1 w-full rounded-xl bg-red px-3 py-2.5 text-xs font-bold text-white transition-colors hover:bg-red-dark disabled:opacity-60"
+              className="btn-3d mt-2 w-full rounded-full px-4 py-3.5 text-sm font-bold"
             >
               {loading ? "Enviando..." : "Quero minha cotação →"}
             </button>
@@ -210,14 +240,15 @@ export function LeadPopup() {
 
         {/* Sucesso */}
         {step === "success" && (
-          <div className="px-4 py-6 text-center">
-            <ShieldCheck className="mx-auto mb-2 h-7 w-7 text-red" />
-            <p className="text-sm font-bold text-ink">Recebemos sua resposta!</p>
-            <p className="mt-1 text-xs text-ink-soft">Obrigado pela informação.</p>
+          <div className="px-6 py-10 text-center">
+            <ShieldCheck className="mx-auto mb-3 h-10 w-10 text-red" />
+            <p className="font-display text-xl font-black uppercase text-ink">Recebemos sua resposta!</p>
+            <p className="mt-2 text-sm text-ink-soft">Obrigado pela informação.</p>
           </div>
         )}
 
       </div>
+    </div>
     </div>
   );
 }

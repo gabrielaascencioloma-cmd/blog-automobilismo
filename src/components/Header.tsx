@@ -1,35 +1,39 @@
 import { Logo } from "./Logo";
 import { DesktopNav } from "./DesktopNav";
 import { MobileMenu } from "./MobileMenu";
+import { HeaderShell } from "./HeaderShell";
 import { Search } from "lucide-react";
+import { getMenuHighlights } from "@/lib/data/posts";
 
-export function Header() {
+export async function Header() {
+  const highlights = await getMenuHighlights();
+
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-black backdrop-blur-md">
-      <div className="relative mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-4 lg:gap-10 wide:gap-12">
-        <Logo inverted compact className="shrink-0" />
+    <HeaderShell>
+      <Logo inverted compact className="shrink-0" />
 
-        <DesktopNav />
+      <DesktopNav highlights={highlights} />
 
-        <div className="flex items-center gap-2">
-          <form action="/blog" method="get" className="hidden items-stretch sm:inline-flex lg:hidden xl:inline-flex">
+      <div className="flex items-center gap-2">
+        <form action="/blog" method="get" className="hidden items-center sm:inline-flex lg:hidden xl:inline-flex">
+          <div className="flex items-center rounded-full bg-white p-1 pl-4 shadow-[inset_0_1px_2px_rgba(0,0,0,0.12)]">
             <input
               type="search"
               name="q"
               placeholder="Pesquise por palavra-chave..."
-              className="w-40 rounded-l-full border border-r-0 border-white bg-white py-2 pl-4 pr-2 text-xs text-ink placeholder-ink-faint outline-none transition-all focus:w-52"
+              className="w-36 bg-transparent py-1 pr-2 font-nav text-xs text-ink placeholder-ink-faint outline-none transition-all focus:w-48"
             />
             <button
               type="submit"
-              className="rounded-r-full bg-red px-3 py-2 text-white transition-colors hover:bg-red-dark"
+              className="btn-3d flex h-8 w-8 items-center justify-center rounded-full"
               aria-label="Pesquisar"
             >
-              <Search className="h-4 w-4" />
+              <Search className="h-3.5 w-3.5" />
             </button>
-          </form>
-          <MobileMenu />
-        </div>
+          </div>
+        </form>
+        <MobileMenu />
       </div>
-    </header>
+    </HeaderShell>
   );
 }
