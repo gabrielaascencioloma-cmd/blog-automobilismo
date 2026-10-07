@@ -3,7 +3,6 @@
 import { useRef, useState } from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import Image from "@tiptap/extension-image";
 import { Table, TableRow, TableHeader, TableCell } from "@tiptap/extension-table";
 import { upload } from "@vercel/blob/client";
 import { toWebp } from "../lib/toWebp";
@@ -22,6 +21,8 @@ import {
   Redo2,
 } from "lucide-react";
 import { CalloutNode } from "./tiptap/CalloutNode";
+import { BlockMover, ImageBlock } from "./tiptap/blocks";
+import { BlockControls } from "./tiptap/BlockControls";
 
 function ToolbarButton({
   onClick,
@@ -39,8 +40,10 @@ function ToolbarButton({
       type="button"
       title={label}
       onClick={onClick}
-      className={`flex h-8 w-8 items-center justify-center rounded-lg transition-colors ${
-        active ? "bg-emerald-500/15 text-emerald-400" : "text-zinc-400 hover:bg-white/[0.07] hover:text-white"
+      className={`flex h-9 w-9 items-center justify-center rounded-xl transition-all ${
+        active
+          ? "bg-gradient-to-b from-emerald-400/25 to-emerald-500/10 text-emerald-300 shadow-[inset_0_1px_0_rgba(255,255,255,0.12)] ring-1 ring-emerald-400/30"
+          : "text-zinc-400 hover:bg-white/[0.07] hover:text-white"
       }`}
     >
       {children}
@@ -60,7 +63,8 @@ export function TiptapEditor({
     extensions: [
       StarterKit.configure({ link: { openOnClick: false } }),
       CalloutNode,
-      Image,
+      ImageBlock,
+      BlockMover,
       Table,
       TableRow,
       TableHeader,
@@ -69,13 +73,14 @@ export function TiptapEditor({
     content: initialContent,
     editorProps: {
       attributes: {
-        class: "prose-article min-h-[300px] max-w-none focus:outline-none",
+        class: "prose-article min-h-[480px] max-w-none focus:outline-none",
       },
     },
     onUpdate: ({ editor }) => onChange(editor.getHTML()),
   });
 
   const fileRef = useRef<HTMLInputElement>(null);
+  const [paper, setPaper] = useState<HTMLDivElement | null>(null);
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
 
@@ -105,8 +110,8 @@ export function TiptapEditor({
   if (!editor) return null;
 
   return (
-    <div className="overflow-hidden rounded-xl border border-white/10">
-      <div className="flex flex-wrap gap-1 border-b border-white/10 bg-[#101114] p-2">
+    <div className="overflow-hidden rounded-2xl border border-white/10 shadow-[0_20px_40px_-24px_rgba(0,0,0,0.9)]">
+      <div className="sticky top-0 z-10 flex flex-wrap items-center gap-1 border-b border-white/10 bg-gradient-to-b from-[#17181d] to-[#111215] p-2">
         <ToolbarButton
           label="Negrito"
           active={editor.isActive("bold")}
@@ -194,10 +199,14 @@ export function TiptapEditor({
         </ToolbarButton>
       </div>
       {uploadError && <p className="bg-red-500/10 px-3 py-2 text-xs text-red-400">{uploadError}</p>}
-      {/* Área de escrita clara, igual ao post no site */}
-      <div className="bg-white px-5 py-4 text-ink">
+      {/* Área de escrita clara, igual ao post no site. Cada bloco pode subir, descer, duplicar ou sair. */}
+      <div ref={setPaper} className="relative bg-white px-6 pb-8 pt-12 text-ink md:px-10 md:pb-10 md:pt-14">
         <EditorContent editor={editor} />
+        <BlockControls editor={editor} container={paper} />
       </div>
+      <p className="border-t border-white/10 bg-[#111215] px-4 py-2 text-[11px] text-zinc-500">
+        Clique num bloco para mover (↑ ↓ ou Alt+↑/↓), duplicar ou apagar. Imagens também podem ser arrastadas e têm tamanho e alinhamento.
+      </p>
     </div>
   );
 }

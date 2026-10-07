@@ -10,7 +10,7 @@ const NAV = [
   { href: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/admin/posts", label: "Posts", icon: FileText, exact: true },
   { href: "/admin/posts/new", label: "Novo post", icon: PenSquare },
-  { href: "/admin/leads", label: "Leads Loma", icon: Users, badgeKey: "leads" as const },
+  { href: "/admin/leads", label: "Leads", icon: Users, badgeKey: "leads" as const },
 ];
 
 function isActive(pathname: string, href: string, exact?: boolean) {
@@ -31,13 +31,14 @@ export function AdminSidebar({ email, leadCount }: { email: string; leadCount: n
       <Link
         key={item.href}
         href={item.href}
-        className={`group flex shrink-0 items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors ${
-          active
-            ? "bg-white/[0.07] text-white"
-            : "text-zinc-400 hover:bg-white/[0.04] hover:text-zinc-100"
+        // Ao passar o mouse, o item acende e os outros escurecem (mesmo efeito das barras do gráfico).
+        className={`group flex shrink-0 items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200 group-hover/nav:opacity-40 hover:translate-x-0.5 hover:bg-gradient-to-r hover:from-emerald-500/[0.16] hover:to-emerald-500/[0.02] hover:text-white hover:!opacity-100 hover:shadow-[inset_2px_0_0_#34d399,0_8px_24px_-12px_rgba(16,185,129,0.6)] ${
+          active ? "bg-white/[0.07] text-white" : "text-zinc-400"
         }`}
       >
-        <Icon className={`h-[18px] w-[18px] ${active ? "text-emerald-400" : "text-zinc-500 group-hover:text-zinc-300"}`} />
+        <Icon
+          className={`h-[18px] w-[18px] transition-colors group-hover:text-emerald-300 ${active ? "text-emerald-400" : "text-zinc-500"}`}
+        />
         <span className="flex-1">{item.label}</span>
         {item.badgeKey === "leads" && leadCount > 0 && (
           <span className="rounded-md bg-emerald-500/15 px-1.5 py-0.5 text-[11px] font-semibold text-emerald-400">
@@ -64,7 +65,7 @@ export function AdminSidebar({ email, leadCount }: { email: string; leadCount: n
         </Link>
 
         <p className="mt-8 px-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-600">Menu</p>
-        <nav className="mt-2 flex flex-col gap-1">{links}</nav>
+        <nav className="group/nav mt-2 flex flex-col gap-1">{links}</nav>
 
         <p className="mt-8 px-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-600">Site</p>
         <a

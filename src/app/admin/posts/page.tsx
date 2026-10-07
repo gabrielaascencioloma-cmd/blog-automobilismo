@@ -1,11 +1,7 @@
 import { prisma } from "@/lib/db";
-import { PostsView } from "../components/PostsView";
+import { PostsView, type PostsParams } from "../components/PostsView";
 
-export default async function AdminPostsPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ periodo?: string; de?: string; ate?: string }>;
-}) {
+export default async function AdminPostsPage({ searchParams }: { searchParams: Promise<PostsParams> }) {
   const params = await searchParams;
   const allPosts = await prisma.post.findMany({ orderBy: { updatedAt: "desc" } });
   return <PostsView allPosts={allPosts} params={params} />;
