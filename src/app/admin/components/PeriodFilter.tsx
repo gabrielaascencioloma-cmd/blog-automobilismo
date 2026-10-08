@@ -14,11 +14,14 @@ export function PeriodFilter({
   de,
   ate,
   basePath = "/admin/posts",
+  keep = {},
 }: {
   periodo: string;
   de: string;
   ate: string;
   basePath?: string;
+  // Outros filtros da página (status, busca…) que devem continuar ao trocar o período.
+  keep?: Record<string, string | undefined>;
 }) {
   const router = useRouter();
   const [mode, setMode] = useState(periodo);
@@ -26,7 +29,9 @@ export function PeriodFilter({
   const [to, setTo] = useState(ate);
 
   function go(params: Record<string, string>) {
-    const q = new URLSearchParams(params).toString();
+    const merged: Record<string, string> = {};
+    for (const [k, v] of Object.entries(keep)) if (v) merged[k] = v;
+    const q = new URLSearchParams({ ...merged, ...params }).toString();
     router.push(q ? `${basePath}?${q}` : basePath);
   }
 
