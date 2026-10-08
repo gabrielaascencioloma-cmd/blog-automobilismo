@@ -154,7 +154,7 @@ export default async function LeadsPage({
                 { key: undefined, label: `Todos · ${total}` },
                 { key: "cotacao", label: `Querem cotar · ${cotacoes}` },
                 { key: "verificacao", label: `Já têm proteção · ${verificacoes}` },
-                { key: "ark", label: `Canais ARK · ${arks}` },
+                { key: "ark", label: `Canais Dark · ${arks}` },
               ].map((t) => (
                 <a
                   key={t.label}
@@ -240,7 +240,7 @@ export default async function LeadsPage({
                           }`}
                         >
                           <span className={`h-1.5 w-1.5 rounded-full ${isArk ? "bg-orange-400" : cotacao ? "bg-emerald-400" : "bg-sky-400"}`} />
-                          {isArk ? "Canal ARK" : cotacao ? "Quer cotar" : "Já tem proteção"}
+                          {isArk ? "Canal Dark" : cotacao ? "Quer cotar" : "Já tem proteção"}
                         </span>
                         {utmLabel && (
                           <span className="inline-flex items-center rounded-full bg-violet-500/10 px-2.5 py-0.5 text-[11px] font-medium text-violet-300 ring-1 ring-violet-400/20">
