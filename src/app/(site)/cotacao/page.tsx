@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { ShieldCheck, CheckCircle, ArrowRight } from "lucide-react";
+import { ShieldCheck, CheckCircle, ArrowRight, Wrench, BookOpen, ShieldAlert } from "lucide-react";
+import Link from "next/link";
 
 function formatPhone(value: string) {
   const digits = value.replace(/\D/g, "").slice(0, 11);
@@ -68,15 +69,95 @@ export default function CotacaoPage() {
 
   if (done) {
     return (
-      <div className="flex min-h-[70vh] flex-col items-center justify-center px-6 text-center">
-        <CheckCircle className="h-16 w-16 text-green-500" />
-        <h2 className="font-display mt-5 text-2xl font-black uppercase text-ink sm:text-3xl">
-          Recebemos seu pedido!
-        </h2>
-        <p className="mx-auto mt-3 max-w-sm text-ink-soft leading-relaxed">
-          Nossa equipe vai entrar em contato em breve pelo WhatsApp para apresentar as opções de proteção para o seu carro.
-        </p>
-        <p className="mt-6 text-xs text-ink-faint">Pode fechar essa página.</p>
+      <div className="bg-page">
+        {/* Confirmação */}
+        <section className="flex flex-col items-center justify-center px-6 py-16 text-center">
+          <CheckCircle className="h-16 w-16 text-green-500" />
+          <h2 className="font-display mt-5 text-2xl font-black uppercase text-ink sm:text-3xl">
+            Recebemos seu pedido!
+          </h2>
+          <p className="mx-auto mt-3 max-w-sm text-ink-soft leading-relaxed">
+            Nossa equipe vai entrar em contato em breve pelo WhatsApp para apresentar as opções de proteção para o seu carro.
+          </p>
+        </section>
+
+        {/* Enquanto aguarda */}
+        <section className="border-t border-border-subtle bg-surface px-6 py-12">
+          <div className="mx-auto max-w-4xl">
+            <p className="text-center text-xs font-bold uppercase tracking-widest text-red mb-2">Enquanto aguarda</p>
+            <h3 className="font-display text-center text-2xl font-black uppercase text-ink mb-8">
+              Conteúdo que pode te ajudar
+            </h3>
+
+            <div className="grid gap-4 sm:grid-cols-3">
+              {/* Ebook */}
+              <Link
+                href="/ebook"
+                className="group flex flex-col gap-3 rounded-2xl border border-border-subtle bg-surface-2 p-6 transition-shadow hover:shadow-md"
+              >
+                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-red/10">
+                  <BookOpen className="h-5 w-5 text-red" />
+                </span>
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-widest text-red">E-book grátis</p>
+                  <p className="font-display mt-1 text-base font-black uppercase text-ink leading-tight">
+                    Bê-á-bá da Manutenção
+                  </p>
+                  <p className="mt-1 text-sm text-ink-soft">
+                    Guia completo para você não cair em roubada na oficina.
+                  </p>
+                </div>
+                <span className="mt-auto inline-flex items-center gap-1 text-xs font-bold text-red group-hover:gap-2 transition-all">
+                  Baixar grátis <ArrowRight className="h-3.5 w-3.5" />
+                </span>
+              </Link>
+
+              {/* Manutenção */}
+              <Link
+                href="/blog?categoria=manutencao"
+                className="group flex flex-col gap-3 rounded-2xl border border-border-subtle bg-surface-2 p-6 transition-shadow hover:shadow-md"
+              >
+                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-red/10">
+                  <Wrench className="h-5 w-5 text-red" />
+                </span>
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-widest text-red">Manutenção</p>
+                  <p className="font-display mt-1 text-base font-black uppercase text-ink leading-tight">
+                    Cuide bem do seu carro
+                  </p>
+                  <p className="mt-1 text-sm text-ink-soft">
+                    Dicas práticas para manter o carro funcionando e evitar surpresas na estrada.
+                  </p>
+                </div>
+                <span className="mt-auto inline-flex items-center gap-1 text-xs font-bold text-red group-hover:gap-2 transition-all">
+                  Ver artigos <ArrowRight className="h-3.5 w-3.5" />
+                </span>
+              </Link>
+
+              {/* Proteção e segurança */}
+              <Link
+                href="/blog?categoria=protecao"
+                className="group flex flex-col gap-3 rounded-2xl border border-border-subtle bg-surface-2 p-6 transition-shadow hover:shadow-md"
+              >
+                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-red/10">
+                  <ShieldAlert className="h-5 w-5 text-red" />
+                </span>
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-widest text-red">Proteção Veicular</p>
+                  <p className="font-display mt-1 text-base font-black uppercase text-ink leading-tight">
+                    Entenda sua proteção
+                  </p>
+                  <p className="mt-1 text-sm text-ink-soft">
+                    O que cobre, o que não cobre e o que você precisa saber antes de contratar.
+                  </p>
+                </div>
+                <span className="mt-auto inline-flex items-center gap-1 text-xs font-bold text-red group-hover:gap-2 transition-all">
+                  Ver artigos <ArrowRight className="h-3.5 w-3.5" />
+                </span>
+              </Link>
+            </div>
+          </div>
+        </section>
       </div>
     );
   }
