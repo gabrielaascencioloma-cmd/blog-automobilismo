@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ShieldCheck, CheckCircle, ArrowRight, Wrench, BookOpen, ShieldAlert } from "lucide-react";
 import Link from "next/link";
 
@@ -28,6 +28,13 @@ export default function CotacaoPage() {
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [utmSource, setUtmSource] = useState<string | null>(null);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const src = params.get("utm_source");
+    if (src) setUtmSource(src);
+  }, []);
 
   function validate() {
     const e: Record<string, string> = {};
@@ -52,6 +59,7 @@ export default function CotacaoPage() {
           telefone: form.telefone.replace(/\D/g, ""),
           placa: form.placa || null,
           modelo: form.modelo.trim(),
+          utmSource: utmSource || null,
         }),
       });
       setDone(true);

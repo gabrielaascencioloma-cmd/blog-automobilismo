@@ -38,6 +38,7 @@ model Lead {
   placa         String?
   modelo        String?
   protecaoAtual String?
+  utmSource     String?
   createdAt     DateTime @default(now())
 }
 

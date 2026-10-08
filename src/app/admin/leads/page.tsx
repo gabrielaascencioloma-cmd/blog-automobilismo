@@ -52,12 +52,13 @@ export default async function LeadsPage({
   const now = new Date();
   const leads = await prisma.lead.findMany({ orderBy: { createdAt: "desc" } });
 
-  const tipo = params.tipo === "cotacao" || params.tipo === "verificacao" ? params.tipo : undefined;
+  const tipo = ["cotacao", "verificacao", "ark", "ebook"].includes(params.tipo ?? "") ? params.tipo : undefined;
   const q = (params.q ?? "").trim();
 
   const total = leads.length;
   const cotacoes = leads.filter((l) => l.tipo === "cotacao").length;
   const verificacoes = leads.filter((l) => l.tipo === "verificacao").length;
+  const arks = leads.filter((l) => l.tipo === "ark").length;
   const last7 = leads.filter((l) => l.createdAt.getTime() >= now.getTime() - 7 * DAY).length;
 
   const daily: number[] = [];
@@ -67,7 +68,7 @@ export default async function LeadsPage({
   }
 
   const searched = q
-    ? leads.filter((l) => normalize(`${l.nome ?? ""} ${l.placa ?? ""} ${l.telefone ?? ""} ${l.protecaoAtual ?? ""}`).includes(normalize(q)))
+    ? leads.filter((l) => normalize(`${l.nome ?? ""} ${l.placa ?? ""} ${l.telefone ?? ""} ${l.protecaoAtual ?? ""} ${l.utmSource ?? ""}`).includes(normalize(q)))
     : leads;
   const list = tipo ? searched.filter((l) => l.tipo === tipo) : searched;
 
@@ -153,6 +154,7 @@ export default async function LeadsPage({
                 { key: undefined, label: `Todos · ${total}` },
                 { key: "cotacao", label: `Querem cotar · ${cotacoes}` },
                 { key: "verificacao", label: `Já têm proteção · ${verificacoes}` },
+                { key: "ark", label: `Canais ARK · ${arks}` },
               ].map((t) => (
                 <a
                   key={t.label}
@@ -202,15 +204,26 @@ export default async function LeadsPage({
         ) : (
           <ul className="divide-y divide-white/[0.05]">
             {list.map((lead) => {
+              const isArk = lead.tipo === "ark";
               const cotacao = lead.tipo === "cotacao";
               const phone = lead.telefone?.replace(/\D/g, "");
+
+              const UTM_LABELS: Record<string, string> = {
+                "curva-fechada": "Curva Fechada",
+                "debaixo-do-capo": "Debaixo do Capô",
+                "terapia-automotiva": "Terapia Automotiva",
+              };
+              const utmLabel = lead.utmSource ? (UTM_LABELS[lead.utmSource] ?? lead.utmSource) : null;
+
               return (
                 <li key={lead.id} className="group relative transition-colors hover:bg-white/[0.025]">
                   <span className="absolute inset-y-3 left-0 w-0.5 rounded-full bg-emerald-400 opacity-0 transition-opacity group-hover:opacity-100" />
                   <div className="grid grid-cols-[auto_1fr_auto] items-center gap-4 px-5 py-4 lg:grid-cols-[auto_minmax(0,1.4fr)_minmax(0,1fr)_7rem_minmax(0,1fr)_11rem] 2xl:px-6">
                     <span
                       className={`flex h-11 w-11 items-center justify-center rounded-2xl text-sm font-bold uppercase ring-1 ring-white/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.15)] ${
-                        cotacao ? "bg-gradient-to-br from-emerald-400/30 to-emerald-700/20 text-emerald-200" : "bg-gradient-to-br from-sky-400/30 to-sky-700/20 text-sky-200"
+                        isArk ? "bg-gradient-to-br from-orange-400/30 to-orange-700/20 text-orange-200"
+                        : cotacao ? "bg-gradient-to-br from-emerald-400/30 to-emerald-700/20 text-emerald-200"
+                        : "bg-gradient-to-br from-sky-400/30 to-sky-700/20 text-sky-200"
                       }`}
                     >
                       {(lead.nome ?? "?").charAt(0)}
@@ -218,19 +231,28 @@ export default async function LeadsPage({
 
                     <div className="min-w-0">
                       <p className="truncate text-[15px] font-medium text-zinc-100">{lead.nome ?? "Sem nome"}</p>
-                      <span
-                        className={`mt-1 inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[11px] font-medium ring-1 ${
-                          cotacao ? "bg-emerald-500/10 text-emerald-300 ring-emerald-400/20" : "bg-sky-500/10 text-sky-300 ring-sky-400/20"
-                        }`}
-                      >
-                        <span className={`h-1.5 w-1.5 rounded-full ${cotacao ? "bg-emerald-400" : "bg-sky-400"}`} />
-                        {cotacao ? "Quer cotar" : "Já tem proteção"}
-                      </span>
+                      <div className="mt-1 flex flex-wrap items-center gap-1.5">
+                        <span
+                          className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[11px] font-medium ring-1 ${
+                            isArk ? "bg-orange-500/10 text-orange-300 ring-orange-400/20"
+                            : cotacao ? "bg-emerald-500/10 text-emerald-300 ring-emerald-400/20"
+                            : "bg-sky-500/10 text-sky-300 ring-sky-400/20"
+                          }`}
+                        >
+                          <span className={`h-1.5 w-1.5 rounded-full ${isArk ? "bg-orange-400" : cotacao ? "bg-emerald-400" : "bg-sky-400"}`} />
+                          {isArk ? "Canal ARK" : cotacao ? "Quer cotar" : "Já tem proteção"}
+                        </span>
+                        {utmLabel && (
+                          <span className="inline-flex items-center rounded-full bg-violet-500/10 px-2.5 py-0.5 text-[11px] font-medium text-violet-300 ring-1 ring-violet-400/20">
+                            {utmLabel}
+                          </span>
+                        )}
+                      </div>
                     </div>
 
                     <div className="hidden min-w-0 lg:block">
-                      <p className="text-xs text-zinc-500">Proteção atual</p>
-                      <p className="truncate text-sm text-zinc-300">{lead.protecaoAtual ?? "—"}</p>
+                      <p className="text-xs text-zinc-500">{isArk ? "Veículo" : "Proteção atual"}</p>
+                      <p className="truncate text-sm text-zinc-300">{isArk ? (lead.modelo ?? "—") : (lead.protecaoAtual ?? "—")}</p>
                     </div>
 
                     <div className="hidden lg:block">{lead.placa ? <Plate value={lead.placa} /> : <span className="text-zinc-600">—</span>}</div>

@@ -3,7 +3,7 @@ import { prisma } from "@/lib/db";
 
 export async function POST(req: Request) {
   const body = await req.json();
-  const { tipo, nome, telefone, placa, modelo, protecaoAtual } = body;
+  const { tipo, nome, telefone, placa, modelo, protecaoAtual, utmSource } = body;
 
   const lead = await prisma.lead.create({
     data: {
@@ -13,6 +13,7 @@ export async function POST(req: Request) {
       placa: placa ? String(placa).trim().toUpperCase() : null,
       modelo: modelo ? String(modelo).trim() : null,
       protecaoAtual: protecaoAtual ? String(protecaoAtual).trim() : null,
+      utmSource: utmSource ? String(utmSource).trim().toLowerCase() : null,
     },
   });
 
